@@ -1,0 +1,103 @@
+---
+title: Quick Start
+description: Create your first browser profile and start browsing in 2 minutes.
+sidebar:
+  order: 3
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+## Your First Profile in 2 Minutes
+
+<Steps>
+
+1. **Open Veilus** — Launch the app after installation
+
+2. **Create a Profile**
+   Click **"+ New Profile"** in the profile manager. Give it a name like "Work Account 1".
+
+3. **Launch the Profile**
+   Click the **▶ Launch** button. A new browser window opens with a unique identity.
+
+4. **Verify Your Fingerprint**
+   Navigate to [creepjs.com](https://creepjs.com) and check:
+   - Trust Score shows a real-looking fingerprint
+   - Each component has consistent values
+   - No red flags or "bot" indicators
+
+5. **Test on iphey.com**
+   Visit [iphey.com](https://iphey.com) — it should report **"Real"** browser with a green checkmark.
+
+</Steps>
+
+## Understanding the Profile Manager
+
+The Profile Manager is your home screen. It shows all your profiles in a grid or list view.
+
+### Profile Card Information
+
+Each profile card shows:
+
+| Element | Description |
+|---------|-------------|
+| **Name** | Your custom label |
+| **Status** | 🟢 Running / ⚪ Stopped |
+| **OS** | Windows / macOS / Linux fingerprint |
+| **Proxy** | Connected proxy or "Direct" |
+| **Last used** | Timestamp of last session |
+| **Tags** | Color-coded organizational tags |
+
+### Quick Actions
+
+Right-click any profile for quick actions:
+- **Launch** / **Stop** — Start or stop the browser
+- **Edit** — Open profile settings
+- **Duplicate** — Copy with a new fingerprint
+- **Export** — Save as `.veilus` file
+- **Delete** — Remove profile and data
+
+## What Happens When You Launch a Profile?
+
+When you click Launch, Veilus:
+
+1. **Loads the fingerprint** — Canvas, WebGL, fonts, screen, etc.
+2. **Applies proxy settings** — If configured, routes traffic through the proxy
+3. **Sets timezone** — Auto-matched to proxy location (or manual setting)
+4. **Restores session** — Cookies, localStorage, and tabs from last session
+5. **Opens the browser** — A Chromium window with your unique identity
+
+Each launched profile is fully isolated — cookies, cache, localStorage, IndexedDB, and even the GPU fingerprint are unique to that profile.
+
+## Multiple Profiles at Once
+
+You can run multiple profiles simultaneously. Each one is a separate process with its own:
+- Memory space
+- Cookie jar
+- Network stack (proxy)
+- Fingerprint
+
+**Resource usage per profile:**
+- ~100 MB RAM (idle)
+- ~200-300 MB RAM (active with multiple tabs)
+- Minimal CPU when idle (background throttling)
+
+### Performance Tips
+
+| System RAM | Recommended Max Profiles |
+|-----------|-------------------------|
+| 8 GB | 10-15 concurrent |
+| 16 GB | 30-50 concurrent |
+| 32 GB | 80-100+ concurrent |
+
+:::tip
+Close tabs you're not using. Each tab adds ~50-100 MB RAM. Veilus auto-hibernates background profiles after 10 minutes of inactivity.
+:::
+
+## Next Steps
+
+Now that you have a profile running:
+
+- [📋 Create more profiles](/profiles/create/) — Organize with tags
+- [🛡️ Configure fingerprints](/profiles/fingerprinting/) — Fine-tune detection evasion
+- [🌐 Set up proxies](/profiles/proxy/) — Appear from different locations
+- [🤖 Record an automation](/automation/recording/) — Automate repetitive tasks

@@ -1,0 +1,39 @@
+---
+title: Welcome to Veilus
+description: The only anti-detect browser with a fully integrated automation platform.
+template: splash
+hero:
+  title: Veilus Documentation
+  tagline: Learn how to use Veilus — the anti-detect browser with native performance and built-in automation.
+  actions:
+    - text: Get Started
+      link: /getting-started/introduction/
+      icon: right-arrow
+      variant: primary
+    - text: Download Veilus
+      link: https://veilus.io/download
+      icon: external
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Quick Links
+
+<CardGrid>
+  <Card title="Getting Started" icon="rocket">
+    Install Veilus and create your first browser profile in under 5 minutes.
+    [Start here →](/getting-started/introduction/)
+  </Card>
+  <Card title="Profiles" icon="puzzle">
+    Learn about fingerprinting, proxy setup, and profile management.
+    [Learn more →](/profiles/create/)
+  </Card>
+  <Card title="Automation" icon="setting">
+    Record browser actions and auto-generate scripts with VeilusFlow.
+    [Explore →](/automation/overview/)
+  </Card>
+  <Card title="FAQ" icon="information">
+    Common questions and troubleshooting tips.
+    [Read FAQ →](/reference/faq/)
+  </Card>
+</CardGrid>

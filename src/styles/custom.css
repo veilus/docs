@@ -1,0 +1,30 @@
+/* Veilus Docs — Custom Styles */
+
+:root {
+  --sl-color-accent-low: #0b2d3d;
+  --sl-color-accent: #00d4ff;
+  --sl-color-accent-high: #b3ecff;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #e6edf3;
+  --sl-color-gray-2: #8b949e;
+  --sl-color-gray-3: #484f58;
+  --sl-color-gray-4: #30363d;
+  --sl-color-gray-5: #21262d;
+  --sl-color-gray-6: #161b22;
+  --sl-color-black: #0b0f1a;
+  --sl-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #d6f4ff;
+  --sl-color-accent: #0094b3;
+  --sl-color-accent-high: #003d4d;
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Better code blocks */
+.expressive-code pre {
+  border-radius: 8px !important;
+}

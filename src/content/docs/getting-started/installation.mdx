@@ -1,0 +1,182 @@
+---
+title: Installation
+description: Download and install Veilus on Windows, macOS, or Linux.
+sidebar:
+  order: 2
+---
+
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
+## System Requirements
+
+| | Windows | macOS | Linux |
+|---|---------|-------|-------|
+| **OS** | Windows 10/11 (64-bit) | macOS 12+ Monterey | Ubuntu 20.04+, Fedora 36+ |
+| **CPU** | x86_64, 2+ cores | Intel or Apple Silicon | x86_64, 2+ cores |
+| **RAM** | 4 GB minimum (8 GB recommended) | 4 GB minimum (8 GB recommended) | 4 GB minimum |
+| **Disk** | 500 MB for app + ~200 MB per engine | 500 MB + ~250 MB per engine | 500 MB + ~200 MB per engine |
+| **Display** | DirectX 11 capable | Metal capable | X11 or Wayland |
+| **Network** | Internet for initial setup | Internet for initial setup | Internet for initial setup |
+
+## Download
+
+Visit **[veilus.io/download](https://veilus.io/download)** — the page automatically detects your operating system and highlights the right download.
+
+## Installation Guide
+
+<Tabs>
+<TabItem label="Windows">
+
+### Windows Installation
+
+1. **Download** the `.exe` installer from [veilus.io/download](https://veilus.io/download)
+2. **Run** the installer — Windows may show a SmartScreen warning:
+   - Click "More info" → "Run anyway"
+   - This happens because the app is new and doesn't have a reputation score yet
+3. **Choose** the installation directory (default: `C:\Users\<you>\AppData\Local\Veilus`)
+4. **Launch** Veilus from the Start menu or desktop shortcut
+
+#### Silent Install (IT/Enterprise)
+```bash
+Veilus-Setup.exe /S /D=C:\Program Files\Veilus
+```
+
+#### Portable Mode
+Extract the `.zip` version instead of running the installer. Data is stored alongside the executable — useful for USB drives.
+
+</TabItem>
+<TabItem label="macOS">
+
+### macOS Installation
+
+1. **Download** the `.dmg` file from [veilus.io/download](https://veilus.io/download)
+2. **Open** the DMG and drag **Veilus** to your Applications folder
+3. **First launch** — macOS will show a security prompt:
+
+:::note[Gatekeeper Warning]
+macOS may say "Veilus can't be opened because it is from an unidentified developer."
+
+**Fix:** Go to **System Settings → Privacy & Security** → scroll to the bottom → click **"Open Anyway"** next to the Veilus message.
+
+Alternatively, right-click the app → "Open" → "Open" again.
+:::
+
+4. **Permissions** — Veilus may ask for:
+   - Accessibility (for VeilusFlow automation)
+   - Files & Folders (for profile import/export)
+
+#### Apple Silicon vs Intel
+The Universal binary works on both. Veilus auto-detects your architecture and loads the optimal build.
+
+</TabItem>
+<TabItem label="Linux">
+
+### Linux Installation
+
+#### AppImage (Recommended)
+```bash
+# Download
+wget https://veilus.io/download/veilus-latest.AppImage
+
+# Make executable
+chmod +x Veilus-*.AppImage
+
+# Run
+./Veilus-*.AppImage
+```
+
+#### Debian/Ubuntu (.deb)
+```bash
+sudo dpkg -i veilus_*.deb
+sudo apt-get install -f  # Install dependencies if needed
+```
+
+#### Fedora/RHEL (.rpm)
+```bash
+sudo rpm -i veilus-*.rpm
+```
+
+#### Dependencies
+Veilus requires these system libraries (usually pre-installed):
+- `libgtk-3-0`
+- `libwebkit2gtk-4.1`
+- `libayatana-appindicator3-1`
+- `librsvg2-2`
+
+Install missing dependencies:
+```bash
+# Ubuntu/Debian
+sudo apt install libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1
+
+# Fedora
+sudo dnf install gtk3 webkit2gtk4.1 libayatana-appindicator-gtk3
+```
+
+</TabItem>
+</Tabs>
+
+## First Launch
+
+When you first open Veilus:
+
+1. **Welcome screen** — Choose your language
+2. **Engine download** — Veilus downloads the Chromium engine (~150 MB, one-time)
+3. **Profile manager** — You're ready to create your first profile
+
+The engine download happens in the background with a progress bar. It typically takes 1-3 minutes depending on your connection.
+
+## Updating Veilus
+
+Veilus checks for updates automatically on startup. When an update is available:
+
+1. A notification badge appears in the top-right corner
+2. Click **"Update Available"** → **"Download & Install"**
+3. Veilus restarts with the new version
+
+Your profiles, automations, and settings are preserved during updates.
+
+### Manual Update
+Download the latest version from [veilus.io/download](https://veilus.io/download) and install over the existing version.
+
+## Uninstalling
+
+<Tabs>
+<TabItem label="Windows">
+
+1. **Settings → Apps → Veilus → Uninstall**
+2. Or run `Veilus-Uninstall.exe` from the installation directory
+
+To also remove profile data:
+```
+rmdir /s "%APPDATA%\Veilus"
+```
+
+</TabItem>
+<TabItem label="macOS">
+
+1. Drag **Veilus** from Applications to the Trash
+2. To remove profile data:
+```bash
+rm -rf ~/Library/Application\ Support/Veilus
+```
+
+</TabItem>
+<TabItem label="Linux">
+
+```bash
+# AppImage — just delete the file
+rm Veilus-*.AppImage
+
+# Deb
+sudo dpkg -r veilus
+
+# Remove data
+rm -rf ~/.config/veilus
+```
+
+</TabItem>
+</Tabs>
+
+## Next Steps
+
+Veilus is installed! Now [create your first profile →](/getting-started/quickstart/)

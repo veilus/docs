@@ -12,19 +12,16 @@ Traditional scraping tools (Puppeteer, Playwright, Selenium) are easily detected
 - **Real browser fingerprints** — pass Canvas, WebGL, and AudioContext checks
 - **Residential proxy support** — rotate IPs per request
 - **Profile persistence** — maintain cookies across scraping sessions
-- **VeilusFlow** — record scraping flows visually, no code needed
+- **VeilusFlow** — build extraction scripts visually or in code, no separate scraping stack needed
 
 ## Quick Start: Scrape a Product Page
 
 ### Visual Method (VeilusFlow)
 
 1. Create a profile with a proxy
-2. Navigate to the target website
-3. Start VeilusFlow recording
-4. Click on the data you want to extract (price, title, rating)
-5. Right-click each element → **Extract Text**
-6. Stop recording
-7. Run the flow — data is saved to CSV
+2. In VeilusFlow, build a script that navigates to the target page
+3. Add **Extract** / **Extract List** nodes for the data you want (price, title, rating)
+4. Run the script on the profile
 
 ### Code Method (Automation API)
 
@@ -83,16 +80,7 @@ Don't scrape faster than a human would browse. Use random delays:
 
 When a CAPTCHA appears during scraping:
 
-1. **VeilusFlow** can pause and wait for manual solving
-2. **Auto-detection** — VeilusFlow detects common CAPTCHA patterns
-3. **Third-party solvers** — Integrate 2captcha or anti-captcha via API
-
-## Output Formats
-
-VeilusFlow extracted data can be exported as:
-- **CSV** — For spreadsheets
-- **JSON** — For programmatic processing
-- **Clipboard** — Copy-paste individual values
+- **Third-party solvers** — Integrate 2captcha or anti-captcha via API in your script
 
 ## Legal Considerations
 

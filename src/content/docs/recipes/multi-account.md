@@ -92,14 +92,12 @@ For Facebook and Google accounts, **mobile proxies** have the lowest ban rate be
 
 Automate repetitive tasks across multiple accounts:
 
-1. **Record** the workflow on one profile
-2. **Export** the VeilusFlow script
-3. **Assign** the script to multiple profiles
-4. **Schedule** execution (stagger times to appear natural)
+1. **Build** the workflow as a script (visual canvas or code)
+2. **Run** the script on the profiles you want, with a concurrency limit and a delay between launches
+3. **Schedule** execution (stagger times to appear natural)
 
 ### Safe Automation Practices
-- Add **random delays** between actions (1-5 seconds)
-- Vary typing speed (use "Human typing" mode in VeilusFlow)
+- Add delays between launches and between actions inside the script
 - Stagger scheduled tasks across accounts (don't all post at 9:00 AM)
 - Monitor for CAPTCHA triggers and pause accordingly
 

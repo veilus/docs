@@ -136,18 +136,10 @@ Common causes:
 
 ## Automation Issues
 
-### VeilusFlow recording doesn't capture clicks
-
-1. **Check DevTools** — Close DevTools while recording (it can interfere)
-2. **Iframe content** — Switch to the iframe context in VeilusFlow
-3. **Shadow DOM** — Use "Pierce Shadow DOM" option in VeilusFlow settings
-4. **Dynamic elements** — Add explicit waits before clicking
-
 ### Automation runs too fast / gets blocked
 
-1. Add **random delays**: VeilusFlow → Settings → Delay → 1-3 seconds
-2. Enable **human typing**: VeilusFlow → Settings → Typing → Natural
-3. Reduce **speed**: Flow → Run Settings → Speed → Slow
+1. Add a **delay between launches** in the Run dialog's concurrency options
+2. Add explicit wait steps or delays inside the script itself
 
 ---
 

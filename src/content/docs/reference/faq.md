@@ -42,10 +42,10 @@ Veilus includes smart resource monitoring that auto-throttles background profile
 ## Automation
 
 ### What is VeilusFlow?
-VeilusFlow is Veilus's built-in visual automation system. Record your browser actions, and Veilus generates automation scripts automatically. [Learn more →](/automation/overview/)
+VeilusFlow is Veilus's built-in automation system for running scripts against your profiles. [Learn more →](/automation/overview/)
 
 ### Do I need coding skills for automation?
-No. VeilusFlow's visual recorder lets you create automations by simply performing actions in the browser. For advanced users, scripts can be edited directly.
+No. You can build a script by dragging action nodes onto a visual canvas. For advanced users, scripts can also be written as raw TypeScript using Playwright or Puppeteer.
 
 ## Troubleshooting
 

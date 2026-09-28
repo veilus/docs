@@ -1,0 +1,100 @@
+---
+title: Để LLM viết script tự động hoá
+description: Nhờ Claude (hoặc LLM nào nói MCP) viết, chạy và sửa script Veilus Flow giúp bạn.
+sidebar:
+  order: 3
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+[MCP server](/vi/reference/mcp/) của Veilus cho phép một agent LLM — Claude Code, Cursor, Claude Desktop, hay bất cứ thứ gì nói MCP — viết một script [Playwright](https://playwright.dev) thật, chạy nó trên một trong các profile của bạn, đọc lại chuyện gì đã xảy ra, và sửa nó, mà bạn không phải tự copy code qua lại bằng tay.
+
+## Chuẩn bị
+
+<Steps>
+
+1. **Bật API cục bộ.** Mở trang **API & MCP** trong sidebar của app và bật nó lên. API chỉ lắng nghe trên `127.0.0.1`.
+
+2. **Đúc một token.** Đặt tên theo công cụ sẽ dùng nó (ví dụ `claude-code`) để sau này thu hồi mà không ảnh hưởng thứ khác. Giá trị chỉ hiện một lần — copy ngay.
+
+3. **Kết nối công cụ LLM của bạn.** Trang **API & MCP** có sẵn đoạn cấu hình cho Claude Code, và khối JSON cho Cursor / Claude Desktop. Xem [MCP Server](/vi/reference/mcp/) để có lệnh chính xác.
+
+</Steps>
+
+## Nhờ nó viết script
+
+Khi đã kết nối, chỉ cần mô tả điều bạn muốn bằng lời của bạn, ví dụ:
+
+> Write a Veilus script that opens `https://example.com`, waits for the page to load, and logs the page title. Read the URL from a variable called `TARGET_URL`.
+
+LLM có tool [`save_script`](/vi/reference/mcp/#save_script), mà phần mô tả của nó đã mang sẵn quy tắc một script phải theo — bạn không cần nhắc lại.
+
+## Vòng lặp
+
+Đây là những gì diễn ra phía sau, và những gì bạn sẽ thấy khi agent làm việc:
+
+1. **`save_script`** — LLM viết TypeScript và lưu vào Veilus Flow. Lưu không kèm `script_id` thì tạo script mới; truyền một `script_id` có sẵn thì thay source của nó.
+2. **`run_script`** — chạy script trên tối đa ba profile của bạn (script LLM vừa viết chưa được duyệt, nên bị giới hạn cho tới khi bạn duyệt — xem bên dưới). Trả về `run_id` ngay lập tức, không đợi lượt chạy xong.
+3. **`get_run_result`** — đọc lại mã thoát của từng profile và phần cuối của stdout/stderr.
+4. Nếu có gì sai, LLM đọc lỗi, sửa script, rồi gọi `save_script` lần nữa với cùng `script_id`. Lặp lại tới khi chạy đúng.
+
+Biến bạn nhắc tới (như `TARGET_URL` ở trên) trở thành biến môi trường bên trong script, tên `process.env.VEILUS_VAR_<NAME>` — LLM tự đặt tên này cho bạn, nhưng biết trước thì đọc script nó viết ra sẽ dễ hơn.
+
+## Duyệt script
+
+Một script agent lưu **chưa được duyệt** cho tới khi bạn xác nhận. Script chưa duyệt vẫn chạy được trực tiếp qua `run_script` (giới hạn 3 profile), nhưng không dùng được trong lịch chạy hay lượt chạy hàng loạt lớn hơn.
+
+Để duyệt một script:
+
+1. Mở **Veilus Flow** và tìm script đó (script do agent viết được đánh dấu riêng).
+2. Đọc source. Đây là một chương trình Node thật, chạy với quyền của user bạn — xem lại như bạn xem lại code của người khác trước khi chạy.
+3. Bấm **Approve**.
+
+Sửa một script — bằng tay hoặc nhờ agent lưu đè lần nữa — sẽ gỡ duyệt nó. Cần xem lại và **Approve** lần nữa trước khi nó quay lại được dùng trong lịch chạy.
+
+Sau khi duyệt, dùng nó ở bất cứ đâu script Veilus Flow được dùng: chạy trên nhiều profile hơn, hoặc theo [lịch](/vi/automation/overview/).
+
+## Hợp đồng của script
+
+Mọi script `save_script` chấp nhận phải theo cùng một bộ quy tắc, để nó chạy đúng trong pool profile của Veilus thay vì tự mở browser riêng. Trích nguyên văn mô tả của chính tool:
+
+> connect with `chromium.connectOverCDP(\`http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}\`)`; no `chromium.launch`/`launchPersistentContext`; use `browser.contexts()[0]`, not `newContext()`; no `setUserAgent`/`setViewportSize` — identity belongs to the profile; errors must exit non-zero: `main().catch((e) => { console.error(e); process.exit(1); })`; import only `playwright` and Node built-ins; end `main()` with `await browser.close()` — it only disconnects from the profile's browser and lets the script exit; without it the run hangs.
+
+Tóm lại:
+
+- **Connect, đừng launch** — `chromium.connectOverCDP` vào `VEILUS_DEBUG_PORT`, không bao giờ `chromium.launch()`.
+- **Dùng context có sẵn** — `browser.contexts()[0]`. Chính profile là danh tính; đừng tạo context mới hay ghi đè user agent/viewport.
+- **Đọc input từ `process.env.VEILUS_VAR_<NAME>`**, dạng UPPER_SNAKE_CASE.
+- **Ghi output bằng `console.log`** — đó là thứ LLM (và `get_run_result`) đọc được.
+- **Thoát khác 0 khi lỗi**, theo mẫu `main().catch(...)` bên dưới.
+- **Luôn `await browser.close()`** cuối `main()` — nó chỉ ngắt kết nối, không đóng browser của profile. Bỏ dòng này thì lượt chạy treo tới khi hết giờ.
+- **Chỉ `playwright` và built-in của Node** — không package npm nào khác.
+
+## Một script tối thiểu, đúng chuẩn
+
+```typescript
+import { chromium } from "playwright";
+
+async function main() {
+  const browser = await chromium.connectOverCDP(
+    `http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}`,
+  );
+  const context = browser.contexts()[0];
+  const page = context.pages()[0] ?? (await context.newPage());
+
+  const url = process.env.VEILUS_VAR_TARGET_URL ?? "https://example.com";
+  await page.goto(url);
+  console.log(`title: ${await page.title()}`);
+
+  await browser.close();
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});
+```
+
+## Bảo mật
+
+Một script do agent viết là chương trình Node bình thường, chạy với quyền của user bạn — nó làm được bất cứ gì một script bạn tự viết cũng làm được. Đọc thứ LLM đã lưu trước khi duyệt, giống cách bạn xem lại một pull request.

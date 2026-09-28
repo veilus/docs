@@ -1,0 +1,100 @@
+---
+// Renders the MCP tool list from src/data/api-catalog.json (copied verbatim
+// from the app's tests/results/api-catalog.json — do not hand-edit the data
+// file, edit the app and re-copy instead).
+import catalog from '../data/api-catalog.json';
+
+interface Prop {
+	type?: string;
+	description?: string;
+	items?: { type?: string };
+}
+interface Tool {
+	name: string;
+	description: string;
+	inputSchema: {
+		properties: Record<string, Prop>;
+		required?: string[];
+	};
+}
+
+const tools = catalog.mcpTools as Tool[];
+---
+
+<div class="mcp-tools">
+	{
+		tools.map((tool) => {
+			const props = Object.entries(tool.inputSchema.properties ?? {});
+			return (
+				<div class="tool" id={tool.name}>
+					<p class="tool-head">
+						<code class="name">{tool.name}</code>
+					</p>
+					<p class="summary">{tool.description}</p>
+					{props.length > 0 && (
+						<table class="params">
+							<thead>
+								<tr>
+									<th>Parameter</th>
+									<th>Type</th>
+									<th>Required</th>
+									<th>Description</th>
+								</tr>
+							</thead>
+							<tbody>
+								{props.map(([name, field]) => (
+									<tr>
+										<td>
+											<code>{name}</code>
+										</td>
+										<td>
+											{field.type === 'array'
+												? `${field.items?.type ?? 'string'}[]`
+												: (field.type ?? 'string')}
+										</td>
+										<td>{tool.inputSchema.required?.includes(name) ? 'yes' : 'no'}</td>
+										<td>{field.description ?? ''}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					)}
+				</div>
+			);
+		})
+	}
+</div>
+
+<style>
+	.tool {
+		border-top: 1px solid var(--sl-color-hairline);
+		padding: 1rem 0;
+	}
+	.tool:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+	.tool-head {
+		margin: 0 0 0.35rem;
+	}
+	.name {
+		font-weight: 700;
+		font-size: 0.95rem;
+	}
+	.summary {
+		margin: 0 0 0.5rem;
+		color: var(--sl-color-gray-2);
+		white-space: pre-line;
+	}
+	.params {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85rem;
+	}
+	.params th,
+	.params td {
+		text-align: left;
+		padding: 0.3rem 0.6rem 0.3rem 0;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+</style>

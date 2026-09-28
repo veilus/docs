@@ -1,0 +1,46 @@
+---
+title: REST API
+description: Control Veilus profiles and scripts from your own tools over a local REST API.
+---
+
+import RestRoutes from '../../../components/RestRoutes.astro';
+
+Veilus can run a small REST API on your own machine, so other programs you run — scripts, other apps, an LLM agent — can list, launch and stop profiles, and drive [Veilus Flow](/recipes/llm-scripts/) scripts.
+
+The API is **off by default**. Turn it on from the **API & MCP** page in the app sidebar, which shows the port it's listening on, lets you mint and revoke named tokens, and gives ready-made connection snippets.
+
+## Local only
+
+The API only listens on `127.0.0.1` — nothing outside your machine can reach it. It reaches every profile, so it's gated behind the Pro plan or higher and stays off until you turn it on.
+
+## Authentication
+
+Every request needs a bearer token, minted from the **API & MCP** page. Each token has a name (so you can tell tools apart) and can be revoked independently — a token's full value is shown only once, at creation time.
+
+```
+Authorization: Bearer <token>
+```
+
+## Base URL
+
+The port is chosen when you turn the API on and shown on the **API & MCP** page. Replace `<port>` below with that value.
+
+```
+http://127.0.0.1:<port>
+```
+
+## Example
+
+```bash
+curl -X GET \
+  -H "Authorization: Bearer $VEILUS_API_TOKEN" \
+  http://127.0.0.1:<port>/v1/profiles
+```
+
+## Routes
+
+<RestRoutes />
+
+## OpenAPI
+
+`GET /v1/openapi.json` returns the OpenAPI 3.1 document for this API (requires a token like any other route). The **API & MCP** page also has a **Copy OpenAPI JSON** button if you'd rather not curl it yourself.

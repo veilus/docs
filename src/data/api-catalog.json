@@ -1,0 +1,267 @@
+{
+  "mcpTools": [
+    {
+      "name": "list_profiles",
+      "description": "List Veilus browser profiles, with their running state.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
+      "name": "launch_profile",
+      "description": "Launch a profile. Returns immediately; the profile may be queued if the pool is full.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "profile_id": {
+            "description": "Profile UUID",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "run_script",
+      "description": "Run a script on the given profiles. Returns `run_id` IMMEDIATELY, without waiting for the run to finish.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "profile_ids": {
+            "description": "UUIDs of the profiles to run on",
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "script_id": {
+            "description": "Script UUID",
+            "type": "string"
+          },
+          "variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Variables for the script, read in the script as process.env.VEILUS_VAR_<NAME>",
+            "type": "object"
+          }
+        },
+        "required": [
+          "script_id",
+          "profile_ids"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_run_result",
+      "description": "Result of a run by `run_id` — use after calling run_script.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "run_id": {
+            "description": "UUID returned by run_script",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "save_script",
+      "description": "Save a Playwright (TypeScript) script into Veilus Flow. Without script_id: create a new script; with script_id: replace its source. Contract - violations are rejected with line numbers: (1) connect with chromium.connectOverCDP(`http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}`); (2) no chromium.launch/launchPersistentContext; (3) use browser.contexts()[0], not newContext(); (4) no setUserAgent/setViewportSize - identity belongs to the profile; (5) errors must exit non-zero: main().catch((e) => { console.error(e); process.exit(1); }); (6) import only playwright and Node built-ins; (7) end main() with `await browser.close()` - it only disconnects from the profile's browser and lets the script exit; without it the run hangs. Read variables via process.env.VEILUS_VAR_<NAME> (names are UPPER_SNAKE_CASE); print what you need to see with console.log to stdout (page.on('console') does not fire). A newly saved script is not approved: run_script can run it (on at most 3 profiles), schedules wait until the user approves it in the app. `name` is used only when creating; updating (with script_id) does not rename, and only scripts saved by an agent can be updated.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "script_id": {
+            "description": "UUID of the script whose source to replace; omit to create a new script",
+            "type": "string"
+          },
+          "source": {
+            "description": "The full TypeScript source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "source"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_script",
+      "description": "Read the source and approval state of a Raw script, to fix it and save_script it again.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "script_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "script_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "compile_script",
+      "description": "Compile a drag-and-drop DSL script into runnable code. Does not run it. Agents writing scripts should use save_script instead.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "dsl": {
+            "description": "DSL script body",
+            "type": "object"
+          },
+          "target": {
+            "description": "Compile target",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dsl"
+        ],
+        "type": "object"
+      }
+    }
+  ],
+  "restRoutes": [
+    {
+      "method": "GET",
+      "path": "/v1/profiles",
+      "summary": "List Veilus browser profiles, with their running state."
+    },
+    {
+      "method": "GET",
+      "path": "/v1/capacity",
+      "summary": "Return the current browser pool capacity and usage."
+    },
+    {
+      "method": "GET",
+      "path": "/v1/dsl/schema",
+      "summary": "Return the JSON schema for the drag-and-drop DSL."
+    },
+    {
+      "method": "POST",
+      "path": "/v1/dsl/compile",
+      "summary": "Compile a drag-and-drop DSL script into runnable code.",
+      "body": {
+        "properties": {
+          "dsl": {
+            "description": "DSL script body",
+            "type": "object"
+          },
+          "target": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "dsl",
+          "target"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/profiles/:id/launch",
+      "summary": "Launch a profile's browser; queues if the pool is full."
+    },
+    {
+      "method": "POST",
+      "path": "/v1/profiles/:id/stop",
+      "summary": "Stop a running profile's browser."
+    },
+    {
+      "method": "POST",
+      "path": "/v1/scripts/run",
+      "summary": "Start a script run on given profiles; returns run_id immediately.",
+      "body": {
+        "properties": {
+          "profile_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": "array"
+          },
+          "script_id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "variables": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object"
+          }
+        },
+        "required": [
+          "script_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/scripts",
+      "summary": "Save an agent-authored Raw script into Veilus Flow.",
+      "body": {
+        "properties": {
+          "description": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "script_id": {
+            "description": "Script to replace; omit to create a new one",
+            "format": "uuid",
+            "type": "string"
+          },
+          "source": {
+            "description": "Full TypeScript source",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "source"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/scripts/:id",
+      "summary": "Read a Raw script's source and approval state."
+    },
+    {
+      "method": "GET",
+      "path": "/v1/runs/:id",
+      "summary": "Read a script run's result by run_id."
+    },
+    {
+      "method": "GET",
+      "path": "/v1/openapi.json",
+      "summary": "Return the OpenAPI 3.1 document describing this REST API."
+    }
+  ],
+  "tokenEnv": "VEILUS_API_TOKEN"
+}

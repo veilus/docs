@@ -1,0 +1,116 @@
+---
+// Renders the REST route list from src/data/api-catalog.json (copied
+// verbatim from the app's tests/results/api-catalog.json — do not hand-edit
+// the data file, edit the app and re-copy instead).
+import catalog from '../data/api-catalog.json';
+
+interface Field {
+	type?: string;
+	description?: string;
+	format?: string;
+	items?: { type?: string };
+}
+interface Route {
+	method: string;
+	path: string;
+	summary: string;
+	body?: {
+		properties: Record<string, Field>;
+		required?: string[];
+	};
+}
+
+const routes = catalog.restRoutes as Route[];
+---
+
+<div class="rest-routes">
+	{
+		routes.map((route) => (
+			<div class="route" id={`${route.method.toLowerCase()}-${route.path.replace(/[/:]/g, '-')}`}>
+				<p class="route-head">
+					<code class={`method method-${route.method.toLowerCase()}`}>{route.method}</code>
+					<code class="path">{route.path}</code>
+				</p>
+				<p class="summary">{route.summary}</p>
+				{route.body && (
+					<table class="params">
+						<thead>
+							<tr>
+								<th>Field</th>
+								<th>Type</th>
+								<th>Required</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+							{Object.entries(route.body.properties).map(([name, field]) => (
+								<tr>
+									<td>
+										<code>{name}</code>
+									</td>
+									<td>
+										{field.type === 'array'
+											? `${field.items?.type ?? 'string'}[]`
+											: (field.type ?? 'string')}
+										{field.format ? ` (${field.format})` : ''}
+									</td>
+									<td>{route.body?.required?.includes(name) ? 'yes' : 'no'}</td>
+									<td>{field.description ?? ''}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				)}
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.route {
+		border-top: 1px solid var(--sl-color-hairline);
+		padding: 1rem 0;
+	}
+	.route:first-child {
+		border-top: none;
+		padding-top: 0;
+	}
+	.route-head {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		margin: 0 0 0.35rem;
+	}
+	.method {
+		font-weight: 700;
+		padding: 0.1rem 0.5rem;
+		border-radius: 4px;
+		font-size: 0.8rem;
+	}
+	.method-get {
+		background: var(--sl-color-green-low);
+		color: var(--sl-color-green-high);
+	}
+	.method-post {
+		background: var(--sl-color-blue-low);
+		color: var(--sl-color-blue-high);
+	}
+	.path {
+		font-size: 0.95rem;
+	}
+	.summary {
+		margin: 0 0 0.5rem;
+		color: var(--sl-color-gray-2);
+	}
+	.params {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85rem;
+	}
+	.params th,
+	.params td {
+		text-align: left;
+		padding: 0.3rem 0.6rem 0.3rem 0;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+</style>

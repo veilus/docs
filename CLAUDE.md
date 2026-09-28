@@ -26,7 +26,7 @@ npm run preview
 |---|---|
 | Hướng dẫn dùng sản phẩm | repo này |
 | Kiến trúc, spec, plan, quyết định | `../project-docs/` — **repo gốc, private** |
-| Trạng thái epic | `../project-docs/STATUS.md` — máy sinh |
+| Ý định và tiến độ | Plane, project `VEIL`, nhãn `repo:docs` — không có bảng trạng thái (quyết định 0032) |
 
 Đừng chép nội dung `project-docs/` sang đây. Phần lớn trong đó là tài liệu nội bộ, và repo này công khai.
 

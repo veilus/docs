@@ -14,7 +14,7 @@ Unlike traditional anti-detect browsers that wrap Chromium inside Electron (addi
 - **3x faster** page load and rendering than typical anti-detect browsers
 - **80% less RAM** per browser profile (~100 MB vs 300-500 MB)
 - **Authentic browser behavior** — no Electron artifacts to detect
-- **Built-in automation** with VeilusFlow visual recording
+- **Built-in automation** with VeilusFlow
 
 ## Who is Veilus For?
 
@@ -37,7 +37,6 @@ Veilus is built for professionals who need browser isolation and identity manage
 | **RAM per profile** | ~100 MB | ~350 MB | ~300 MB | ~400 MB |
 | **Free profiles** | 5 forever | 0 (trial only) | 3 (trial) | 5 (limited) |
 | **Built-in automation** | ✅ VeilusFlow | ❌ Separate tool | ❌ | ❌ |
-| **Visual recording** | ✅ Point & click | ❌ | ❌ | ❌ |
 | **Open source tools** | ✅ GitHub | ❌ | ❌ | ❌ |
 | **Starting price** | Free | $99/mo | $49/mo | $9/mo |
 
@@ -62,7 +61,7 @@ Each browser profile gets a mathematically consistent fingerprint generated from
 - **WebRTC** — IP leak protection with configurable modes
 
 ### VeilusFlow Automation
-Record browser actions visually — clicks, typing, scrolling, navigation — and Veilus auto-generates a replayable script. No coding needed.
+Build a script as a visual node graph or write raw TypeScript with Playwright/Puppeteer, then run it on one or more profiles.
 
 ## Architecture Overview
 
@@ -73,9 +72,9 @@ Record browser actions visually — clicks, typing, scrolling, navigation — an
 ├─────────────────────────────────────┤
 │   Profile Manager │  VeilusFlow     │
 │   ┌───────────┐   │  ┌───────────┐  │
-│   │ Profiles  │   │  │ Recorder  │  │
-│   │ Settings  │   │  │ Editor    │  │
-│   │ Proxy     │   │  │ Runner    │  │
+│   │ Profiles  │   │  │ Editor    │  │
+│   │ Settings  │   │  │ Runner    │  │
+│   │ Proxy     │   │  │ Schedules │  │
 │   └───────────┘   │  └───────────┘  │
 ├─────────────────────────────────────┤
 │        Chromium Engine (Patched)     │

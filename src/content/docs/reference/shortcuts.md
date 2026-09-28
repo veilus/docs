@@ -31,7 +31,5 @@ description: Essential keyboard shortcuts for Veilus.
 
 | Shortcut | Action |
 |----------|--------|
-| `Ctrl/Cmd + Shift + R` | Start/stop recording |
-| `Ctrl/Cmd + Shift + F` | Open VeilusFlow panel |
-| `Ctrl/Cmd + Enter` | Run current flow |
-| `Escape` | Stop running flow |
+| `Ctrl/Cmd + Z` | Undo (canvas) |
+| `Ctrl/Cmd + Shift + Z` | Redo (canvas) |

@@ -15,7 +15,6 @@ Export saves all profile data into a single `.veilus` file:
    - Fingerprint configuration
    - Cookies and session data
    - Proxy settings
-   - VeilusFlow automations (optional)
    - Bookmarks and history (optional)
 
 ### Export Options
@@ -23,7 +22,6 @@ Export saves all profile data into a single `.veilus` file:
 | Option | Default | Description |
 |--------|---------|-------------|
 | **Include cookies** | ✅ On | Session data, login states |
-| **Include automations** | ✅ On | VeilusFlow scripts |
 | **Include bookmarks** | ❌ Off | Browser bookmarks |
 | **Include history** | ❌ Off | Browsing history |
 | **Encrypt export** | ❌ Off | Password-protect the file |

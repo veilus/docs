@@ -48,8 +48,10 @@ Organize profiles with color-coded tags:
 
 ### Import / Export
 
-- **Export**: Right-click → Export Profile (saves as `.veilus` file)
-- **Import**: File → Import Profile
+- **Export**: **⋯** menu on the profile's row → **Export** (saves a `.veiluspack` file)
+- **Import**: **Import** button in the profile list toolbar
+
+See [Import & Export](/profiles/import-export/) for what the file contains.
 
 ### Profile Limits
 

@@ -56,7 +56,7 @@ Older engine builds can fail checks on sites that look at the Chrome version. Ke
 | | Veilus engine | Electron-based tools |
 |---|---|---|
 | **Runtime** | A standalone, genuine Chromium binary, launched as its own process | Chromium and Node.js bundled inside the app's own process |
-| **Automation access** | The standard Chrome DevTools Protocol — the same interface Veilus's own automation and detection tests attach through | Varies by app |
+| **Automation access** | The standard Chrome DevTools Protocol, which Veilus's automation uses | Varies by app |
 
 ## Troubleshooting
 

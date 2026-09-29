@@ -11,7 +11,6 @@ Astro Starlight, chạy ở **docs.veilus.io** (xem `CNAME`). Có `.github/workf
 src/content/docs/   nội dung tài liệu
 astro.config.mjs    cấu hình Starlight, sidebar
 public/
-EPICS.md
 ```
 
 ```bash

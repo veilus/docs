@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: Download and install Veilus on Windows, macOS, or Linux.
+description: Download and install Veilus on Windows or macOS.
 sidebar:
   order: 2
 ---
@@ -9,14 +9,13 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ## System Requirements
 
-| | Windows | macOS | Linux |
-|---|---------|-------|-------|
-| **OS** | Windows 10/11 (64-bit) | macOS 12+ Monterey | Ubuntu 20.04+, Fedora 36+ |
-| **CPU** | x86_64, 2+ cores | Intel or Apple Silicon | x86_64, 2+ cores |
-| **RAM** | 4 GB minimum (8 GB recommended) | 4 GB minimum (8 GB recommended) | 4 GB minimum |
-| **Disk** | 500 MB for app + ~200 MB per engine | 500 MB + ~250 MB per engine | 500 MB + ~200 MB per engine |
-| **Display** | DirectX 11 capable | Metal capable | X11 or Wayland |
-| **Network** | Internet for initial setup | Internet for initial setup | Internet for initial setup |
+| | Windows | macOS |
+|---|---------|-------|
+| **OS** | Windows 10/11 (64-bit) | macOS 13+ (Ventura or later) |
+| **CPU** | x86_64 | Apple Silicon (Intel not supported) |
+| **Disk** | ~6.5 MB installer (engine downloads separately) | ~9.6 MB installer (engine downloads separately) |
+| **Display** | DirectX 11 capable | Metal capable |
+| **Network** | Internet for initial setup | Internet for initial setup |
 
 ## Download
 
@@ -64,52 +63,8 @@ Alternatively, right-click the app → "Open" → "Open" again.
 4. **Permissions** — Veilus may ask for:
    - Files & Folders (for profile import/export)
 
-#### Apple Silicon vs Intel
-The Universal binary works on both. Veilus auto-detects your architecture and loads the optimal build.
-
-</TabItem>
-<TabItem label="Linux">
-
-### Linux Installation
-
-#### AppImage (Recommended)
-```bash
-# Download
-wget https://veilus.io/download/veilus-latest.AppImage
-
-# Make executable
-chmod +x Veilus-*.AppImage
-
-# Run
-./Veilus-*.AppImage
-```
-
-#### Debian/Ubuntu (.deb)
-```bash
-sudo dpkg -i veilus_*.deb
-sudo apt-get install -f  # Install dependencies if needed
-```
-
-#### Fedora/RHEL (.rpm)
-```bash
-sudo rpm -i veilus-*.rpm
-```
-
-#### Dependencies
-Veilus requires these system libraries (usually pre-installed):
-- `libgtk-3-0`
-- `libwebkit2gtk-4.1`
-- `libayatana-appindicator3-1`
-- `librsvg2-2`
-
-Install missing dependencies:
-```bash
-# Ubuntu/Debian
-sudo apt install libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1
-
-# Fedora
-sudo dnf install gtk3 webkit2gtk4.1 libayatana-appindicator-gtk3
-```
+#### Apple Silicon required
+Veilus requires an Apple Silicon Mac (M1 or later) running macOS 13 or later. Intel Macs are not supported.
 
 </TabItem>
 </Tabs>
@@ -157,20 +112,6 @@ rmdir /s "%APPDATA%\Veilus"
 2. To remove profile data:
 ```bash
 rm -rf ~/Library/Application\ Support/Veilus
-```
-
-</TabItem>
-<TabItem label="Linux">
-
-```bash
-# AppImage — just delete the file
-rm Veilus-*.AppImage
-
-# Deb
-sudo dpkg -r veilus
-
-# Remove data
-rm -rf ~/.config/veilus
 ```
 
 </TabItem>

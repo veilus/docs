@@ -9,7 +9,7 @@ description: Frequently asked questions about Veilus.
 Yes! The free plan includes **5 browser profiles forever** — no credit card required, no time limit. Premium plans offer more profiles and advanced features.
 
 ### What platforms does Veilus support?
-Veilus runs on **Windows 10/11**, **macOS 12+** (Intel and Apple Silicon), and **Linux** (Ubuntu 20.04+, Fedora 36+).
+Veilus runs on **Windows 10/11** and **macOS 13+** (Apple Silicon only — Intel Macs aren't supported).
 
 ### Is Veilus open source?
 Veilus uses open-source components and contributes community tools to GitHub. The core application is proprietary.
@@ -51,7 +51,7 @@ No. You can build a script by dragging action nodes onto a visual canvas. For ad
 
 ### Veilus won't start
 1. Ensure your system meets the [minimum requirements](/getting-started/installation/)
-2. Try running as administrator (Windows) or with `sudo` (Linux)
+2. Try running as administrator (Windows)
 3. Check if antivirus is blocking Veilus
 
 ### Profile won't launch  

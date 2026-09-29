@@ -1,74 +1,74 @@
 ---
 title: Chromium Engine
-description: Understanding and managing the Chromium engine in Veilus.
+description: How Veilus downloads, updates, and manages the Chromium engine builds your profiles run on.
 sidebar:
   order: 1
 ---
 
 ## Overview
 
-Veilus uses a custom-patched Chromium engine — not Electron, not CEF. This means you get the same browser engine that powers Google Chrome, with modifications for fingerprint spoofing and anti-detection.
+Veilus profiles run on a standalone, custom-patched Chromium build, launched as its own process — not a copy of Chromium embedded inside Electron. This engine is downloaded and managed separately from the Veilus app itself: a fresh install has no engine until you download one from the Engine Manager, at which point Veilus activates it automatically.
 
 ## Engine Manager
 
-The Engine Manager (**Settings → Engine**) shows:
+Open **Settings** from the sidebar; the **Engine** section (Chromium Version Manager) shows:
 
-| Info | Description |
-|------|-------------|
-| **Current version** | e.g., Chromium 124.0.6367.91 |
-| **Status** | Up to date / Update available |
-| **Disk usage** | Total disk space used by installed engines |
-| **Auto-update** | On/Off toggle |
+- The version currently in use, if any (for example, `153.0.8010.37`)
+- **Sync from Cloud** — fetches the list of available versions from Veilus's servers, along with their signed checksums. This also runs once, silently, whenever you open the Settings page.
+- Total disk space used by the builds you've downloaded, and a **Cleanup Old** button (shown once you have more than one build downloaded) that deletes every downloaded build except the one currently active
+- A list of versions available for your platform, each showing:
 
-## Engine Updates
+| Badge / info | Meaning |
+|---|---|
+| **Active** | The build new profiles launch with |
+| **Latest** | The newest build available for your Veilus version and platform |
+| Size, or "Not downloaded" | Whether the build is on disk, and how much space it uses |
+| Released date | When that Chromium build was released |
 
-### Automatic Updates
-By default, Veilus checks for engine updates daily. When a new version is available:
+Depending on its state, a version's row offers **Download**, **Activate**, **Redownload**, and **Delete**.
 
-1. A notification appears in the profile manager
-2. Click **"Update Engine"**
-3. The new engine downloads in the background
-4. Existing profiles continue working during download
-5. New engine is applied when all profiles are closed
+Every download is checked against Veilus's signed version index (SHA-256) before it's kept. If a build has since dropped out of that signed index, Veilus won't touch your existing install of it — you'll see a message telling you to sync again instead.
 
-### Manual Update
-**Settings → Engine → Check for Updates**
+## Updates
 
-### Version Pinning
-For consistency (e.g., running automation tests), you can pin to a specific engine version:
+**Settings → Updates** only shows the engine build currently in use ("Engine in use: `<version>`"). It doesn't check for new versions or switch builds — that happens in the **Engine** section above.
 
-1. **Settings → Engine → Version**
-2. Select a version from the dropdown
-3. Auto-update will be paused until you unpin
+There is no scheduled or background check for new engine versions, and no setting to turn one on or off. Veilus syncs the version list once, silently, whenever you open **Settings**; otherwise, syncing happens only when you click **Sync from Cloud** yourself.
+
+## Getting a newer engine version
+
+1. **Settings → Engine → Sync from Cloud**
+2. Find the version tagged **Latest**
+3. **Download** it, then **Activate** it
+
+Profiles you open afterward use the newly activated build. Profiles that are already open keep running on whichever engine they were launched with — activating a different version doesn't restart them.
+
+## Switching between installed versions
+
+Click **Activate** on any already-downloaded version to make it the one new profiles use. There's no separate "pin" step: whatever you last activated stays active until you activate something else — Veilus never switches it back on its own, since there's no automatic update to begin with.
 
 :::caution
-Using older engine versions may cause detection on sites that check for the latest Chrome version. Only pin when you have a specific reason.
+Older engine builds can fail checks on sites that look at the Chrome version. Keep the active build reasonably current unless you have a specific reason to stay on an older one — for example, matching a fixed version across automation runs.
 :::
 
-## Why Not Electron?
+## Why not Electron?
 
-| | Veilus (Native Chromium) | Electron-based |
-|---|------------------------|----------------|
-| **Binary** | Single Chromium binary | Electron + Chromium + Node.js |
-| **Startup** | ~2 seconds | ~5-8 seconds |
-| **RAM baseline** | ~80 MB | ~200 MB |
-| **Detection risk** | Low (real Chrome fingerprint) | Medium (Electron markers) |
-| **Web API support** | 100% Chrome compatibility | 95% (some APIs excluded) |
-| **DevTools** | Full Chrome DevTools | Modified DevTools |
+| | Veilus engine | Electron-based tools |
+|---|---|---|
+| **Runtime** | A standalone, genuine Chromium binary, launched as its own process | Chromium and Node.js bundled inside the app's own process |
+| **Automation access** | The standard Chrome DevTools Protocol — the same interface Veilus's own automation and detection tests attach through | Varies by app |
 
 ## Troubleshooting
 
 ### Engine won't download
 - Check your internet connection
-- Ensure firewall allows HTTPS connections to `engine.veilus.io`
-- Try: **Settings → Engine → Clear Cache → Re-download**
+- Make sure your firewall allows HTTPS to `api.veilus.io` (the version list and download links) and to Cloudflare R2 (the engine package itself)
+- If the error says a build is no longer in the signed list, click **Sync from Cloud** and try again
 
-### Engine crash on launch
-- Delete the engine cache: close Veilus → delete `~/.veilus/engine/` → reopen
-- Check if antivirus is quarantining engine files
-- Try running Veilus as administrator (Windows)
+### Engine won't start, or delete/redownload fails
+- On Windows, close any profile windows still using that build first — Windows keeps its files locked while a browser built from it is running, which makes delete and redownload fail
+- From **Settings → Engine**, use **Delete** then **Download** to reinstall the build (or **Redownload** if it's the active one)
+- If Veilus itself won't start, quit it, remove the version's folder under `~/.veilus/engines/<version>/` by hand, then relaunch and download the engine again
 
-### Sites detect wrong Chrome version
-- Update to the latest engine version
-- Check that your profile's User Agent matches the engine version
-- Use Auto fingerprint mode for automatic version matching
+### Sites detect an outdated Chrome version
+- **Settings → Engine → Sync from Cloud**, then download and activate the version tagged **Latest**

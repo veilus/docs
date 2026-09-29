@@ -23,19 +23,6 @@ sidebar:
 
 **Fix:** Click "More info" → "Run anyway"
 
-### Linux: Missing dependencies
-
-**Error:** `error while loading shared libraries: libwebkit2gtk-4.1.so`
-
-**Fix:**
-```bash
-# Ubuntu/Debian
-sudo apt install libgtk-3-0 libwebkit2gtk-4.1-0 libayatana-appindicator3-1
-
-# Fedora
-sudo dnf install gtk3 webkit2gtk4.1 libayatana-appindicator-gtk3
-```
-
 ---
 
 ## Profile Issues
@@ -53,7 +40,6 @@ sudo dnf install gtk3 webkit2gtk4.1 libayatana-appindicator-gtk3
    # Find profile data
    # Windows: %APPDATA%\Veilus\profiles\<profile-id>
    # macOS: ~/Library/Application Support/Veilus/profiles/<profile-id>
-   # Linux: ~/.config/veilus/profiles/<profile-id>
 
    # Delete the cache subfolder (keeps cookies and settings)
    rm -rf <profile-path>/cache

@@ -17,7 +17,7 @@ The Engine Manager (**Settings → Engine**) shows:
 |------|-------------|
 | **Current version** | e.g., Chromium 124.0.6367.91 |
 | **Status** | Up to date / Update available |
-| **Disk usage** | ~200-250 MB per engine |
+| **Disk usage** | Total disk space used by installed engines |
 | **Auto-update** | On/Off toggle |
 
 ## Engine Updates
@@ -27,7 +27,7 @@ By default, Veilus checks for engine updates daily. When a new version is availa
 
 1. A notification appears in the profile manager
 2. Click **"Update Engine"**
-3. The new engine downloads in the background (~150 MB)
+3. The new engine downloads in the background
 4. Existing profiles continue working during download
 5. New engine is applied when all profiles are closed
 

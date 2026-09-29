@@ -27,7 +27,7 @@ By default, Veilus checks for engine updates daily. When a new version is availa
 
 1. A notification appears in the profile manager
 2. Click **"Update Engine"**
-3. The new engine downloads in the background (~150 MB)
+3. The new engine downloads in the background
 4. Existing profiles continue working during download
 5. New engine is applied when all profiles are closed
 

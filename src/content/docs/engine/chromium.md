@@ -17,7 +17,7 @@ The Engine Manager (**Settings → Engine**) shows:
 |------|-------------|
 | **Current version** | e.g., Chromium 124.0.6367.91 |
 | **Status** | Up to date / Update available |
-| **Disk usage** | ~200-250 MB per engine |
+| **Disk usage** | Total disk space used by installed engines, as measured by the app |
 | **Auto-update** | On/Off toggle |
 
 ## Engine Updates

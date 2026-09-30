@@ -5,7 +5,7 @@ description: Connect Claude Code, Cursor, or Claude Desktop to Veilus over MCP.
 
 import McpTools from '../../../components/McpTools.astro';
 
-[MCP (Model Context Protocol)](https://modelcontextprotocol.io) is the standard way LLM tools like Claude Code, Cursor, and Claude Desktop connect to external tools — Veilus speaks it over stdio, so an LLM can list and launch your profiles and write and run [Veilus Flow](/recipes/llm-scripts/) scripts on your behalf.
+[MCP (Model Context Protocol)](https://modelcontextprotocol.io) is the standard way LLM tools like Claude Code, Cursor, and Claude Desktop connect to external tools — Veilus speaks it over stdio, so an LLM can import proxies, create and launch profiles, drive a running profile's page, write and run [Veilus Flow](/recipes/llm-scripts/) scripts, and schedule them — on your behalf.
 
 Like the [REST API](/reference/rest-api/), this needs the local API turned on first, from the **API & MCP** page in the app sidebar — that page also mints the token you'll need below.
 
@@ -45,4 +45,4 @@ The **API & MCP** page fills in the real binary path and token for you once you'
 
 ## See also
 
-[Let an LLM write automation scripts](/recipes/llm-scripts/) walks through the save/run/fix loop these tools are meant for.
+[Let an LLM run your automation](/recipes/llm-scripts/) walks through the whole job these tools are meant for, and the safety rules they follow.

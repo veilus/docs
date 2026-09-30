@@ -5,7 +5,7 @@ description: Control Veilus profiles and scripts from your own tools over a loca
 
 import RestRoutes from '../../../components/RestRoutes.astro';
 
-Veilus can run a small REST API on your own machine, so other programs you run — scripts, other apps, an LLM agent — can list, launch and stop profiles, and drive [Veilus Flow](/recipes/llm-scripts/) scripts.
+Veilus can run a small REST API on your own machine, so other programs you run — scripts, other apps, an LLM agent — can manage profiles and proxy pools, drive a running profile's page, and run and schedule [Veilus Flow](/recipes/llm-scripts/) scripts.
 
 The API is **off by default**. Turn it on from the **API & MCP** page in the app sidebar, which shows the port it's listening on, lets you mint and revoke named tokens, and gives ready-made connection snippets.
 
@@ -20,6 +20,10 @@ Every request needs a bearer token, minted from the **API & MCP** page. Each tok
 ```
 Authorization: Bearer <token>
 ```
+
+## Rate limit
+
+Each token can make at most 30 expensive calls per 60 seconds: `POST` to launch a profile, create profiles, create a proxy pool, run a script, run a batch, or run a schedule now. Past that the API answers `429` with a `Retry-After` header. Reads and cheap calls such as stopping a profile aren't counted.
 
 ## Base URL
 

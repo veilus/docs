@@ -1,19 +1,19 @@
 ---
-title: Để LLM viết script tự động hoá
-description: Nhờ Claude (hoặc LLM nào nói MCP) viết, chạy và sửa script Veilus Flow giúp bạn.
+title: Để LLM làm tự động hoá giúp bạn
+description: Nhờ Claude (hoặc LLM nào nói MCP) dựng proxy và profile, tìm hiểu trang web, viết script Veilus Flow và đặt lịch chạy.
 sidebar:
   order: 3
 ---
 
 import { Steps } from '@astrojs/starlight/components';
 
-[MCP server](/vi/reference/mcp/) của Veilus cho phép một agent LLM — Claude Code, Cursor, Claude Desktop, hay bất cứ thứ gì nói MCP — viết một script [Playwright](https://playwright.dev) thật, chạy nó trên một trong các profile của bạn, đọc lại chuyện gì đã xảy ra, và sửa nó, mà bạn không phải tự copy code qua lại bằng tay.
+[MCP server](/vi/reference/mcp/) của Veilus cho phép một agent LLM — Claude Code, Cursor, Claude Desktop, hay bất cứ thứ gì nói MCP — làm trọn một việc tự động hoá chỉ từ một yêu cầu: nhập proxy của bạn, tạo profile khớp với proxy, mở một profile để xem trang đích, viết một script [Playwright](https://playwright.dev) thật, chạy thử, và — khi bạn đã duyệt — chạy nó trên nhiều profile hoặc theo lịch.
 
 ## Chuẩn bị
 
 <Steps>
 
-1. **Bật API cục bộ.** Mở trang **API & MCP** trong sidebar của app và bật nó lên. API chỉ lắng nghe trên `127.0.0.1`.
+1. **Bật API cục bộ.** Mở trang **API & MCP** trong sidebar của app và bật nó lên. API chỉ lắng nghe trên chính máy của bạn.
 
 2. **Đúc một token.** Đặt tên theo công cụ sẽ dùng nó (ví dụ `claude-code`) để sau này thu hồi mà không ảnh hưởng thứ khác. Giá trị chỉ hiện một lần — copy ngay.
 
@@ -21,28 +21,43 @@ import { Steps } from '@astrojs/starlight/components';
 
 </Steps>
 
-## Nhờ nó viết script
+## Một yêu cầu, làm trọn từ đầu tới cuối
 
-Khi đã kết nối, chỉ cần mô tả điều bạn muốn bằng lời của bạn, ví dụ:
+Khi đã kết nối, mô tả cả việc bằng lời của bạn, ví dụ:
 
-> Write a Veilus script that opens `https://example.com`, waits for the page to load, and logs the page title. Read the URL from a variable called `TARGET_URL`.
+> Nhập 10 proxy này, kiểm tra chúng, rồi tạo mỗi proxy một profile với múi giờ khớp proxy. Sau đó mở profile đầu tiên, vào `https://example.com/login`, tìm hiểu form đăng nhập, và viết một script Veilus đăng nhập bằng `USERNAME` và `PASSWORD` rồi in ra tên tài khoản. Chạy thử trên tối đa 3 profile và báo tôi khi script sẵn sàng để duyệt.
 
-LLM có tool [`save_script`](/vi/reference/mcp/#save_script), mà phần mô tả của nó đã mang sẵn quy tắc một script phải theo — bạn không cần nhắc lại.
+Và sau khi bạn đã duyệt script:
 
-## Vòng lặp
+> Chạy script đăng nhập trên cả 10 profile, mỗi lượt 3 profile, rồi đặt lịch chạy mỗi ngày lúc 09:00. Cho tôi biết profile nào lỗi.
 
-Đây là những gì diễn ra phía sau, và những gì bạn sẽ thấy khi agent làm việc:
+Đây là những gì agent làm, từng bước:
 
-1. **`save_script`** — LLM viết TypeScript và lưu vào Veilus Flow. Lưu không kèm `script_id` thì tạo script mới; truyền một `script_id` có sẵn thì thay source của nó.
-2. **`run_script`** — chạy script trên tối đa ba profile của bạn (script LLM vừa viết chưa được duyệt, nên bị giới hạn cho tới khi bạn duyệt — xem bên dưới). Trả về `run_id` ngay lập tức, không đợi lượt chạy xong.
-3. **`get_run_result`** — đọc lại mã thoát của từng profile và phần cuối của stdout/stderr.
-4. Nếu có gì sai, LLM đọc lỗi, sửa script, rồi gọi `save_script` lần nữa với cùng `script_id`. Lặp lại tới khi chạy đúng.
+<Steps>
 
-Biến bạn nhắc tới (như `TARGET_URL` ở trên) trở thành biến môi trường bên trong script, tên `process.env.VEILUS_VAR_<NAME>` — LLM tự đặt tên này cho bạn, nhưng biết trước thì đọc script nó viết ra sẽ dễ hơn.
+1. **Nhập proxy** — `import_proxies` biến các dòng proxy của bạn thành một pool và báo dòng nào sai theo số dòng. `test_proxy` kiểm từng proxy: sống hay chết, độ trễ, IP ra và quốc gia, múi giờ của IP đó.
+
+2. **Tạo profile khớp proxy** — `create_profiles` với pool đó cấp cho mỗi profile mới một slot proxy riêng, và sinh **múi giờ và ngôn ngữ của profile khớp với vị trí của proxy**. Profile nào có proxy chưa biết vị trí thì không được tạo, mà được liệt kê là lỗi.
+
+3. **Tìm hiểu trang web** — `launch_profile` mở một profile, rồi các tool điều khiển trang lái nó: `navigate` tới một URL, `snapshot` để xem các phần tử trên trang, `click` và `type` để điền form, `wait_for_element` để đợi trang kế tiếp. Nhờ vậy agent biết trang thật trông thế nào trước khi viết dòng code nào.
+
+4. **Viết script** — `save_script` lưu một script Playwright (TypeScript) vào Veilus Flow. Phần mô tả của chính tool đã mang sẵn quy tắc một script phải theo, bạn không cần nhắc lại.
+
+5. **Chạy thử** — `run_script` chạy script trên **tối đa 3 profile** khi script chưa được duyệt, và `get_run_result` đọc lại mã thoát và output của từng profile. Có gì sai thì agent sửa script và lưu lại. Lặp tới khi chạy đúng.
+
+6. **Bạn duyệt script** — trong app, không phải qua agent. Xem [Duyệt script](#duyệt-script). Đây là bước cho phép script chạy thật.
+
+7. **Chạy thật** — `run_batch` chạy script đã duyệt trên nhiều profile cùng lúc (`get_capacity` giúp chọn số profile chạy song song), và `create_schedule` chạy nó lặp lại: mỗi N phút, hằng ngày, hằng tuần, hoặc theo biểu thức cron. Cả hai đều từ chối script bạn chưa duyệt.
+
+8. **Xem kết quả** — `list_runs` liệt kê các lượt chạy gần đây với trạng thái và số profile; `get_run_result` có chi tiết từng profile. `stop_profile` đóng browser của profile khi agent dùng xong.
+
+</Steps>
+
+Biến bạn nhắc tới (như `USERNAME` ở trên) tới script dưới dạng biến môi trường tên `process.env.VEILUS_VAR_<NAME>`. Agent cũng có thể lưu giá trị riêng cho từng profile bằng `set_profile_variables` — xem phần an toàn bên dưới để biết khi nào các giá trị đó được giao cho script.
 
 ## Duyệt script
 
-Một script agent lưu **chưa được duyệt** cho tới khi bạn xác nhận. Script chưa duyệt vẫn chạy được trực tiếp qua `run_script` (giới hạn 3 profile), nhưng không dùng được trong lịch chạy hay lượt chạy hàng loạt lớn hơn.
+Một script agent lưu **chưa được duyệt** cho tới khi bạn xác nhận. Script chưa duyệt vẫn chạy thử được qua `run_script` (giới hạn 3 profile), nhưng lịch chạy và lượt chạy hàng loạt chỉ nhận script đã duyệt.
 
 Để duyệt một script:
 
@@ -50,7 +65,7 @@ Một script agent lưu **chưa được duyệt** cho tới khi bạn xác nh�
 2. Đọc source. Đây là một chương trình Node thật, chạy với quyền của user bạn — xem lại như bạn xem lại code của người khác trước khi chạy.
 3. Bấm **Approve**.
 
-Sửa một script — bằng tay hoặc nhờ agent lưu đè lần nữa — sẽ gỡ duyệt nó. Cần xem lại và **Approve** lần nữa trước khi nó quay lại được dùng trong lịch chạy.
+Sửa một script — bằng tay hoặc nhờ agent lưu đè lần nữa — sẽ gỡ duyệt nó. Cần xem lại và **Approve** lần nữa trước khi nó dùng lại được trong lịch chạy và lượt chạy hàng loạt.
 
 Sau khi duyệt, dùng nó ở bất cứ đâu script Veilus Flow được dùng: chạy trên nhiều profile hơn, hoặc theo [lịch](/vi/automation/overview/).
 
@@ -58,7 +73,7 @@ Sau khi duyệt, dùng nó ở bất cứ đâu script Veilus Flow được dùn
 
 Mọi script `save_script` chấp nhận phải theo cùng một bộ quy tắc, để nó chạy đúng trong pool profile của Veilus thay vì tự mở browser riêng. Trích nguyên văn mô tả của chính tool:
 
-> connect with `chromium.connectOverCDP(\`http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}\`)`; no `chromium.launch`/`launchPersistentContext`; use `browser.contexts()[0]`, not `newContext()`; no `setUserAgent`/`setViewportSize` — identity belongs to the profile; errors must exit non-zero: `main().catch((e) => { console.error(e); process.exit(1); })`; import only `playwright` and Node built-ins; end `main()` with `await browser.close()` — it only disconnects from the profile's browser and lets the script exit; without it the run hangs.
+> connect with `` chromium.connectOverCDP(`http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}`) ``; no `chromium.launch`/`launchPersistentContext`; use `browser.contexts()[0]`, not `newContext()`; no `setUserAgent`/`setViewportSize` — identity belongs to the profile; errors must exit non-zero: `main().catch((e) => { console.error(e); process.exit(1); })`; import only `playwright` and Node built-ins; end `main()` with `await browser.close()` — it only disconnects from the profile's browser and lets the script exit; without it the run hangs.
 
 Tóm lại:
 
@@ -95,6 +110,13 @@ main().catch((e) => {
 });
 ```
 
-## Bảo mật
+## Agent làm được gì, không làm được gì
 
-Một script do agent viết là chương trình Node bình thường, chạy với quyền của user bạn — nó làm được bất cứ gì một script bạn tự viết cũng làm được. Đọc thứ LLM đã lưu trước khi duyệt, giống cách bạn xem lại một pull request.
+Vài quy tắc được cài sẵn để một agent làm thay bạn vẫn ở trong giới hạn an toàn:
+
+- **Tạo và dừng, không bao giờ xoá.** Không có tool nào xoá profile, pool proxy, script hay lịch chạy — việc xoá ở lại trong app, trong tay bạn. Agent có thể tắt một lịch bằng `set_schedule_enabled`, lịch và lịch sử chạy của nó vẫn còn.
+- **Proxy đang có không bị ghi đè nhầm.** `assign_proxy_pool` từ chối cả lời gọi nếu có profile nào đã có proxy, trừ khi agent truyền `force: true`. Nó cũng không đổi múi giờ của profile, nên proxy ở nước khác sẽ làm profile không mở được — profile mới nên nhận proxy qua `create_profiles`.
+- **Giới hạn tốc độ cho lời gọi nặng.** Mỗi token được tối đa **30 lời gọi nặng trong 60 giây** — mở profile, chạy script, tạo profile, nhập proxy, chạy hàng loạt, hoặc chạy lịch ngay. Quá mức đó, lời gọi bị từ chối kèm thời gian phải đợi cho tới khi cửa sổ trống bớt.
+- **`evaluate_js` không phải sandbox.** Nó chạy JavaScript trong trang của profile với toàn quyền của trang đang đăng nhập đó: đọc được cookie và gửi request dưới danh nghĩa bạn. Chỉ để agent bạn tin dùng nó trên tài khoản quan trọng.
+- **Biến lưu trong profile chỉ tới script đã duyệt.** Giá trị lưu bằng `set_profile_variables` được giao cho lượt chạy hàng loạt, lịch chạy, và `run_script` khi bạn đã duyệt script. Lượt chạy thử của script chưa duyệt chỉ nhận biến truyền vào đúng lời gọi đó — nên script chưa ai xem không bao giờ thấy bí mật bạn đã lưu.
+- **Script chạy với quyền của bạn.** Script agent viết là một chương trình Node bình thường — làm được mọi thứ một script bạn tự viết làm được. Đọc thứ agent đã lưu trước khi duyệt, như bạn xem lại một pull request.

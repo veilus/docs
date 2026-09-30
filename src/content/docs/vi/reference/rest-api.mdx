@@ -5,7 +5,7 @@ description: Điều khiển profile và script Veilus từ công cụ của ri�
 
 import RestRoutes from '../../../../components/RestRoutes.astro';
 
-Veilus có thể chạy một REST API nhỏ ngay trên máy của bạn, để các chương trình khác bạn chạy — script, ứng dụng khác, agent LLM — có thể liệt kê, mở và đóng profile, và điều khiển script [Veilus Flow](/vi/recipes/llm-scripts/).
+Veilus có thể chạy một REST API nhỏ ngay trên máy của bạn, để các chương trình khác bạn chạy — script, ứng dụng khác, agent LLM — có thể quản lý profile và pool proxy, điều khiển trang của profile đang chạy, và chạy, đặt lịch script [Veilus Flow](/vi/recipes/llm-scripts/).
 
 API này **tắt theo mặc định**. Bật nó từ trang **API & MCP** trong sidebar của app — trang này hiện cổng đang lắng nghe, cho bạn đúc và thu hồi token có tên, và đưa sẵn đoạn cấu hình để dán.
 
@@ -20,6 +20,10 @@ Mọi request cần một bearer token, đúc từ trang **API & MCP**. Mỗi to
 ```
 Authorization: Bearer <token>
 ```
+
+## Giới hạn tốc độ
+
+Mỗi token được tối đa 30 lời gọi nặng trong 60 giây: `POST` để mở profile, tạo profile, tạo pool proxy, chạy script, chạy hàng loạt, hoặc chạy lịch ngay. Quá mức đó API trả `429` kèm header `Retry-After`. Lời gọi đọc và lời gọi nhẹ như đóng profile không bị đếm.
 
 ## Base URL
 

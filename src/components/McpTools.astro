@@ -3,6 +3,7 @@
 // from the app's tests/results/api-catalog.json — do not hand-edit the data
 // file, edit the app and re-copy instead).
 import catalog from '../data/api-catalog.json';
+import { LABELS, type Lang } from './catalog-labels';
 
 interface Prop {
 	type?: string;
@@ -19,9 +20,10 @@ interface Tool {
 }
 
 interface Props {
-	lang?: 'en' | 'vi';
+	lang?: Lang;
 }
 const { lang = 'en' } = Astro.props;
+const t = LABELS[lang];
 
 // Nhóm tool để đọc cho dễ. Tool có trong danh mục mà không thuộc nhóm nào
 // (hoặc ngược lại) làm build đỏ — chép lại danh mục thì phải xếp nhóm lại.
@@ -61,10 +63,10 @@ if (ungrouped.length || unknown.length) {
 						<table class="params">
 							<thead>
 								<tr>
-									<th>Parameter</th>
-									<th>Type</th>
-									<th>Required</th>
-									<th>Description</th>
+									<th>{t.parameter}</th>
+									<th>{t.type}</th>
+									<th>{t.required}</th>
+									<th>{t.description}</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -78,7 +80,7 @@ if (ungrouped.length || unknown.length) {
 												? `${field.items?.type ?? 'string'}[]`
 												: (field.type ?? 'string')}
 										</td>
-										<td>{tool.inputSchema.required?.includes(name) ? 'yes' : 'no'}</td>
+										<td>{tool.inputSchema.required?.includes(name) ? t.yes : t.no}</td>
 										<td>{field.description ?? ''}</td>
 									</tr>
 								))}

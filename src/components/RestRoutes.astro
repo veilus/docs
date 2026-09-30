@@ -3,6 +3,7 @@
 // verbatim from the app's tests/results/api-catalog.json — do not hand-edit
 // the data file, edit the app and re-copy instead).
 import catalog from '../data/api-catalog.json';
+import { LABELS, type Lang } from './catalog-labels';
 
 interface Field {
 	type?: string;
@@ -20,6 +21,12 @@ interface Route {
 	};
 }
 
+interface Props {
+	lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const t = LABELS[lang];
+
 const routes = catalog.restRoutes as Route[];
 ---
 
@@ -36,10 +43,10 @@ const routes = catalog.restRoutes as Route[];
 					<table class="params">
 						<thead>
 							<tr>
-								<th>Field</th>
-								<th>Type</th>
-								<th>Required</th>
-								<th>Description</th>
+								<th>{t.field}</th>
+								<th>{t.type}</th>
+								<th>{t.required}</th>
+								<th>{t.description}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -54,7 +61,7 @@ const routes = catalog.restRoutes as Route[];
 											: (field.type ?? 'string')}
 										{field.format ? ` (${field.format})` : ''}
 									</td>
-									<td>{route.body?.required?.includes(name) ? 'yes' : 'no'}</td>
+									<td>{route.body?.required?.includes(name) ? t.yes : t.no}</td>
 									<td>{field.description ?? ''}</td>
 								</tr>
 							))}

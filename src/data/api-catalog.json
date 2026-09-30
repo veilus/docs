@@ -584,7 +584,7 @@
     },
     {
       "name": "type",
-      "description": "Focus an element by node_id and type text into it, one key event per character (at most 5000 characters). Select-all and delete are sent first, but clearing text already in the field is not guaranteed on every OS. If the result notes that the value could not be confirmed (pre-filled, masked or auto-formatted fields), verify the field with snapshot or evaluate_js.",
+      "description": "Focus an element by node_id and type text into it, one key event per character (at most 5000 characters). Replaces the field's current content: existing text is removed before typing. If the result notes that the value could not be confirmed (masked, length-limited or auto-formatted fields), verify the field with snapshot or evaluate_js.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {

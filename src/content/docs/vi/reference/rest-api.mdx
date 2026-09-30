@@ -1,0 +1,50 @@
+---
+title: REST API
+description: Điều khiển profile và script Veilus từ công cụ của riêng bạn qua REST API cục bộ.
+---
+
+import RestRoutes from '../../../../components/RestRoutes.astro';
+
+Veilus có thể chạy một REST API nhỏ ngay trên máy của bạn, để các chương trình khác bạn chạy — script, ứng dụng khác, agent LLM — có thể quản lý profile và pool proxy, điều khiển trang của profile đang chạy, và chạy, đặt lịch script [Veilus Flow](/vi/recipes/llm-scripts/).
+
+API này **tắt theo mặc định**. Bật nó từ trang **API & MCP** trong sidebar của app — trang này hiện cổng đang lắng nghe, cho bạn đúc và thu hồi token có tên, và đưa sẵn đoạn cấu hình để dán.
+
+## Chỉ cục bộ
+
+API chỉ lắng nghe trên `127.0.0.1` — không thứ gì ngoài máy bạn chạm tới được. Nó chạm được mọi profile, nên chỉ mở cho gói Pro trở lên và luôn tắt cho tới khi bạn bật.
+
+## Xác thực
+
+Mọi request cần một bearer token, đúc từ trang **API & MCP**. Mỗi token có tên riêng (để phân biệt công cụ nào dùng token nào) và thu hồi được độc lập — giá trị đầy đủ của token chỉ hiện đúng một lần, lúc tạo.
+
+```
+Authorization: Bearer <token>
+```
+
+## Giới hạn tốc độ
+
+Mỗi token được tối đa 30 lời gọi nặng trong 60 giây: `POST` để mở profile, tạo profile, tạo pool proxy, chạy script, chạy hàng loạt, hoặc chạy lịch ngay. Quá mức đó API trả `429` kèm header `Retry-After`. Lời gọi đọc và lời gọi nhẹ như đóng profile không bị đếm.
+
+## Base URL
+
+Cổng được chọn khi bạn bật API và hiện trên trang **API & MCP**. Thay `<port>` bên dưới bằng giá trị đó.
+
+```
+http://127.0.0.1:<port>
+```
+
+## Ví dụ
+
+```bash
+curl -X GET \
+  -H "Authorization: Bearer $VEILUS_API_TOKEN" \
+  http://127.0.0.1:<port>/v1/profiles
+```
+
+## Danh sách route
+
+<RestRoutes lang="vi" />
+
+## OpenAPI
+
+`GET /v1/openapi.json` trả về tài liệu OpenAPI 3.1 mô tả API này (cũng cần token như mọi route khác). Trang **API & MCP** còn có nút **Copy OpenAPI JSON** nếu bạn không muốn tự curl.

@@ -1,0 +1,133 @@
+---
+// Renders the MCP tool list from src/data/api-catalog.json (copied verbatim
+// from the app's tests/results/api-catalog.json — do not hand-edit the data
+// file, edit the app and re-copy instead).
+import catalog from '../data/api-catalog.json';
+import { LABELS, type Lang } from './catalog-labels';
+
+interface Prop {
+	type?: string;
+	description?: string;
+	items?: { type?: string };
+}
+interface Tool {
+	name: string;
+	description: string;
+	inputSchema: {
+		properties: Record<string, Prop>;
+		required?: string[];
+	};
+}
+
+interface Props {
+	lang?: Lang;
+}
+const { lang = 'en' } = Astro.props;
+const t = LABELS[lang];
+
+// Nhóm tool để đọc cho dễ. Tool có trong danh mục mà không thuộc nhóm nào
+// (hoặc ngược lại) làm build đỏ — chép lại danh mục thì phải xếp nhóm lại.
+const GROUPS: { en: string; vi: string; names: string[] }[] = [
+	{ en: 'Profiles', vi: 'Profile', names: ['list_profiles', 'create_profiles', 'launch_profile', 'stop_profile', 'set_profile_variables'] },
+	{ en: 'Proxy', vi: 'Proxy', names: ['import_proxies', 'list_proxy_pools', 'test_proxy', 'assign_proxy_pool', 'get_profile_proxy'] },
+	{ en: 'Page driving', vi: 'Điều khiển trang', names: ['navigate', 'snapshot', 'click', 'type', 'press_key', 'scroll', 'wait_for_element', 'evaluate_js'] },
+	{ en: 'Script', vi: 'Script', names: ['save_script', 'get_script', 'run_script', 'compile_script'] },
+	{ en: 'Batch', vi: 'Chạy hàng loạt', names: ['run_batch', 'get_capacity'] },
+	{ en: 'Schedules', vi: 'Lịch chạy', names: ['create_schedule', 'list_schedules', 'set_schedule_enabled', 'run_schedule_now'] },
+	{ en: 'Monitoring', vi: 'Theo dõi', names: ['list_runs', 'get_run_result'] },
+];
+
+const byName = new Map((catalog.mcpTools as Tool[]).map((t) => [t.name, t]));
+const grouped = GROUPS.flatMap((g) => g.names);
+const ungrouped = [...byName.keys()].filter((n) => !grouped.includes(n));
+const unknown = grouped.filter((n) => !byName.has(n));
+if (ungrouped.length || unknown.length) {
+	throw new Error(`McpTools: tool chưa xếp nhóm ${ungrouped.join(', ')}; nhóm nhắc tool không có ${unknown.join(', ')}`);
+}
+---
+
+<div class="mcp-tools">
+	{
+		GROUPS.map((group) => (
+			<section class="group">
+			<h3 id={`group-${group.en.toLowerCase().replace(/ /g, '-')}`}>{group[lang]}</h3>
+			{group.names.map((name) => byName.get(name)!).map((tool) => {
+			const props = Object.entries(tool.inputSchema.properties ?? {});
+			return (
+				<div class="tool" id={tool.name}>
+					<p class="tool-head">
+						<code class="name">{tool.name}</code>
+					</p>
+					<p class="summary">{tool.description}</p>
+					{props.length > 0 && (
+						<table class="params">
+							<thead>
+								<tr>
+									<th>{t.parameter}</th>
+									<th>{t.type}</th>
+									<th>{t.required}</th>
+									<th>{t.description}</th>
+								</tr>
+							</thead>
+							<tbody>
+								{props.map(([name, field]) => (
+									<tr>
+										<td>
+											<code>{name}</code>
+										</td>
+										<td>
+											{field.type === 'array'
+												? `${field.items?.type ?? 'string'}[]`
+												: (field.type ?? 'string')}
+										</td>
+										<td>{tool.inputSchema.required?.includes(name) ? t.yes : t.no}</td>
+										<td>{field.description ?? ''}</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					)}
+				</div>
+			);
+		})}
+			</section>
+		))
+	}
+</div>
+
+<style>
+	.tool {
+		border-top: 1px solid var(--sl-color-hairline);
+		padding: 1rem 0;
+	}
+	.group h3 {
+		margin-top: 1.5rem;
+	}
+	.tool:first-of-type {
+		border-top: none;
+		padding-top: 0;
+	}
+	.tool-head {
+		margin: 0 0 0.35rem;
+	}
+	.name {
+		font-weight: 700;
+		font-size: 0.95rem;
+	}
+	.summary {
+		margin: 0 0 0.5rem;
+		color: var(--sl-color-gray-2);
+		white-space: pre-line;
+	}
+	.params {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85rem;
+	}
+	.params th,
+	.params td {
+		text-align: left;
+		padding: 0.3rem 0.6rem 0.3rem 0;
+		border-bottom: 1px solid var(--sl-color-hairline);
+	}
+</style>

@@ -16,8 +16,10 @@ The Veilus app binary has an `mcp` subcommand that speaks MCP over stdio. The cl
 ### Claude Code
 
 ```bash
-claude mcp add veilus -e VEILUS_API_TOKEN=<token> -- "<path to Veilus>" mcp
+claude mcp add --scope user veilus -e VEILUS_API_TOKEN=<token> -- "<path to Veilus>" mcp
 ```
+
+`--scope user` makes Veilus available in every folder you open Claude Code in; without it, Claude Code only sees Veilus in the folder where you ran the command.
 
 ### Cursor / Claude Desktop
 

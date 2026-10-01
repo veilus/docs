@@ -16,8 +16,10 @@ Binary Veilus có lệnh con `mcp` nói MCP qua stdio. Client cần đường d�
 ### Claude Code
 
 ```bash
-claude mcp add veilus -e VEILUS_API_TOKEN=<token> -- "<path to Veilus>" mcp
+claude mcp add --scope user veilus -e VEILUS_API_TOKEN=<token> -- "<path to Veilus>" mcp
 ```
+
+`--scope user` cho Claude Code thấy Veilus ở mọi thư mục; không có nó thì chỉ thấy ở đúng thư mục bạn đứng lúc chạy lệnh.
 
 ### Cursor / Claude Desktop
 

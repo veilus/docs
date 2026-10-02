@@ -35,7 +35,7 @@ For the app:
 Veilus does **not** encrypt profile data before uploading it. Files in your repository or Drive folder are stored as-is, including cookies — the live login sessions of every profile you sync. Anyone who can read that repository or folder, including the storage provider, can read them.
 :::
 
-What the vault password does protect is the **access token** Veilus uses to reach your storage (a Git personal access token, or your Google sign-in). It is stored encrypted on this computer. See [Set up Veilus Sync](/sync/set-up/).
+What the vault password does protect is the **credential** Veilus uses to reach your storage (a Git personal access token or SSH private key, or your Google sign-in). It is stored encrypted on this computer. See [Set up Veilus Sync](/sync/set-up/).
 
 To keep your data safe:
 

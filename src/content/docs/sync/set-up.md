@@ -9,7 +9,7 @@ Open **Veilus Sync** from the sidebar, then the **Settings** tab. Setup has two 
 
 ## 1. Create the vault
 
-The vault holds the access token Veilus uses to reach your storage, stored encrypted on this computer. While the vault is locked, syncing is unavailable.
+The vault holds the access token or SSH key Veilus uses to reach your storage, stored encrypted on this computer. While the vault is locked, syncing is unavailable.
 
 1. In the **Vault** panel, enter a **New password** and **Re-enter password**
 2. Click **Create vault**
@@ -18,7 +18,7 @@ The vault holds the access token Veilus uses to reach your storage, stored encry
 The vault locks again every time Veilus restarts. Enter the **Vault password** and click **Unlock** before you sync.
 
 :::note
-The vault password protects only the access token. It does not encrypt your profile data — see [Who can read the copied data](/sync/overview/#who-can-read-the-copied-data).
+The vault password protects only the access token or SSH key. It does not encrypt your profile data — see [Who can read the copied data](/sync/overview/#who-can-read-the-copied-data).
 :::
 
 ## 2. Connect a provider
@@ -32,14 +32,14 @@ Works with GitHub, GitLab, Gitea, Gitee, and self-hosted Git servers.
 1. Create an **empty private repository** on your Git host
 2. In the **Git Server** panel, fill in:
    - **Remote URL** — for example `https://github.com/you/veilus-data.git`
-   - **Branch** — leave it as `main`. Veilus pushes to `main` (or `master` if the repository has no `main`)
+   - **Branch** — the branch Veilus pushes to and pulls from. Leave it empty or as `main` to use `main`. Use the same branch on every computer
    - **Authentication** — choose one:
      - **Personal Access Token** — a token that can read and push to the repository
      - **SSH Key** — paste the full private key, starting with `-----BEGIN OPENSSH PRIVATE KEY-----`
 3. Click **Save Git Config**. Veilus saves the settings and connects to the repository; if it can't connect, the error appears under the form
 
 :::caution
-A pasted SSH private key is saved as a separate file in Veilus's data folder on this computer. Unlike a personal access token, it is **not** protected by the vault password. Use a key made only for this repository.
+A pasted SSH private key is stored encrypted in the vault, like a personal access token. While a sync runs, Veilus writes it to a temporary file that only your user account can read, and deletes it when the sync ends. Use a key made only for this repository. If you set up SSH with an earlier version, Veilus moves the key into the vault the first time you unlock it and deletes the old file.
 :::
 
 ### Google Drive
@@ -48,7 +48,7 @@ A pasted SSH private key is saved as a separate file in Veilus's data folder on 
 2. Your web browser opens. Sign in with Google and allow access within two minutes
 3. Back in Veilus, the panel shows **Connected** and your account
 
-Veilus stores its files in a folder named **Veilus Sync** in your Drive. It can only see files it created itself, not the rest of your Drive. To stop using Drive, click **Disconnect**.
+Veilus stores its files in a visible folder named **Veilus Sync** at the top level of your Drive; the **Folder** row in the panel shows this and cannot be changed. It can only see files it created itself, not the rest of your Drive. To stop using Drive, click **Disconnect**.
 
 ## 3. Sync
 

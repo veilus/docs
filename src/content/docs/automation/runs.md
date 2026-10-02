@@ -14,12 +14,12 @@ A run executes one script on a set of profiles. For each profile, Veilus opens t
 3. Under **Execution Options**, set:
    - **Concurrency**: how many profiles run at the same time (1, 2, 3, 4, 5, 8 or 10).
    - **Delay Between**: the pause between two profile launches (**No delay**, 0.5s, 1s, 2s, 3s or 5s).
-4. If the script uses variables, a table shows each variable for each selected profile, filled from the profile's variables and the script's defaults. Edit a cell to use a different value for this run only. The edit isn't saved to the profile, and it takes priority over a profile variable or dataset column with the same name.
+4. If the script uses variables, a table shows each variable for each selected profile, filled the way the run will fill them: from the profile's variables, its identity dataset row and the script's defaults. A column that comes from a content dataset, or a secret dataset column, shows **from dataset** instead of a value. The row is picked only when the run starts, and secret values never appear in the table. Edit a cell to use a different value for this run only. The edit isn't saved to the profile, and it takes priority over a profile variable or dataset column with the same name.
 5. Click **Run on N profiles**.
 
 The dialog shows a suggested maximum for **Concurrency** based on this computer's current load, and warns you if you pick more.
 
-If the script uses variables that a selected profile doesn't have, the run button stays disabled with **Fill all required variables first**. Fill the empty cells in the table, or add the missing [profile variables](/automation/scripts/#what-a-script-receives).
+If a required variable gets no value from the profile, its datasets or the script's defaults, the run button stays disabled with **Fill all required variables first**. Fill the empty cells in the table, add the missing [profile variables](/automation/scripts/#what-a-script-receives), or assign a [dataset](/profiles/datasets/) that has that column.
 
 Only approved scripts run. Running a script on several profiles at the same time is a Pro feature, also included in the trial. If your plan doesn't include it, set **Concurrency** to 1 and the profiles run one after another.
 

@@ -35,6 +35,8 @@ A `.veiluspack` file carries the profile's **live login sessions**. Without a pa
 
 Each file becomes a new profile named after the original with **(imported)** added. It keeps the **same fingerprint** as the exported profile, so it looks like the same browser to websites.
 
+Tags come with the profile. A tag that doesn't exist on this computer is created; a tag with the same name that already exists is reused, not duplicated. Packs don't store tag colors, so new tags get the default color, which you can change afterwards.
+
 :::note
 Because the fingerprint is kept, don't run the original and the imported copy at the same time on the same accounts. To a website they are one device appearing in two places.
 :::

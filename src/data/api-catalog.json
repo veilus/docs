@@ -142,14 +142,22 @@
     },
     {
       "name": "create_profiles",
-      "description": "Create 1 to 50 new browser profiles in one call. With proxy_pool_id (a static pool, e.g. from import_proxies), each new profile gets the pool's least-loaded slot (free slots first, lowest index on ties) and its timezone and language are generated to match that slot's exit-IP geo; a profile whose slot has no known geo is listed in `failed` and NOT created. Without proxy_pool_id the fingerprint is random. The whole call is rejected, creating nothing, if it would exceed the plan's profile limit. `name_template` replaces {n} with 1, 2, ...; `tags` are tag names. `failed[].index` is that same n.",
+      "description": "Create 1 to 50 new browser profiles in one call. With proxy_pool_id (a static pool, e.g. from import_proxies), each new profile gets the pool's least-loaded slot (free slots first, lowest index on ties) and its timezone and language are generated to match that slot's exit-IP geo; a profile whose slot has no known geo is listed in `failed` and NOT created. Without proxy_pool_id the fingerprint is random. The whole call is rejected, creating nothing, if it would exceed the plan's profile limit. `name_template` replaces {n} with 1, 2, ...; `tags` are tag names. `failed[].index` is that same n. With identity_dataset_id (a fixed dataset) each new profile takes one unassigned row, and the call is refused if count exceeds the unassigned rows; content_dataset_id (a consume dataset) goes to every new profile's Content slot.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "content_dataset_id": {
+            "description": "UUID of a consume dataset",
+            "type": "string"
+          },
           "count": {
             "maximum": 50,
             "minimum": 1,
             "type": "integer"
+          },
+          "identity_dataset_id": {
+            "description": "UUID of a fixed dataset (create_dataset)",
+            "type": "string"
           },
           "name_template": {
             "description": "Profile name; {n} becomes 1, 2, ...",
@@ -721,6 +729,202 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "name": "create_dataset",
+      "description": "Create a dataset: a table stored in Veilus that approved scripts read per profile. mode `fixed`: each profile gets ONE row for good (accounts); its columns arrive as process.env.VEILUS_VAR_<COLUMN>. mode `consume`: each run takes `rows_per_run` (1-50, default 1) unused rows; a failed run gives them back, a successful run marks them used; they arrive as VEILUS_VAR_ROWS (JSON array of {COLUMN: value}) and, when rows_per_run is 1, also one variable per column. VEILUS_VAR_ROW_INDEX is the row's number. Columns are UPPER_SNAKE_CASE; ROWS, ROW_INDEX, PROFILE_ID, RUN_ID and DEBUG_PORT are reserved. Mark a column `secret: true` for passwords: it is stored and given to approved scripts, but no tool ever returns it. Bad rows are reported in `rejected` by row number (from 1). Returns `datasetId`.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "columns": {
+            "items": {
+              "properties": {
+                "name": {
+                  "pattern": "^[A-Z_][A-Z0-9_]*$",
+                  "type": "string"
+                },
+                "secret": {
+                  "default": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          },
+          "mode": {
+            "enum": [
+              "fixed",
+              "consume"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "rows": {
+            "description": "One object per row, keyed by column name; every value must be a string — convert numbers and dates to text before sending",
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "maxItems": 5000,
+            "type": "array"
+          },
+          "rows_per_run": {
+            "default": 1,
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "mode",
+          "columns"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "append_dataset_rows",
+      "description": "Add rows to a dataset, in the same shape as create_dataset's `rows`. Bad rows are reported in `rejected` by row number and do not block good ones.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "description": "Dataset UUID",
+            "type": "string"
+          },
+          "rows": {
+            "description": "One object per row, keyed by column name; every value must be a string — convert numbers and dates to text before sending",
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "maxItems": 5000,
+            "type": "array"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "rows"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "list_datasets",
+      "description": "List datasets: id, name, mode, columns with their secret flag, rowsPerRun, row counts (total and assigned for fixed; available, reserved and used for consume) and how many profiles use each. Never returns row values.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
+      "name": "get_dataset_rows",
+      "description": "Read a dataset's rows in order: `limit` rows (default 100, at most 500) from `offset`. Each row has its index, its values, and for a fixed dataset the profile it is assigned to, for a consume dataset its state. Secret columns are always left out of `values`.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "description": "Dataset UUID",
+            "type": "string"
+          },
+          "limit": {
+            "maximum": 500,
+            "minimum": 1,
+            "type": "integer"
+          },
+          "offset": {
+            "minimum": 0,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "dataset_id"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "assign_dataset",
+      "description": "Assign a dataset to existing profiles. A fixed dataset goes to each profile's Identity slot and gives it one unassigned row (lowest index first); profiles left without a row are named in `withoutRow` and get nothing — never share one account between profiles. A consume dataset goes to the Content slot. Refuses the whole call if a profile already has a different dataset in that slot, unless force: true; refuses column names that also exist in the dataset in the profile's other slot. Every later run of an APPROVED script on those profiles carries the data; schedules and run_batch need no new field.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "description": "Dataset UUID",
+            "type": "string"
+          },
+          "force": {
+            "description": "Replace a dataset already in the slot. Default false",
+            "type": "boolean"
+          },
+          "profile_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "profile_ids"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "unassign_dataset",
+      "description": "Remove a dataset from profiles. For a fixed dataset their rows become unassigned again. Profile ids that no longer exist are accepted, so rows held by deleted profiles can be freed.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "description": "Dataset UUID",
+            "type": "string"
+          },
+          "profile_ids": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "dataset_id",
+          "profile_ids"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "name": "reset_dataset_rows",
+      "description": "For a consume dataset: put every used row back to available, so runs take them again. Returns how many rows changed.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "dataset_id": {
+            "description": "Dataset UUID",
+            "type": "string"
+          }
+        },
+        "required": [
+          "dataset_id"
+        ],
+        "type": "object"
+      }
     }
   ],
   "restRoutes": [
@@ -845,10 +1049,20 @@
       "summary": "Create 1-50 profiles; with a proxy pool, timezones follow each slot's geo.",
       "body": {
         "properties": {
+          "content_dataset_id": {
+            "description": "Consume dataset for the Content slot",
+            "format": "uuid",
+            "type": "string"
+          },
           "count": {
             "maximum": 50,
             "minimum": 1,
             "type": "integer"
+          },
+          "identity_dataset_id": {
+            "description": "Fixed dataset: one unassigned row per new profile",
+            "format": "uuid",
+            "type": "string"
           },
           "name_template": {
             "description": "{n} becomes 1, 2, ...",
@@ -1286,6 +1500,152 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/datasets",
+      "summary": "List datasets with their columns and row counts by state; never row values."
+    },
+    {
+      "method": "POST",
+      "path": "/v1/datasets",
+      "summary": "Create a fixed or consume dataset from columns and rows; bad rows are reported by number.",
+      "body": {
+        "properties": {
+          "columns": {
+            "items": {
+              "properties": {
+                "name": {
+                  "pattern": "^[A-Z_][A-Z0-9_]*$",
+                  "type": "string"
+                },
+                "secret": {
+                  "default": false,
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "name"
+              ],
+              "type": "object"
+            },
+            "maxItems": 50,
+            "minItems": 1,
+            "type": "array"
+          },
+          "mode": {
+            "enum": [
+              "fixed",
+              "consume"
+            ],
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "rows": {
+            "description": "One object per row, keyed by column name; every value must be a string — convert numbers and dates to text before sending",
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "maxItems": 5000,
+            "type": "array"
+          },
+          "rows_per_run": {
+            "default": 1,
+            "maximum": 50,
+            "minimum": 1,
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "mode",
+          "columns"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/datasets/:id/rows",
+      "summary": "Read a dataset's rows by page (query offset, limit); secret columns are never returned."
+    },
+    {
+      "method": "POST",
+      "path": "/v1/datasets/:id/rows",
+      "summary": "Append rows to a dataset; bad rows are reported by number.",
+      "body": {
+        "properties": {
+          "rows": {
+            "description": "One object per row, keyed by column name; every value must be a string — convert numbers and dates to text before sending",
+            "items": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "maxItems": 5000,
+            "type": "array"
+          }
+        },
+        "required": [
+          "rows"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/datasets/:id/assign",
+      "summary": "Assign a dataset to profiles, into the slot its mode implies; a taken slot is refused unless force.",
+      "body": {
+        "properties": {
+          "force": {
+            "default": false,
+            "type": "boolean"
+          },
+          "profile_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "profile_ids"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/datasets/:id/unassign",
+      "summary": "Remove a dataset from profiles; their fixed rows become unassigned again.",
+      "body": {
+        "properties": {
+          "profile_ids": {
+            "items": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "type": "array"
+          }
+        },
+        "required": [
+          "profile_ids"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/datasets/:id/reset",
+      "summary": "Return every used row of a consume dataset to available."
     }
   ],
   "tokenEnv": "VEILUS_API_TOKEN"

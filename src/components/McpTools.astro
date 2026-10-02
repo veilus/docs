@@ -35,6 +35,7 @@ const GROUPS: { en: string; vi: string; names: string[] }[] = [
 	{ en: 'Batch', vi: 'Chạy hàng loạt', names: ['run_batch', 'get_capacity'] },
 	{ en: 'Schedules', vi: 'Lịch chạy', names: ['create_schedule', 'list_schedules', 'set_schedule_enabled', 'run_schedule_now'] },
 	{ en: 'Monitoring', vi: 'Theo dõi', names: ['list_runs', 'get_run_result'] },
+	{ en: 'Datasets', vi: 'Bộ dữ liệu', names: ['create_dataset', 'append_dataset_rows', 'list_datasets', 'get_dataset_rows', 'assign_dataset', 'unassign_dataset', 'reset_dataset_rows'] },
 ];
 
 const byName = new Map((catalog.mcpTools as Tool[]).map((t) => [t.name, t]));

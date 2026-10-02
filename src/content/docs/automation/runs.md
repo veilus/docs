@@ -14,11 +14,12 @@ A run executes one script on a set of profiles. For each profile, Veilus opens t
 3. Under **Execution Options**, set:
    - **Concurrency**: how many profiles run at the same time (1, 2, 3, 4, 5, 8 or 10).
    - **Delay Between**: the pause between two profile launches (**No delay**, 0.5s, 1s, 2s, 3s or 5s).
-4. Click **Run on N profiles**.
+4. If the script uses variables, a table shows each variable for each selected profile, filled from the profile's variables and the script's defaults. Edit a cell to use a different value for this run only. The edit isn't saved to the profile, and it takes priority over a profile variable or dataset column with the same name.
+5. Click **Run on N profiles**.
 
 The dialog shows a suggested maximum for **Concurrency** based on this computer's current load, and warns you if you pick more.
 
-If the script uses variables that a selected profile doesn't have, the run button stays disabled with **Fill all required variables first**. Add the missing [profile variables](/automation/scripts/#what-a-script-receives) and open the dialog again.
+If the script uses variables that a selected profile doesn't have, the run button stays disabled with **Fill all required variables first**. Fill the empty cells in the table, or add the missing [profile variables](/automation/scripts/#what-a-script-receives).
 
 Only approved scripts run. Running a script on several profiles at the same time is a Pro feature, also included in the trial. If your plan doesn't include it, set **Concurrency** to 1 and the profiles run one after another.
 

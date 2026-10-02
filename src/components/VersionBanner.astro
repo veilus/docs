@@ -1,0 +1,27 @@
+---
+/**
+ * Ghi chú phiên bản cho mọi trang (VEIL-1178): docs viết theo app main sau v0.2.1, trong khi bản tải được là v0.2.1.
+ * Phát hành bản mới thì gỡ ghi chú này (bỏ dòng Banner trong astro.config.mjs và xoá file).
+ */
+import Default from '@astrojs/starlight/components/Banner.astro';
+
+const isVi = Astro.locals.starlightRoute.locale === 'vi';
+---
+
+<div class="sl-banner version-note" data-pagefind-ignore>
+  {isVi
+    ? <>Tài liệu này mô tả bản Veilus <strong>sau v0.2.1</strong>, sắp phát hành. Nếu bạn đang dùng v0.2.1, một số màn hình và tính năng (Bộ dữ liệu, Thùng rác, panel hồ sơ mới, nhiều tool MCP) chưa có trong bản của bạn.</>
+    : <>These docs describe the Veilus release <strong>after v0.2.1</strong>, coming soon. If you have v0.2.1, some screens and features (Datasets, Trash, the new profile panel, many MCP tools) are not in your version yet.</>}
+</div>
+<Default />
+
+<style>
+  .version-note {
+    padding: var(--sl-nav-pad-y) var(--sl-nav-pad-x);
+    background: var(--sl-color-white);
+    color: var(--sl-color-black);
+    font-size: var(--sl-text-sm);
+    text-align: center;
+    text-wrap: balance;
+  }
+</style>

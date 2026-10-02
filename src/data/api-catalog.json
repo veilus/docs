@@ -191,7 +191,7 @@
     },
     {
       "name": "import_proxies",
-      "description": "Create a static proxy pool from proxy lines (host:port, host:port:user:pass or user:pass@host:port). Bad lines are reported in `rejected` by line number (counting from 1) and do not block good ones; if no line is valid, nothing is created. Returns pool_id for create_profiles or assign_proxy_pool. Passwords are stored but never returned.",
+      "description": "Create a static proxy pool from proxy lines (host:port, host:port:user:pass or user:pass@host:port). Prefix a line with socks5:// for a SOCKS5 proxy; http:// or no prefix means HTTP; https:// is rejected (TLS to the proxy is not supported). Bad lines are reported in `rejected` by line number (counting from 1) and do not block good ones; if no line is valid, nothing is created. Returns pool_id for create_profiles or assign_proxy_pool. Passwords are stored but never returned.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {

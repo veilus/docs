@@ -42,7 +42,9 @@ host:port:user:pass
 user:pass@host:port
 ```
 
-Static pool proxies are used as HTTP proxies.
+Start a line with `socks5://` for a SOCKS5 proxy, for example `socks5://user:pass@host:port` or `socks5://host:port:user:pass`. A line starting with `http://`, or with no prefix, is an HTTP proxy. Each proxy keeps its own type, so one pool can mix HTTP and SOCKS5.
+
+`https://` proxies are not supported: Veilus cannot open an encrypted connection to a proxy, and lines starting with `https://` are rejected.
 
 Choose an **Assignment Mode**:
 
@@ -51,7 +53,7 @@ Choose an **Assignment Mode**:
 
 ### Rotating pool
 
-One gateway URL from your proxy provider, for example `http://user:pass@gate.example.com:8000`. Use `socks5://` at the start for a SOCKS5 gateway.
+One gateway URL from your proxy provider, for example `http://user:pass@gate.example.com:8000`. Use `socks5://` at the start for a SOCKS5 gateway. `https://` gateway URLs are rejected.
 
 Set **Session Type** to match how your provider's gateway behaves: **Sticky (same IP per session)** or **Per Request (rotate each call)**. The provider does the rotation.
 
@@ -75,12 +77,12 @@ A profile in the Trash keeps its slot in a static pool. Delete it forever from t
 
 On the **Proxy pools** page, click **Import** and choose a `.txt` or `.csv` file.
 
-- **TXT**: one proxy per line, in the forms shown above.
-- **CSV**: a header row with `host` and `port`, and optionally `username`, `password`, `country`, `timezone`, `city`. Other columns are ignored.
+- **TXT**: one proxy per line, in the forms shown above, including the optional `http://` or `socks5://` prefix.
+- **CSV**: a header row with `host` and `port`, and optionally `username`, `password`, `country`, `timezone`, `city`. Other columns are ignored. For a SOCKS5 proxy, put `socks5://` before the host, for example `socks5://1.2.3.4`.
 
-The preview counts valid proxies and lists skipped lines with the reason. Import into a **New pool** or **Add to existing pool** (static pools). Proxies already in the pool, with the same host, port and username, are skipped.
+The preview counts valid proxies and lists skipped lines with the reason. Import into a **New pool** or **Add to existing pool** (static pools). Proxies already in the pool, with the same host, port, username and type, are skipped.
 
-To export, use **Export all** on the Proxy pools page, or **Export** on a pool's page. Choose **TXT** (one proxy per line; a rotating pool is written as its endpoint URL) or **CSV** (with location columns; rotating pools are left out).
+To export, use **Export all** on the Proxy pools page, or **Export** on a pool's page. Choose **TXT** (one proxy per line; a rotating pool is written as its endpoint URL) or **CSV** (with location columns; rotating pools are left out). SOCKS5 proxies keep their `socks5://` prefix, so the file imports back with the same type.
 
 :::caution
 Exported files contain proxy passwords in plain text. A username or password containing `:` `@` `,` `"` or a line break does not read back correctly from these files; the app warns you when that applies.
@@ -122,5 +124,6 @@ Pin a state or city at your proxy provider, not just a country, so every proxy i
 |---------|------------|
 | **Test Proxy** fails | Check host, port, type and credentials |
 | Launch blocked by the timezone check | Use **Match to proxy** or change the profile's timezone, or pick a proxy in the profile's region |
+| Launch fails with *proxy pool '…' has no usable proxy* or mentions `https://` | The profile's pool is empty or its gateway URL can't be used (for example `https://`). Edit the pool or assign another one. Veilus will not launch the profile without its proxy |
 | **Dead Proxy** in the list | Run the pool's health check, replace the dead proxy |
 | WebRTC shows your real IP | Set **WebRTC Mode** on the Fingerprint tab (see [Fingerprinting](/profiles/fingerprinting/)) |

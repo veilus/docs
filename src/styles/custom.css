@@ -1,30 +1,188 @@
-/* Veilus Docs — Custom Styles */
+/* Veilus Docs — hệ "bản vẽ" của website (website/src/styles/global.css, blueprint.css; VEIL-955).
+   Nền giấy, mực, một màu nhấn, IBM Plex, góc vuông, lưới nền. Website đổi token thì chép lại ở đây (VEIL-1178).
+   Website chỉ có nền sáng; nền tối ở đây là bản đảo của cùng bộ token (mực làm nền, giấy làm chữ). */
 
 :root {
-  --sl-color-accent-low: #0b2d3d;
-  --sl-color-accent: #00d4ff;
-  --sl-color-accent-high: #b3ecff;
-  --sl-color-white: #ffffff;
-  --sl-color-gray-1: #e6edf3;
-  --sl-color-gray-2: #8b949e;
-  --sl-color-gray-3: #484f58;
-  --sl-color-gray-4: #30363d;
-  --sl-color-gray-5: #21262d;
-  --sl-color-gray-6: #161b22;
-  --sl-color-black: #0b0f1a;
-  --sl-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --paper: #F2EFE7;
+  --ink: #1B2230;
+  --muted: #596172;
+  --acc: oklch(0.55 0.18 33);
+
+  --sl-font: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sl-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --sl-line-height-headings: 1.15;
 }
 
+/* Nền tối: mực làm nền */
+:root {
+  --grid: rgba(242, 239, 231, 0.04);
+  --grid2: rgba(242, 239, 231, 0.075);
+
+  --sl-color-accent-low: oklch(0.32 0.09 33);
+  --sl-color-accent: oklch(0.68 0.16 33);
+  --sl-color-accent-high: oklch(0.86 0.07 33);
+  --sl-color-white: #F2EFE7;
+  --sl-color-gray-1: #E4E0D6;
+  --sl-color-gray-2: #C3C1BA;
+  --sl-color-gray-3: #9A9C9F;
+  --sl-color-gray-4: #5E6573;
+  --sl-color-gray-5: #39414F;
+  --sl-color-gray-6: #232B3A;
+  --sl-color-black: #1B2230;
+  --sl-color-bg-nav: #1B2230;
+  --sl-color-bg-sidebar: #1B2230;
+  --sl-color-hairline: rgba(242, 239, 231, 0.2);
+  --sl-color-hairline-light: rgba(242, 239, 231, 0.2);
+}
+
+/* Nền sáng: đúng token website */
 :root[data-theme='light'] {
-  --sl-color-accent-low: #d6f4ff;
-  --sl-color-accent: #0094b3;
-  --sl-color-accent-high: #003d4d;
+  --grid: rgba(27, 34, 48, 0.055);
+  --grid2: rgba(27, 34, 48, 0.1);
+
+  --sl-color-accent-low: oklch(0.92 0.04 33);
+  --sl-color-accent: oklch(0.55 0.18 33);
+  --sl-color-accent-high: oklch(0.42 0.15 33);
+  --sl-color-white: #1B2230;
+  --sl-color-gray-1: #1B2230;
+  --sl-color-gray-2: #2E3646;
+  --sl-color-gray-3: #596172;
+  --sl-color-gray-4: #8A8F98;
+  --sl-color-gray-5: #C9C5BA;
+  --sl-color-gray-6: #E2DDD1;
+  --sl-color-gray-7: #EAE6DC;
+  --sl-color-black: #F2EFE7;
+  --sl-color-bg-nav: #F2EFE7;
+  --sl-color-bg-sidebar: #F2EFE7;
+  --sl-color-bg-inline-code: #E2DDD1;
+  --sl-color-hairline: rgba(27, 34, 48, 0.2);
+  --sl-color-hairline-light: rgba(27, 34, 48, 0.2);
+  --sl-color-hairline-shade: rgba(27, 34, 48, 0.4);
 }
 
-/* Smooth scrolling */
-html { scroll-behavior: smooth; }
+/* Bản vẽ không có bóng và không có góc bo */
+:root {
+  --sl-shadow-sm: none;
+  --sl-shadow-md: none;
+  --sl-shadow-lg: none;
+}
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
 
-/* Better code blocks */
-.expressive-code pre {
-  border-radius: 8px !important;
+/* Lưới nền như website */
+body {
+  background-color: var(--sl-color-black);
+  background-image:
+    linear-gradient(var(--grid2) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid2) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Thanh trên, thanh bên, mục lục: nền giấy đặc, viền mực mảnh */
+header.header {
+  border-bottom: 1.5px solid var(--sl-color-white);
+}
+.sidebar-pane {
+  border-inline-end: 1px solid var(--sl-color-hairline);
+}
+
+/* Tên trang: kiểu mark "VEILUS" của website */
+.site-title {
+  font-family: var(--sl-font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sl-color-white);
+}
+
+/* Nhóm thanh bên: nhãn mono viết hoa như .k-fig */
+.sidebar-content .group-label .large {
+  font-family: var(--sl-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-3);
+}
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover {
+  background: var(--sl-color-white);
+  color: var(--sl-color-black);
+}
+
+/* Chữ */
+.sl-markdown-content :is(h1, h2, h3, h4, h5, h6),
+h1#_top {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.sl-markdown-content a {
+  color: var(--sl-color-white);
+  text-decoration-color: var(--sl-color-accent);
+  text-underline-offset: 3px;
+}
+.sl-markdown-content a:hover {
+  color: var(--sl-color-accent);
+}
+
+/* Nút: khối mực vuông như .k-btn */
+.sl-link-button {
+  border: 1.5px solid var(--sl-color-white);
+  font-weight: 600;
+}
+.sl-link-button.primary {
+  background: var(--sl-color-white);
+  color: var(--sl-color-black);
+}
+.sl-link-button.secondary {
+  background: transparent;
+  color: var(--sl-color-white);
+}
+
+/* Thẻ và khối mã: viền mực thay cho bóng */
+.card,
+.expressive-code .frame {
+  border: 1.5px solid var(--sl-color-white);
+}
+.card {
+  background: var(--sl-color-black);
+}
+/* Starlight tô mỗi thẻ một màu; bản vẽ chỉ có mực */
+.card .icon {
+  border: 1.5px solid var(--sl-color-white) !important;
+  background-color: transparent !important;
+  color: var(--sl-color-white) !important;
+}
+.expressive-code {
+  --ec-brdRad: 0;
+  --ec-frm-edActTabIndBtmCol: var(--sl-color-accent);
+}
+.sl-markdown-content code:not(pre code) {
+  font-family: var(--sl-font-mono);
+}
+.sl-markdown-content :is(th, td) {
+  border: 1px solid var(--sl-color-hairline);
+}
+.sl-markdown-content th {
+  border-bottom: 1.5px solid var(--sl-color-white);
+  font-family: var(--sl-font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }

@@ -7,17 +7,12 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: 'Veilus Docs',
-			logo: {
-				light: './src/assets/logo-light.svg',
-				dark: './src/assets/logo-dark.svg',
-				replacesTitle: false,
-			},
 			social: [
 				{ icon: 'github', label: 'GitHub', href: 'https://github.com/veilus' },
 				{ icon: 'x.com', label: 'X', href: 'https://x.com/veilusbrowser' },
 				{ icon: 'telegram', label: 'Telegram', href: 'https://t.me/veilusbrowser' },
 			],
-			customCss: ['./src/styles/custom.css'],
+			customCss: ['./src/styles/fonts.css', './src/styles/custom.css'],
 			defaultLocale: 'root',
 			locales: {
 				root: { label: 'English', lang: 'en' },
@@ -38,6 +33,11 @@ export default defineConfig({
 					label: 'Automation',
 					translations: { vi: 'Tự động hóa' },
 					autogenerate: { directory: 'automation' },
+				},
+				{
+					label: 'Veilus Sync',
+					translations: { vi: 'Veilus Sync' },
+					autogenerate: { directory: 'sync' },
 				},
 				{
 					label: 'Chromium Engine',
@@ -61,7 +61,7 @@ export default defineConfig({
 				},
 			],
 			head: [
-				{ tag: 'meta', attrs: { name: 'theme-color', content: '#0B0F1A' } },
+				{ tag: 'meta', attrs: { name: 'theme-color', content: '#F2EFE7' } },
 			],
 		}),
 	],

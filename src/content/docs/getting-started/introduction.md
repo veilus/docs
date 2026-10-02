@@ -1,101 +1,43 @@
 ---
 title: Introduction
-description: What is Veilus and why choose it over other anti-detect browsers.
+description: What Veilus is, what it does, and where to start.
 sidebar:
   order: 1
 ---
 
-## What is Veilus?
+Veilus is a desktop app for Windows and macOS that runs many separate browser profiles side by side. Each profile has its own fingerprint, proxy, cookies and storage, so accounts kept in different profiles do not share browser data. Automation (Veilus Flow) is built into the same app.
 
-Veilus is a **free anti-detect browser** built on a native Chromium engine — not Electron. It's designed for professionals who need to manage multiple online identities with complete anonymity and efficiency.
+The browser itself is Chromium, built and patched by Veilus. It is not bundled with the installer: you download it from inside the app the first time (see [Installation](/getting-started/installation/)).
 
-Unlike traditional anti-detect browsers that wrap Chromium inside Electron (adding overhead and potential detection vectors), Veilus compiles directly against the Chromium source code. This architectural choice delivers:
+## What you can do
 
-- **3x faster** page load and rendering than typical anti-detect browsers
-- **80% less RAM** per browser profile (~100 MB vs 300-500 MB)
-- **Authentic browser behavior** — no Electron artifacts to detect
-- **Built-in automation** with VeilusFlow
+| Area | What it does |
+|------|--------------|
+| **Profiles** | Create a profile for Windows or macOS with a language, region and timezone. Veilus generates a fingerprint that matches that OS. Duplicate, tag, filter and move profiles to the trash. |
+| **Proxy** | Set a manual HTTP or SOCKS5 proxy per profile, or create **Proxy pools** (static or rotating) and assign profiles to them. Before each launch, Veilus can check that the profile's timezone matches where the proxy exits. |
+| **Profile test** | **Test** a profile against a set of fingerprinting test sites and see how many it passed. |
+| **Cookies & extensions** | Import, export or copy cookies between running profiles. Install extensions once in **Extensions** and assign them to profiles. |
+| **Veilus Flow** | Build scripts in the diagram editor, start from a template, or let an AI assistant write Playwright scripts over MCP. Run them on one profile, as a batch, or on a schedule. |
+| **Datasets** | Keep rows of data (accounts, URLs, and so on) that scripts read per profile. See [Datasets](/profiles/datasets/). |
+| **Veilus Sync** | Copy profiles to a Git repository you choose or to your Google Drive. See [Veilus Sync](/sync/overview/). |
+| **API & MCP** | A local REST API and MCP server on `127.0.0.1` so your own tools or AI assistant can list, open and close profiles and run scripts. |
+| **Import / Export** | Save profiles as `.veiluspack` files, optionally protected with a password. See [Import & Export](/profiles/import-export/). |
 
-## Who is Veilus For?
+Veilus Flow, schedules, batch runs, Veilus Sync, import/export, script templates and the local API/MCP need a paid plan or the 7-day trial. See [Plans & license](/reference/plans-and-license/).
 
-Veilus is built for professionals who need browser isolation and identity management:
+## What Veilus does not promise
 
-| User | Use Case |
-|------|----------|
-| **Affiliate Marketers** | Run multiple ad accounts without linking |
-| **E-commerce Sellers** | Manage storefronts on Amazon, eBay, Shopify |
-| **Social Media Managers** | Operate multiple social accounts safely |
-| **Web Scrapers** | Collect data without IP/fingerprint bans |
-| **QA Engineers** | Test apps under different device configurations |
-| **Privacy Advocates** | Browse without leaving a trackable fingerprint |
+No tool can guarantee that a website will never detect or link your profiles, and Veilus does not claim to. How a site treats your accounts also depends on how you use them: proxy quality, behavior, and whether the profile's OS, language and timezone fit its proxy.
 
-## Feature Comparison
+## Next steps
 
-| Feature | Veilus | Multilogin | GoLogin | AdsPower |
-|---------|-------|------------|---------|----------|
-| **Engine** | Native Chromium | Mimic (Chromium) | Orbita (Chromium) | Sun Browser |
-| **RAM per profile** | ~100 MB | ~350 MB | ~300 MB | ~400 MB |
-| **Free profiles** | 5 forever | 0 (trial only) | 3 (trial) | 5 (limited) |
-| **Built-in automation** | ✅ VeilusFlow | ❌ Separate tool | ❌ | ❌ |
-| **Open source tools** | ✅ GitHub | ❌ | ❌ | ❌ |
-| **Starting price** | Free | $99/mo | $49/mo | $9/mo |
+1. [Install Veilus](/getting-started/installation/) and download the browser engine.
+2. [Create and launch your first profile](/getting-started/quickstart/).
+3. [Set up proxies](/profiles/proxy/).
+4. [Automate with Veilus Flow](/automation/overview/).
 
-## Core Technology
+## Community
 
-### Native Chromium Engine
-Veilus doesn't use Electron or CEF. It directly patches and builds Chromium, giving you:
-- Real Chrome DevTools
-- Full Web API compatibility
-- Hardware acceleration (WebGL, Canvas)
-- Native PDF viewer, Web Workers, Service Workers
-
-### Fingerprint Engine
-Each browser profile gets a mathematically consistent fingerprint generated from a seed value:
-- **Canvas** — Unique rendering via subtle pixel manipulation
-- **WebGL** — Spoofed GPU renderer/vendor strings
-- **AudioContext** — Modified audio processing signature
-- **Navigator** — Customized user agent, platform, hardware concurrency
-- **Fonts** — OS-appropriate font list
-- **Screen** — Resolution, color depth, device pixel ratio
-- **ClientRects** — Element measurement variations
-- **WebRTC** — IP leak protection with configurable modes
-
-### VeilusFlow Automation
-Build a script as a visual node graph or write raw TypeScript with Playwright/Puppeteer, then run it on one or more profiles.
-
-## Architecture Overview
-
-```
-┌─────────────────────────────────────┐
-│           Veilus Desktop App        │
-│         (Tauri + Rust Core)         │
-├─────────────────────────────────────┤
-│   Profile Manager │  VeilusFlow     │
-│   ┌───────────┐   │  ┌───────────┐  │
-│   │ Profiles  │   │  │ Editor    │  │
-│   │ Settings  │   │  │ Runner    │  │
-│   │ Proxy     │   │  │ Schedules │  │
-│   └───────────┘   │  └───────────┘  │
-├─────────────────────────────────────┤
-│        Chromium Engine (Patched)     │
-│  Canvas │ WebGL │ Audio │ Fonts │   │
-│  Screen │ WebRTC│ TZ    │ Nav   │   │
-└─────────────────────────────────────┘
-```
-
-## Getting Started
-
-Ready to try Veilus? Follow these steps:
-
-1. [Install Veilus](/getting-started/installation/) on your platform
-2. [Create your first profile](/getting-started/quickstart/) in 2 minutes
-3. [Configure fingerprints](/profiles/fingerprinting/) for your use case
-4. [Set up proxies](/profiles/proxy/) for geographic targeting
-5. [Automate workflows](/automation/overview/) with VeilusFlow
-
-## Community & Support
-
-- 💬 [Telegram Community](https://t.me/veilusbrowser) — Chat with other users
-- 🐦 [Twitter/X](https://x.com/veilusbrowser) — Latest updates
-- 🐙 [GitHub](https://github.com/veilus) — Open source tools
-- 📧 Support: support@veilus.io
+- [Telegram](https://t.me/veilusbrowser)
+- [X](https://x.com/veilusbrowser)
+- [GitHub](https://github.com/veilus)

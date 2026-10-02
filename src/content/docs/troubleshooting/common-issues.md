@@ -1,164 +1,127 @@
 ---
 title: Troubleshooting
-description: Solutions to common issues with Veilus.
+description: Fixes for common problems with installing Veilus, activating a license, the browser engine, proxies, launching profiles, and Veilus Sync.
 sidebar:
   order: 1
 ---
 
-## Installation Issues
+## Installing and first launch
 
-### "App can't be opened" on macOS
+### macOS: "Apple could not verify Veilus…"
 
-**Cause:** macOS Gatekeeper blocks apps from unidentified developers.
+The macOS build is not notarized by Apple, so macOS blocks the first launch.
 
-**Fix:**
-1. **System Settings → Privacy & Security**
-2. Scroll to "Security" section
-3. Click **"Open Anyway"** next to the Veilus warning
-4. Or: Right-click Veilus.app → "Open" → "Open"
+1. Open Veilus once. When macOS says it cannot verify the developer, click **Done**
+2. Open **System Settings → Privacy & Security**, scroll down, and click **Open Anyway** next to the Veilus message
+3. Confirm **Open Anyway**
 
-### Windows SmartScreen warning
+Later launches work normally.
 
-**Cause:** New apps without established reputation trigger SmartScreen.
+### macOS: Veilus doesn't start at login
 
-**Fix:** Click "More info" → "Run anyway"
+If you turned on **Start with the computer** in **Settings → System**, macOS asks for permission the first time ("Background Items Added"). Click **Allow**, or turn Veilus on in **System Settings → General → Login Items**. Until then, Veilus won't start at login.
 
----
+### Windows: SmartScreen warning
 
-## Profile Issues
-
-### Profile won't launch
-
-**Symptoms:** Clicking Launch does nothing, or window opens and closes immediately.
-
-**Try:**
-1. **Close other Chromium browsers** — resource conflicts
-2. **Check RAM** — minimum ~200 MB free per profile
-3. **Restart Veilus** — clears temporary state
-4. **Delete profile cache:**
-   ```bash
-   # Find profile data
-   # Windows: %APPDATA%\Veilus\profiles\<profile-id>
-   # macOS: ~/Library/Application Support/Veilus/profiles/<profile-id>
-
-   # Delete the cache subfolder (keeps cookies and settings)
-   rm -rf <profile-path>/cache
-   ```
-
-### Profile loads slowly
-
-**Causes:**
-- Too many extensions installed in the profile
-- Large cookie database
-- Slow proxy connection
-
-**Fixes:**
-- Remove unused extensions
-- Clear profile cookies: Profile Settings → Clear Data → Cookies
-- Test proxy speed: Profile Settings → Proxy → Check Proxy
-- Enable profile hibernation for inactive profiles
-
-### Profiles linking to each other
-
-If platforms detect your profiles are related:
-
-1. **Check proxies** — Are multiple profiles sharing the same IP?
-2. **Check timezone** — Does it match the proxy location?
-3. **Clear DNS cache** — Settings → Privacy → Clear DNS cache
-4. **Verify fingerprints** — Each profile should have different Canvas/WebGL hashes
-5. **Check WebRTC** — Settings → Privacy → Disable WebRTC or enable spoofing
+Windows may show "Windows protected your PC" when you run the installer, because the app is new and has no reputation score yet. Click **More info → Run anyway**.
 
 ---
 
-## Fingerprint Issues
+## License and activation
 
-### Fingerprint test failing on creepjs.com
+Activate or change your key in **Settings → License**.
 
-**Check these in order:**
+| Message | What to do |
+|---|---|
+| Please enter a license key | The key field is empty. Paste your key and try again |
+| Invalid license key | Check that you pasted the whole key, with no extra spaces |
+| Couldn't reach the license server. Check your connection and try again. | Check your internet connection, VPN, or firewall, then retry |
+| This license has expired | Renew the license, then click **Validate Now** |
+| This license has been revoked / This license has been disabled | The key can no longer be used. Contact us on [Telegram](https://t.me/veilusbrowser) |
+| Activation failed (HTTP …) | A server error. Wait a moment and try again; if it keeps happening, contact us |
+| Your license uses … signing, which this app version cannot verify. Update Veilus to restore your plan. | Install the latest Veilus version |
 
-1. **Engine version** — Update to latest: Settings → Engine → Update
-2. **Fingerprint mode** — Use "Auto" not "Custom"
-3. **Extensions** — Some extensions modify fingerprint. Disable all and test
-4. **Canvas** — Profile Settings → Fingerprint → Canvas → ensure "Noise" mode is on
-5. **WebGL** — Ensure WebGL spoofing is enabled
+### "This license is already activated on N devices — the most it allows."
 
-### iphey.com shows "Bot" or low score
+Every computer you activate counts as one device, and your key allows a fixed number. **Deactivate** in **Settings → License** switches only this computer back to the Free plan — it does not free the device slot. Contact us on [Telegram](https://t.me/veilusbrowser) to free up a device, then try again.
 
-Common causes:
-- **WebRTC leak** — Enable WebRTC protection in fingerprint settings
-- **Timezone mismatch** — Enable "Auto timezone from proxy"
-- **Screen resolution** — Use a common resolution (1920x1080, 1366x768)
-- **User agent** — Ensure it matches the engine version
-
----
-
-## Proxy Issues
-
-### Proxy connection failed
-
-1. **Verify credentials** — username:password correct?
-2. **Test from terminal:**
-   ```bash
-   curl -x socks5://user:pass@host:port https://httpbin.org/ip
-   ```
-3. **Check proxy type** — SOCKS5 vs HTTP/HTTPS mismatch
-4. **Firewall** — Some networks block SOCKS5 connections
-5. **Proxy expired** — Check with your proxy provider
-
-### Slow page loading with proxy
-
-1. **Check proxy latency** — Profile Settings → Proxy → Check Proxy
-2. **Try a closer server** — Choose proxy in your geographic region
-3. **Switch proxy type** — HTTP is generally faster than SOCKS5
-4. **Check bandwidth** — Some proxy plans have bandwidth limits
-
-### IP leak detected
-
-1. **Enable WebRTC protection** — Fingerprint Settings → WebRTC → Disabled
-2. **Check DNS** — Settings → Privacy → DNS over HTTPS → Enabled
-3. **Verify on browserleaks.com** — Should show proxy IP, not real IP
+Veilus recognizes a computer partly by its computer name and your operating-system user account. Renaming the computer, or running Veilus under a different user account, can make the same machine count as a new device.
 
 ---
 
-## Automation Issues
+## Browser engine
 
-### Automation runs too fast / gets blocked
+The engine is not included in the installer. A new install has no engine until you download one. For full details, see [Chromium Engine](/engine/chromium/).
 
-1. Add a **delay between launches** in the Run dialog's concurrency options
-2. Add explicit wait steps or delays inside the script itself
-
----
-
-## Performance Issues
-
-### High RAM usage
-
-| Symptom | Solution |
-|---------|----------|
-| >500 MB per profile | Close unused tabs, disable extensions |
-| System slowdown | Enable auto-hibernation (Settings → Performance) |
-| Disk thrashing | Move profile data to SSD |
-
-### Slow startup
-
-1. **Disable auto-launch** for profiles you don't need
-2. **Reduce startup profiles** — don't restore 20 profiles at boot
-3. **Update engine** — newer versions have performance improvements
-4. **SSD** — Store engine and profile data on SSD, not HDD
+| Problem | What to do |
+|---|---|
+| **Settings → Engine & updates** says *No engine activated yet — download one in Chromium Version Manager.* | Click **Sync from Cloud**, then **Download** the version tagged **Latest**. Veilus activates your first download automatically |
+| A profile won't open and the error starts with *Chromium binary not found* | The active engine is missing from disk. Download or **Redownload** it in **Settings → Engine & updates** |
+| *Build … is no longer in the signed engine list — keeping the installed build* | Click **Sync from Cloud**, then download the version tagged **Latest** |
+| A message that you've reached the version limit on the Free plan | The Free plan keeps one engine version on disk. Delete the old one before downloading another, or upgrade |
+| Download fails | Check your connection and that your firewall allows HTTPS to `api.veilus.io` and to Cloudflare R2 |
 
 ---
 
-## Getting More Help
+## Proxies
 
-If none of the above solve your issue:
+### "Test Proxy" fails
 
-1. 💬 **Telegram**: [t.me/veilusbrowser](https://t.me/veilusbrowser) — Community support
-2. 🐛 **GitHub Issues**: [github.com/veilus/veilus/issues](https://github.com/veilus/veilus/issues) — Bug reports
-3. 📧 **Email**: support@veilus.io — Direct support (Pro/Enterprise)
+**Test Proxy** in a profile's proxy settings loads `https://httpbin.org/ip` through the proxy and shows the latency and exit IP on success.
 
-When reporting a bug, include:
-- Veilus version (Settings → About)
-- Engine version
-- Operating system
-- Steps to reproduce
-- Screenshots or screen recordings
+| Message | Likely cause |
+|---|---|
+| Connection timeout (10s) | The proxy is too slow or unreachable, or the host or port is wrong |
+| Connection refused | The proxy did not accept the connection. Check the host, port, username and password, and whether your proxy plan is still active |
+| Proxy not configured (empty host or port) | Fill in **Host** and **Port** |
+| Connection failed: … | Often the wrong **Type** — check whether your provider gave you an HTTP or SOCKS5 proxy |
+
+If the proxy works elsewhere but the test still fails, check that `httpbin.org` isn't blocked on your network.
+
+For proxy pools, use **Run health check** on the pool to test every proxy at once.
+
+### A profile won't open: "Cannot open …" with two time zones
+
+Before each launch, Veilus compares the profile's time zone with where its proxy exits. When they don't match, the dialog shows **Profile declares** and **Proxy exits in** and how many hours apart they are. Click **Change proxy** or **Edit profile** to fix the mismatch.
+
+You choose what happens on a mismatch in **Settings → Timezone check**: **Block**, **Warn** (launch anyway and log it), or **Off**.
+
+---
+
+## Launching profiles
+
+### "Too many browsers are already open (16 of 16). Close one and try again."
+
+Veilus runs at most 16 browsers at the same time. Close a profile to free a slot.
+
+Script runs started from Veilus Flow or a schedule don't fail straight away at this limit — they wait for a slot to free up.
+
+### "You've reached the 5-profile limit on the Free plan."
+
+The Free plan allows 5 profiles. Delete profiles you no longer need, or upgrade.
+
+---
+
+## Veilus Sync
+
+| Problem | What to do |
+|---|---|
+| *Vault is locked. Unlock it in the Settings tab, then sync again.* | The vault locks every time Veilus restarts. Open **Veilus Sync → Settings**, enter the vault password, and click **Unlock** |
+| *Set up a provider in Settings first* | Connect Git or Google Drive in **Veilus Sync → Settings** |
+| A warning like *2 profiles were changed in two places* | Both computers changed the same profile between syncs. Veilus used one version and kept the other in your storage — see [Conflicts](/sync/devices-and-conflicts/#conflicts) |
+| Changes from another computer didn't arrive for one profile | A profile whose browser is open is not overwritten. Close it and sync again |
+| Another computer is missing from **Devices** | It appears after that computer has synced and this computer has synced again |
+
+See [Set Up Veilus Sync](/sync/set-up/) for more error messages.
+
+---
+
+## Getting more help
+
+Ask on Telegram: [t.me/veilusbrowser](https://t.me/veilusbrowser). For billing and refunds, email billing@veilus.io.
+
+When you report a problem, include:
+
+- Your Veilus version and operating system
+- The engine version (**Settings → Engine & updates**, "Engine in use")
+- The exact error message, and the steps that lead to it

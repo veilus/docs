@@ -1,120 +1,116 @@
 ---
 title: Installation
-description: Download and install Veilus on Windows or macOS.
+description: Install Veilus on Windows or macOS and download the browser engine.
 sidebar:
   order: 2
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
-## System Requirements
+## System requirements
 
 | | Windows | macOS |
 |---|---------|-------|
-| **OS** | Windows 10/11 (64-bit) | macOS 13+ (Ventura or later) |
-| **CPU** | x86_64 | Apple Silicon (Intel not supported) |
-| **Disk** | ~6.5 MB installer (engine downloads separately) | ~9.6 MB installer (engine downloads separately) |
-| **Display** | DirectX 11 capable | Metal capable |
-| **Network** | Internet for initial setup | Internet for initial setup |
+| **OS** | Windows 10 or 11, 64-bit (x64) | macOS 13 or later |
+| **Processor** | x64 | Apple Silicon (Intel Macs are not supported) |
+| **Network** | Needed to download the browser engine and to activate a license | Same |
+
+Veilus is available for Windows and macOS only.
 
 ## Download
 
-Visit **[veilus.io/download](https://veilus.io/download)** — the page automatically detects your operating system and highlights the right download.
+Get the installer from **[veilus.io/download](https://veilus.io/download/)**:
 
-## Installation Guide
+- Windows: `Veilus_<version>_x64-setup.exe`
+- macOS: `Veilus_<version>_aarch64.dmg`
+
+All releases are also listed on [GitHub](https://github.com/veilus/releases/releases).
+
+## Install
 
 <Tabs>
 <TabItem label="Windows">
 
-### Windows Installation
+<Steps>
 
-1. **Download** the `.exe` installer from [veilus.io/download](https://veilus.io/download)
-2. **Run** the installer — Windows may show a SmartScreen warning:
-   - Click "More info" → "Run anyway"
-   - This happens because the app is new and doesn't have a reputation score yet
-3. **Choose** the installation directory (default: `C:\Users\<you>\AppData\Local\Veilus`)
-4. **Launch** Veilus from the Start menu or desktop shortcut
+1. Run `Veilus_<version>_x64-setup.exe`.
 
-#### Silent Install (IT/Enterprise)
-```bash
-Veilus-Setup.exe /S /D=C:\Program Files\Veilus
-```
+2. If Windows SmartScreen shows **Windows protected your PC**, click **More info**, then **Run anyway**.
 
-#### Portable Mode
-Extract the `.zip` version instead of running the installer. Data is stored alongside the executable — useful for USB drives.
+3. Follow the installer, then open Veilus from the Start menu.
+
+</Steps>
 
 </TabItem>
 <TabItem label="macOS">
 
-### macOS Installation
+<Steps>
 
-1. **Download** the `.dmg` file from [veilus.io/download](https://veilus.io/download)
-2. **Open** the DMG and drag **Veilus** to your Applications folder
-3. **First launch** — macOS will show a security prompt:
+1. Open the `.dmg` and drag **Veilus** into **Applications**.
 
-:::note[Gatekeeper Warning]
-macOS may say "Veilus can't be opened because it is from an unidentified developer."
+2. Open Veilus. The app is not notarized by Apple, so macOS says it cannot verify the developer. Click **Done**.
 
-**Fix:** Go to **System Settings → Privacy & Security** → scroll to the bottom → click **"Open Anyway"** next to the Veilus message.
+3. Open **System Settings → Privacy & Security**, scroll down and click **Open Anyway**, then confirm **Open Anyway**.
 
-Alternatively, right-click the app → "Open" → "Open" again.
-:::
+   Later launches open normally.
 
-4. **Permissions** — Veilus may ask for:
-   - Files & Folders (for profile import/export)
-
-#### Apple Silicon required
-Veilus requires an Apple Silicon Mac (M1 or later) running macOS 13 or later. Intel Macs are not supported.
+</Steps>
 
 </TabItem>
 </Tabs>
 
-## First Launch
+## Download the browser engine
 
-When you first open Veilus:
+The installer does not include the browser. Profiles cannot launch until an engine is installed.
 
-1. **Welcome screen** — Choose your language
-2. **Engine** — Veilus doesn't bundle a Chromium engine; download one from inside the app
-3. **Profile manager** — Create your first profile
+<Steps>
+
+1. In Veilus, open **Settings → Engine & updates**.
+
+2. Under **Chromium Version Manager**, the list of available versions loads automatically. If it is empty, click **Sync from Cloud**.
+
+3. Click **Download** next to the version marked **Latest**.
+
+   The first engine you download becomes active automatically. **Engine in use** under **Updates** shows which build profiles will use.
+
+</Steps>
+
+To switch versions later, download another version and click **Activate**. **Cleanup Old** deletes downloaded versions that are not active. The Free plan keeps one engine version at a time; paid plans can keep several.
 
 ## Updating Veilus
 
-Veilus checks for updates automatically on startup. When an update is available:
+The app does not update itself. To update, download the latest installer from [veilus.io/download](https://veilus.io/download/) and install it over the current version. Your profiles, scripts and settings are kept.
 
-1. A notification badge appears in the top-right corner
-2. Click **"Update Available"** → **"Download & Install"**
-3. Veilus restarts with the new version
+Engine updates are separate: download a newer version in **Settings → Engine & updates**.
 
-Your profiles, automations, and settings are preserved during updates.
+## Where Veilus stores data
 
-### Manual Update
-Download the latest version from [veilus.io/download](https://veilus.io/download) and install over the existing version.
+Profiles, scripts, settings and downloaded engines are stored in a `.veilus` folder in your home directory:
+
+- Windows: `%USERPROFILE%\.veilus`
+- macOS: `~/.veilus`
 
 ## Uninstalling
 
 <Tabs>
 <TabItem label="Windows">
 
-1. **Settings → Apps → Veilus → Uninstall**
-2. Or run `Veilus-Uninstall.exe` from the installation directory
-
-To also remove profile data:
-```
-rmdir /s "%APPDATA%\Veilus"
-```
+1. Open **Settings → Apps**, find **Veilus** and click **Uninstall**.
+2. To also delete profiles and engines, delete `%USERPROFILE%\.veilus`.
 
 </TabItem>
 <TabItem label="macOS">
 
-1. Drag **Veilus** from Applications to the Trash
-2. To remove profile data:
-```bash
-rm -rf ~/Library/Application\ Support/Veilus
-```
+1. Quit Veilus (**Quit Veilus** in the menu bar icon, or <kbd>Cmd</kbd>+<kbd>Q</kbd>), then move **Veilus** from Applications to the Trash.
+2. To also delete profiles and engines, delete `~/.veilus`.
 
 </TabItem>
 </Tabs>
 
-## Next Steps
+:::caution
+Deleting the `.veilus` folder removes every profile, including cookies and logins. Export anything you want to keep first.
+:::
 
-Veilus is installed! Now [create your first profile →](/getting-started/quickstart/)
+## Next steps
+
+[Create your first profile →](/getting-started/quickstart/)

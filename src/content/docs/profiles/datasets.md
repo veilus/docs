@@ -16,31 +16,45 @@ Each profile has two dataset slots:
 | **Identity** | **Fixed**: one row per profile, kept for good | Each column as `VEILUS_VAR_<COLUMN>` |
 | **Content** | **Consume**: each run takes new rows | `VEILUS_VAR_ROWS`, a JSON array of rows (plus each column, when the dataset takes 1 row per run) |
 
-The slot follows from the kind of dataset, so a list of accounts is never "used up" by mistake and a list of posts is never pinned to one profile. A profile has at most one dataset per slot. `VEILUS_VAR_ROW_INDEX` holds the row's number (starting at 1), so a script can print it next to its result.
+The slot follows from the kind of dataset, so a list of accounts is never "used up" by mistake and a list of posts is never pinned to one profile. A profile has at most one dataset per slot. `VEILUS_VAR_ROW_INDEX` holds the row's number (starting at 1), so a script can print it next to its result: the identity row when the profile has one, otherwise the first content row of the run.
 
 ## Create a dataset
 
-1. Open **Data** in the sidebar, go to **Datasets**, and click **New from file**.
-2. Choose a `.csv` file (the first line holds the column names) or a `.txt` file (one value per line, in a column named `VALUE`).
-3. Check the preview. Lines that cannot be read are listed by line number.
-4. Pick **Fixed** or **Consume**. For Consume, set how many rows each run takes (1 to 50).
-5. Mark the **secret** columns, such as passwords.
+1. Open **Datasets** in the sidebar and click **New from file**.
+2. Choose a `.csv` file (the first line holds the column names; quoted values may contain commas and line breaks) or a `.txt` file (one value per line, in a column named `VALUE`).
+3. Check the preview of the first 20 rows. Lines that cannot be read are listed by line number.
+4. Enter a **Dataset name** (the file name is filled in).
+5. Under **Kind**, pick **Fixed** or **Consume**. For Consume, set **Rows per run** (1 to 50).
+6. Tick the **Secret columns**, such as passwords.
+7. Click **Import**.
 
-Column names become `UPPER_SNAKE_CASE` (`First name` becomes `FIRST_NAME`). `ROWS` and `ROW_INDEX` are reserved and cannot be column names.
+Column names become upper case, with any character other than `A-Z`, `0-9` and `_` turned into `_` (`First name` becomes `FIRST_NAME`). The preview shows the final names. `ROWS`, `ROW_INDEX`, `PROFILE_ID`, `RUN_ID` and `DEBUG_PORT` are reserved and cannot be column names.
 
-To export a dataset to `.csv`, secret columns are included only if you tick **include secret columns**.
+**Assign by profile name:** if a Fixed dataset has a `PROFILE_NAME` column, you can tick **Assign rows to profiles by the PROFILE_NAME column**. Each row then goes to the profile with that name. Names that match no profile, or more than one, are listed after the import.
+
+### On the dataset's page
+
+Click a dataset in the list to see its rows, with the profile each row belongs to and its state: **Available**, **In use**, **Used** or **Unassigned**. From there:
+
+- **Add rows from file** appends rows from another `.csv` or `.txt` file.
+- **Export** saves the dataset as `.csv`. Secret columns are included only if you tick **Include secret columns**, and then they are written as plain text.
+- **Return used rows** (Consume datasets) makes used rows available again.
+
+Deleting a dataset from the **Datasets** list deletes its rows, and the profiles using it lose that data. This cannot be undone.
 
 ## Assign it to profiles
 
 Select profiles in the profile list and click **Assign dataset** in the bulk action bar, then choose the dataset. It goes into the Identity or Content slot according to its kind.
 
 - **Shortage:** a fixed dataset gives each selected profile the next unassigned row. If rows run out, the profiles that got no row are listed by name. Two profiles never share one row.
-- **Replace:** if a profile already has a different dataset in that slot, the assignment is refused unless you tick **Replace**.
+- **Replace:** if a profile already has a different dataset in that slot, the assignment is refused unless you tick **Replace a dataset already in this slot**.
 - **Column clash:** if the dataset has a column with the same name as one in the profile's other slot, the assignment is refused and the clashing column is named.
 
-When you create profiles in bulk, the form has an identity dataset select and a content dataset select, so new profiles are assigned as they are created.
+When you create profiles with **Batch create**, the Organize step has **Identity dataset** and **Content dataset** selects, so new profiles are assigned as they are created.
 
-Open a profile's panel and its **Data** tab to see the **Datasets** section: the profile's row (secret values masked) and how many content rows are left. Each slot has a button to remove the dataset.
+Open a profile's panel and its **Data** tab to see the **Dataset** section: the profile's **Identity** row (secret values masked) and, for **Content**, rows per run and how many rows are left. Each slot has a **Remove** button. A profile assigned a Fixed dataset but given no row fails early when it runs.
+
+The **Automation** tab lists, under **Variables from datasets**, the variable names a script will receive from each slot. They are read-only and override a manual variable of the same name.
 
 ## How consume rows are used
 

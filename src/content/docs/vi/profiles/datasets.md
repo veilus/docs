@@ -16,31 +16,45 @@ Mỗi profile có hai ô dữ liệu:
 | **Danh tính** | **Cố định**: mỗi profile một dòng, giữ mãi | Mỗi cột thành `VEILUS_VAR_<CỘT>` |
 | **Nội dung** | **Rút dần**: mỗi lần chạy lấy dòng mới | `VEILUS_VAR_ROWS`, mảng JSON các dòng (kèm từng cột, khi bộ lấy 1 dòng mỗi lần) |
 
-Ô được suy ra từ kiểu của bộ, nên bảng tài khoản không bao giờ bị "dùng hết" nhầm, và bảng bài đăng không bị gắn cứng vào một profile. Mỗi profile có tối đa một bộ ở mỗi ô. `VEILUS_VAR_ROW_INDEX` là số thứ tự dòng (bắt đầu từ 1) để script in kèm kết quả.
+Ô được suy ra từ kiểu của bộ, nên bảng tài khoản không bao giờ bị "dùng hết" nhầm, và bảng bài đăng không bị gắn cứng vào một profile. Mỗi profile có tối đa một bộ ở mỗi ô. `VEILUS_VAR_ROW_INDEX` là số thứ tự dòng (bắt đầu từ 1) để script in kèm kết quả: dòng danh tính nếu profile có, nếu không thì dòng nội dung đầu tiên của lần chạy.
 
 ## Tạo bộ dữ liệu
 
-1. Mở **Data** ở thanh bên, vào **Datasets**, bấm **New from file**.
-2. Chọn file `.csv` (dòng đầu là tên cột) hoặc `.txt` (mỗi dòng một giá trị, trong cột tên `VALUE`).
-3. Xem trước. Dòng không đọc được được liệt kê theo số dòng.
-4. Chọn **Cố định** hoặc **Rút dần**. Với Rút dần, đặt số dòng mỗi lần chạy lấy (1 đến 50).
-5. Đánh dấu các cột **bí mật**, như mật khẩu.
+1. Mở **Datasets** ở thanh bên, bấm **New from file**.
+2. Chọn file `.csv` (dòng đầu là tên cột; giá trị trong ngoặc kép được chứa dấu phẩy và xuống dòng) hoặc `.txt` (mỗi dòng một giá trị, trong cột tên `VALUE`).
+3. Xem bản xem trước 20 dòng đầu. Dòng không đọc được được liệt kê theo số dòng.
+4. Nhập **Dataset name** (tên file được điền sẵn).
+5. Ở **Kind**, chọn **Fixed** (Cố định) hoặc **Consume** (Rút dần). Với Consume, đặt **Rows per run** (1 đến 50).
+6. Tick các **Secret columns** (cột bí mật), như mật khẩu.
+7. Bấm **Import**.
 
-Tên cột được đổi sang `UPPER_SNAKE_CASE` (`First name` thành `FIRST_NAME`). `ROWS` và `ROW_INDEX` là tên dành riêng, không dùng làm tên cột.
+Tên cột được viết hoa, ký tự nào ngoài `A-Z`, `0-9` và `_` thành `_` (`First name` thành `FIRST_NAME`). Bản xem trước hiện tên cuối cùng. `ROWS`, `ROW_INDEX`, `PROFILE_ID`, `RUN_ID` và `DEBUG_PORT` là tên dành riêng, không dùng làm tên cột.
 
-Khi xuất ra `.csv`, cột bí mật chỉ có mặt nếu bạn tick **include secret columns**.
+**Gán theo tên profile:** nếu bộ Cố định có cột `PROFILE_NAME`, bạn có thể tick **Assign rows to profiles by the PROFILE_NAME column**. Khi đó mỗi dòng về profile mang đúng tên đó. Tên không khớp profile nào, hoặc khớp nhiều hơn một, được liệt kê sau khi nhập.
+
+### Ở trang của bộ
+
+Bấm vào một bộ trong danh sách để xem các dòng, profile sở hữu từng dòng và trạng thái: **Available**, **In use**, **Used** hoặc **Unassigned**. Tại đó:
+
+- **Add rows from file** nối thêm dòng từ một file `.csv` hoặc `.txt` khác.
+- **Export** lưu bộ ra `.csv`. Cột bí mật chỉ có mặt nếu bạn tick **Include secret columns**, và khi đó chúng được ghi ở dạng chữ thường.
+- **Return used rows** (bộ Rút dần) cho dòng đã dùng thành dùng được lại.
+
+Xoá một bộ trong danh sách **Datasets** sẽ xoá các dòng của nó, và profile đang dùng bộ đó mất dữ liệu này. Không hoàn tác được.
 
 ## Gán cho profile
 
 Chọn profile trong danh sách, bấm **Assign dataset** trên thanh thao tác hàng loạt, rồi chọn bộ. Bộ vào ô Danh tính hoặc Nội dung tuỳ kiểu của nó.
 
 - **Thiếu dòng:** bộ cố định cho mỗi profile được chọn một dòng chưa gán kế tiếp. Hết dòng thì profile nào không có dòng được nêu **tên**. Hai profile không bao giờ chung một dòng.
-- **Thay thế:** nếu profile đã có bộ khác ở ô đó, việc gán bị từ chối trừ khi bạn tick **Replace**.
+- **Thay thế:** nếu profile đã có bộ khác ở ô đó, việc gán bị từ chối trừ khi bạn tick **Replace a dataset already in this slot**.
 - **Trùng cột:** nếu bộ có cột trùng tên với cột của ô còn lại, việc gán bị từ chối và nêu tên cột trùng.
 
-Khi tạo profile hàng loạt, form có ô chọn bộ danh tính và bộ nội dung, nên profile mới được gán ngay lúc tạo.
+Khi tạo profile bằng **Batch create**, bước Organize có ô chọn **Identity dataset** và **Content dataset**, nên profile mới được gán ngay lúc tạo.
 
-Mở panel của profile, tab **Data**, mục **Datasets**: dòng của profile (giá trị bí mật được che) và số dòng nội dung còn lại. Mỗi ô có nút gỡ bộ.
+Mở panel của profile, tab **Data**, mục **Dataset**: dòng **Identity** của profile (giá trị bí mật được che) và, với **Content**, số dòng mỗi lần chạy và số dòng còn lại. Mỗi ô có nút **Remove**. Profile được gán bộ Cố định mà không có dòng nào thì hỏng sớm khi chạy.
+
+Tab **Automation** liệt kê, dưới **Variables from datasets**, tên các biến script sẽ nhận từ mỗi ô. Chúng chỉ đọc, và đè lên biến nhập tay cùng tên.
 
 ## Cách dùng dòng của bộ rút dần
 

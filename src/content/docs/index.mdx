@@ -1,39 +1,46 @@
 ---
-title: Welcome to Veilus
-description: The only anti-detect browser with a fully integrated automation platform.
+title: Veilus Documentation
+description: Guides for Veilus, a multi-account browser for Windows and macOS with per-profile fingerprints and proxies, plus built-in automation.
 template: splash
 hero:
   title: Veilus Documentation
-  tagline: Learn how to use Veilus — the anti-detect browser with native performance and built-in automation.
+  tagline: Run many browser profiles, each with its own fingerprint and proxy, and automate them with Veilus Flow.
   actions:
-    - text: Get Started
+    - text: Get started
       link: /getting-started/introduction/
       icon: right-arrow
       variant: primary
     - text: Download Veilus
-      link: https://veilus.io/download
+      link: https://veilus.io/download/
       icon: external
+      variant: secondary
 ---
 
 import { Card, CardGrid } from '@astrojs/starlight/components';
 
-## Quick Links
-
 <CardGrid>
-  <Card title="Getting Started" icon="rocket">
-    Install Veilus and create your first browser profile in under 5 minutes.
-    [Start here →](/getting-started/introduction/)
-  </Card>
   <Card title="Profiles" icon="puzzle">
-    Learn about fingerprinting, proxy setup, and profile management.
-    [Learn more →](/profiles/create/)
+    Each profile is a separate browser with its own fingerprint, cookies and storage.
+    [Create a profile →](/profiles/create/)
   </Card>
-  <Card title="Automation" icon="setting">
-    Build and run browser automation scripts with VeilusFlow.
-    [Explore →](/automation/overview/)
+  <Card title="Veilus Flow automation" icon="rocket">
+    Build scripts in the diagram editor, start from a template, or let your AI assistant write them. Run them on many profiles or on a schedule.
+    [Automation overview →](/automation/overview/)
   </Card>
-  <Card title="FAQ" icon="information">
-    Common questions and troubleshooting tips.
-    [Read FAQ →](/reference/faq/)
+  <Card title="Proxy" icon="random">
+    Give a profile its own HTTP or SOCKS5 proxy, or assign it to a static or rotating proxy pool.
+    [Set up proxies →](/profiles/proxy/)
+  </Card>
+  <Card title="Sync" icon="laptop">
+    Veilus Sync copies your profiles to a Git repository you choose or to your Google Drive, so other devices can pull them.
+    [Veilus Sync →](/sync/overview/)
+  </Card>
+  <Card title="Local API & MCP" icon="setting">
+    Turn on the local control port to drive profiles from your own scripts, Claude Code, Cursor or Claude Desktop.
+    [REST API →](/reference/rest-api/) · [MCP →](/reference/mcp/)
+  </Card>
+  <Card title="Plans & license" icon="information">
+    What the Free plan includes, how the 7-day Pro trial works, and how to activate a key.
+    [Plans & license →](/reference/plans-and-license/)
   </Card>
 </CardGrid>

@@ -1,28 +1,38 @@
 ---
-title: VeilusFlow Overview
-description: Browser automation scripts — visual node canvas or raw Playwright/Puppeteer code.
+title: Veilus Flow Overview
+description: What Veilus Flow does, and how scripts, runs and schedules fit together.
+sidebar:
+  order: 1
 ---
 
-## What is VeilusFlow?
+**Veilus Flow** is the automation part of Veilus. Open it from **Veilus Flow** in the app sidebar.
 
-VeilusFlow is Veilus's **built-in automation platform**. You write a script, then run it against one or more profiles.
+A Flow script is a Node program that connects to a profile's browser after Veilus has started it. The script drives the profile as it is, with its own fingerprint, proxy, cookies and logins. It never starts a separate browser of its own.
 
-Scripts come in two modes:
+Veilus Flow needs a paid plan or the 7-day Pro trial. The Free plan doesn't include it.
 
-1. **Visual** — Build a flow by dragging action nodes onto a canvas and connecting them.
-2. **Code** — Write a raw TypeScript script using Playwright or Puppeteer. It connects to the already-running profile browser over the Chrome DevTools Protocol, so it drives the real fingerprinted session instead of a separate headless browser.
+## The pieces
 
-## Key Concepts
+| Piece | What it is | Page |
+|---|---|---|
+| **Script** | A saved automation, listed under the **Scripts** tab. Usually a Playwright (TypeScript) script written by an AI assistant over MCP, which you read and approve. | [Scripts](/automation/scripts/) |
+| **Run** | One script run on one or more profiles. Veilus opens each profile, runs the script, records the exit code and output, and closes the profile again. | [Runs](/automation/runs/) |
+| **Schedule** | Runs a script on a set of profiles at a fixed interval, daily, weekly, or on a cron expression. | [Schedules](/automation/schedules/) |
 
-### Scripts
-A script is a saved automation — either a visual node graph or a raw TypeScript file — listed on the Scripts tab.
+Two other features feed data into runs:
 
-### Running a Script
-Pick a script, select which profile(s) to run it on, and set a concurrency limit (how many profiles run at once) and a delay between launches. The app shows each profile's progress and result as the run goes.
+- **Profile variables** and **[datasets](/profiles/datasets/)** reach the script as `VEILUS_VAR_<NAME>` environment variables.
+- The **[MCP server](/reference/mcp/)** lets an AI assistant such as Claude Code write, test and schedule scripts for you. See [Let an LLM run your automation](/recipes/llm-scripts/).
 
-### Schedules
-Run a script automatically on a recurring schedule instead of triggering it by hand.
+## Typical workflow
 
-## Getting Started
+1. Ask an AI assistant connected over MCP to write a script for the job. It looks at the site in a real profile, saves a script, and trial-runs it on up to 3 profiles.
+2. Open the script in **Veilus Flow**, read the source, and click **Approve this script**.
+3. Run it on the profiles you choose, or create a schedule.
+4. Check the script's **Run History** tab for each profile's exit code and output.
 
-Open the **Scripts** tab to create a new script, either from the node palette or as a raw TypeScript file.
+## Limits that apply to every run
+
+- **One shared browser limit.** At most 16 profile browsers are open at once, counting all of them: those you open by hand, runs, schedules and the API. A run waits for a free slot instead of failing.
+- **Load check.** Before each profile in a run starts, Veilus checks CPU and memory use. If either is high (CPU above 75% or memory above 80%), it waits 5 seconds between launches. If either is above 90%, it pauses starting new profiles until the load drops, for up to 60 seconds, and then continues anyway.
+- **Approval.** Runs from the app, schedules and batch runs over the API only accept scripts that are approved. Scripts you write or edit in the app count as approved. An AI assistant's script needs your approval first.

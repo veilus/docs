@@ -1,89 +1,94 @@
 ---
 title: Web Scraping
-description: How to use Veilus for reliable, undetectable web scraping.
+description: Collect data from websites with Veilus Flow scripts that run in real profiles, with each profile's own proxy and cookies.
 sidebar:
   order: 2
 ---
 
-## Why Use Veilus for Scraping?
+This recipe collects data from web pages with a Veilus Flow script. The script runs inside a profile's browser, so each request goes out with that profile's fingerprint, proxy and cookies. Logins and cookies stay in the profile between runs.
 
-Traditional scraping tools (Puppeteer, Playwright, Selenium) are easily detected by anti-bot systems. Veilus solves this by providing:
+## What you need
 
-- **Real browser fingerprints** — pass Canvas, WebGL, and AudioContext checks
-- **Residential proxy support** — rotate IPs per request
-- **Profile persistence** — maintain cookies across scraping sessions
-- **VeilusFlow** — build extraction scripts visually or in code, no separate scraping stack needed
+- One or more profiles with proxies. See [Proxy Setup](/profiles/proxy/).
+- A Playwright script. The easiest way is to ask an AI assistant connected over [MCP](/reference/mcp/) to write it. See [Let an LLM run your automation](/recipes/llm-scripts/).
 
-## Quick Start: Scrape a Product Page
+:::note
+Don't use the diagram editor for scraping. Its **Extract** and **Extract List** nodes don't print what they collect, so nothing reaches the run's output. See [The diagram editor](/automation/scripts/#the-diagram-editor).
+:::
 
-### Visual Method (VeilusFlow)
+## Example: scrape a product list
 
-1. Create a profile with a proxy
-2. In VeilusFlow, build a script that navigates to the target page
-3. Add **Extract** / **Extract List** nodes for the data you want (price, title, rating)
-4. Run the script on the profile
+This script opens a page, reads every product on it, and prints the result as one JSON line. Printing to stdout is how a script returns data: the output appears in the script's **Run History** tab, and an AI assistant reads it with `get_run_result`.
 
-### Code Method (Automation API)
+```typescript
+import { chromium } from "playwright";
 
-For programmatic access, use Veilus's local API:
+async function main() {
+  const browser = await chromium.connectOverCDP(
+    `http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}`,
+  );
+  const context = browser.contexts()[0];
+  const page = context.pages()[0] ?? (await context.newPage());
 
-```javascript
-// Connect to a running Veilus profile
-const response = await fetch('http://localhost:9222/json/version');
-const { webSocketDebuggerUrl } = await response.json();
+  const url = process.env.VEILUS_VAR_TARGET_URL ?? "https://example.com/products";
+  await page.goto(url, { waitUntil: "domcontentloaded" });
+  await page.waitForSelector(".product");
 
-// Use Chrome DevTools Protocol (CDP)
-const browser = await puppeteer.connect({
-  browserWSEndpoint: webSocketDebuggerUrl
+  const products = await page.$$eval(".product", (els) =>
+    els.map((el) => ({
+      title: el.querySelector(".title")?.textContent?.trim() ?? null,
+      price: el.querySelector(".price")?.textContent?.trim() ?? null,
+    })),
+  );
+
+  if (products.length === 0) {
+    throw new Error(`no products found on ${url}`);
+  }
+  console.log(JSON.stringify({ url, count: products.length, products }));
+
+  await browser.close();
+}
+
+main().catch((e) => {
+  console.error(e);
+  process.exit(1);
 });
-
-const page = await browser.newPage();
-await page.goto('https://example.com/products');
-
-// Extract data
-const products = await page.evaluate(() => {
-  return [...document.querySelectorAll('.product')].map(el => ({
-    title: el.querySelector('.title')?.textContent,
-    price: el.querySelector('.price')?.textContent,
-  }));
-});
 ```
 
-## Anti-Detection Best Practices
+Replace `.product`, `.title` and `.price` with the selectors of the site you scrape. Throwing when nothing is found makes the run show as failed instead of quietly succeeding with no data.
 
-### Rate Limiting
+Veilus keeps only the last 4096 characters of each profile's output. If you collect more than that, write it to a file with Node's `fs` module and print a short summary.
+
+## Scrape a list of URLs
+
+To work through many pages across several profiles, put the URLs in a **consume** dataset with a column named `URL`, set how many rows each run takes, and assign the dataset to the profiles. Each run takes new rows, and two profiles never get the same row. See [Datasets](/profiles/datasets/).
+
+The rows reach an approved script in `VEILUS_VAR_ROWS`:
+
+```typescript
+const rows: Array<{ URL: string }> = JSON.parse(process.env.VEILUS_VAR_ROWS ?? "[]");
+for (const row of rows) {
+  await page.goto(row.URL, { waitUntil: "domcontentloaded" });
+  // ... read the page and console.log the result
+}
 ```
-Rule: Max 1 request per 3-5 seconds
-```
 
-Don't scrape faster than a human would browse. Use random delays:
-- Page load: wait 2-5 seconds
-- Between items: wait 1-3 seconds
-- Between pages: wait 5-10 seconds
+A run that fails returns its rows to the dataset, so no URL is lost.
 
-### IP Rotation
-- Use a different proxy for each scraping session
-- Rotate IP after every 50-100 pages
-- Use residential proxies for protected sites
+## Run it
 
-### Fingerprint Rotation
-- Create a pool of 5-10 profiles with different fingerprints
-- Rotate between profiles during long scraping sessions
-- Each profile should have its own proxy
+1. Approve the script in **Veilus Flow**.
+2. Run it on your profiles, or create a [schedule](/automation/schedules/) to collect data at fixed times.
+3. Read each profile's output in the **Run History** tab.
 
-### Session Management
-- Save cookies and session data (profiles persist automatically)
-- Reuse the same profile+proxy for subsequent visits to the same site
-- This builds "reputation" with the target site
+## Go easy on the site
 
-## Handling CAPTCHAs
+- Keep **Concurrency** low and set a **Delay Between** launches. See [Runs](/automation/runs/).
+- Wait inside the script between pages, for example `await page.waitForTimeout(3000)`.
+- Reuse the same profile for the same site, so its cookies and logins carry over from run to run.
 
-When a CAPTCHA appears during scraping:
-
-- **Third-party solvers** — Integrate 2captcha or anti-captcha via API in your script
-
-## Legal Considerations
+## Legal considerations
 
 :::caution
-Always check the website's Terms of Service and robots.txt before scraping. Some websites prohibit automated data collection. Veilus is a tool — how you use it is your responsibility.
+Check a website's Terms of Service and robots.txt before you scrape it. Some websites prohibit automated data collection. How you use Veilus is your responsibility.
 :::

@@ -7,21 +7,43 @@ sidebar:
 
 import { Steps } from '@astrojs/starlight/components';
 
-Veilus's [MCP server](/reference/mcp/) lets an LLM agent — Claude Code, Cursor, Claude Desktop, or anything else that speaks MCP — do a whole automation job from one request: import your proxies, create profiles to match them, open a profile and look around the target site, write a real [Playwright](https://playwright.dev) script, test it, and — once you've approved it — run it on many profiles or on a schedule.
+Veilus's [MCP server](/reference/mcp/) lets an LLM agent, such as Claude Code, Cursor or Claude Desktop, do a whole automation job from one request. It can import your proxies, create profiles to match them, open a profile and look around the target site, write a [Playwright](https://playwright.dev) script, and test it. Once you've approved the script, it can run it on many profiles or on a schedule.
+
+The local API, and so MCP, needs a paid plan or the trial.
 
 ## Setup
 
 <Steps>
 
-1. **Turn on the local API.** Open the **API & MCP** page in the app sidebar and enable it. It only listens on your own machine.
+1. **Turn on the local API.** Open **API & MCP** in the app sidebar and click **Turn on port**. It only listens on your own computer.
 
-2. **Mint a token.** Name it after the tool that will use it (e.g. `claude-code`) so you can revoke it later without affecting anything else. The value is shown once — copy it.
+2. **Create a token.** Under **Tokens**, name it after the tool that will use it (for example `claude-code`) and click **Create token**. Copy it right away: it's shown only once. Naming tokens per tool lets you revoke one later without affecting the others.
 
-3. **Connect your LLM tool.** The **API & MCP** page has a ready-made snippet for Claude Code, and a JSON block for Cursor / Claude Desktop. See [MCP Server](/reference/mcp/) for the exact commands.
+3. **Connect your LLM tool.** Under **Connect an LLM**, copy the snippet for Claude Code, or the JSON block for Cursor and Claude Desktop. See [MCP Server](/reference/mcp/) for the exact commands.
 
 </Steps>
 
-## One request, end to end
+## The Veilus plugin for Claude Code
+
+If you use Claude Code, the Veilus plugin adds four skills that walk through the job step by step and stop for your decisions:
+
+```bash
+claude plugin marketplace add veilus/claude-plugin
+claude plugin install veilus@veilus
+```
+
+Restart Claude Code, then type `/veilus:` to see the skills.
+
+| Skill | What it does |
+|---|---|
+| `/veilus:campaign` | The whole job: asks what it needs, prepares proxies and profiles, then uses the three skills below |
+| `/veilus:script` | Learns the site in a real profile, writes a script, trial-runs it on up to 3 profiles, fixes it, then asks you to approve it |
+| `/veilus:schedule` | Sizes a schedule to your computer, shows you the plan as a table, and creates it after you agree |
+| `/veilus:run` | Runs the script now, watches the run, explains failures per profile, and reports |
+
+The plugin needs a Veilus version newer than 0.2.1. Without the plugin, any MCP client can do the same work. Describe the job and the agent picks the tools.
+
+## One request, start to finish
 
 Once connected, describe the whole job in your own words, for example:
 
@@ -35,55 +57,53 @@ Here's what the agent does, step by step:
 
 <Steps>
 
-1. **Import proxies** — `import_proxies` turns your proxy lines into a pool and reports any bad lines by number. `test_proxy` checks each one: alive or dead, latency, exit IP and its country and timezone.
+1. **Import proxies.** `import_proxies` turns your proxy lines into a pool and reports bad lines by line number. `test_proxy` checks each proxy: alive or dead, latency, exit IP, and that IP's country and timezone.
 
-2. **Create matching profiles** — `create_profiles` with that pool gives each new profile its own proxy slot, and generates the profile's **timezone and language to match the proxy's location**. A profile whose proxy has no known location isn't created; it's listed as failed instead.
+2. **Create matching profiles.** `create_profiles` with that pool gives each new profile its own proxy slot, and generates the profile's **timezone and language to match where the proxy exits**. A profile whose proxy has no known location isn't created; it's listed as failed instead.
 
-3. **Learn the site** — `launch_profile` opens a profile, then the page tools drive it: `navigate` to a URL, `snapshot` to see the page's elements, `click` and `type` to fill in forms, `wait_for_element` to wait for the next page. This is how the agent finds out what the site actually looks like before writing any code.
+3. **Learn the site.** `launch_profile` opens a profile, then the page tools drive it: `navigate` to a URL, `snapshot` to list the page's elements, `click`, `type`, `press_key` and `scroll` to work through it, and `wait_for_element` to wait for the next page. This is how the agent learns what the site looks like before writing any code.
 
-4. **Write the script** — `save_script` saves a Playwright (TypeScript) script into Veilus Flow. The tool's own description carries the rules a script must follow, so you don't need to repeat them.
+4. **Write the script.** `save_script` saves a Playwright (TypeScript) script into Veilus Flow. The tool's description carries the [script rules](#script-rules), so you don't need to repeat them, and a script that breaks them is refused with line numbers.
 
-5. **Test it** — `run_script` runs the script on **up to 3 profiles** while it isn't approved yet, and `get_run_result` reads back each profile's exit code and output. If something's wrong, the agent fixes the script and saves it again. Repeat until it works.
+5. **Test it.** `run_script` runs the script on **up to 3 profiles** while it isn't approved yet, and `get_run_result` reads back each profile's exit code and output. If something is wrong, the agent fixes the script and saves it again, until it works.
 
-6. **You approve it** — in the app, not through the agent. See [Approving the script](#approving-the-script). This is the step that lets the script run for real.
+6. **You approve it,** in the app, not through the agent. See [Approving the script](#approving-the-script). This is the step that lets the script run for real.
 
-7. **Run it for real** — `run_batch` runs the approved script on many profiles at once (`get_capacity` helps pick how many in parallel), and `create_schedule` runs it repeatedly: every N minutes, daily, weekly, or on a cron expression. Both refuse a script you haven't approved.
+7. **Run it for real.** `run_batch` runs the approved script on many profiles at once (`get_capacity` helps pick how many in parallel), and `create_schedule` runs it repeatedly: every N minutes or seconds, daily, weekly, or on a cron expression. Both refuse a script you haven't approved.
 
-8. **Check the results** — `list_runs` shows recent runs with their status and profile counts; `get_run_result` has the per-profile detail. `stop_profile` closes a profile's browser when the agent is done with it.
+8. **Check the results.** `list_runs` shows recent runs with their status and profile counts. `get_run_result` has the per-profile detail. `stop_profile` closes a profile's browser when the agent is done with it.
 
 </Steps>
 
-Variables you mention (like `USERNAME` above) reach the script as environment variables named `process.env.VEILUS_VAR_<NAME>`. The agent can also store per-profile values with `set_profile_variables` — see the safety notes below for when those are delivered.
+Values you mention for a run (like `USERNAME` above) reach the script as environment variables named `VEILUS_VAR_<NAME>`, read with `process.env.VEILUS_VAR_USERNAME`. For values that differ per profile, such as one account per profile, the agent can put them in a [dataset](/profiles/datasets/) with `create_dataset` and `assign_dataset`, or store them on a profile with `set_profile_variables`. Both reach only approved scripts; see the safety notes below.
 
 ## Approving the script
 
-A script an agent saves is **not approved** until you say so. Unapproved scripts can still be tested through `run_script` (capped at 3 profiles), but schedules and batch runs only accept approved scripts.
+A script an agent saves is **not approved** until you approve it. An unapproved script can still be tested through `run_script` (up to 3 profiles), but schedules and batch runs only accept approved scripts.
 
 To approve one:
 
-1. Open **Veilus Flow** and find the script (agent-authored scripts are marked as such).
-2. Read the source. This is a real Node program that will run with your user's permissions — review it the way you'd review any code someone else wrote before you run it.
-3. Click **Approve**.
+1. Open **Veilus Flow** and find the script. Agent scripts carry an **MCP** badge, and **Pending approval** lists the ones waiting for you.
+2. Read the changes since the last approved version, or click **Show full source**. This is a real Node program that will run with your user's permissions. Review it the way you'd review code someone else wrote.
+3. Click **Approve this script**.
 
-Editing a script — by hand or by asking the agent to save over it again — un-approves it. It needs another look and another **Approve** before it can be used in schedules and batch runs again.
+When the agent saves the script again, it goes back to **Pending approval** and needs another look. If you edit the script yourself in the app and save, that version counts as approved, because you wrote it.
 
-Once approved, use it anywhere a Veilus Flow script is used: on more profiles at once, or on a [schedule](/automation/overview/).
+Once approved, the script can run on many profiles at once or on a [schedule](/automation/schedules/). More on reviewing, editing and versions: [Scripts](/automation/scripts/).
 
-## The script contract
+## Script rules
 
-Every script `save_script` accepts must follow the same rules, so it behaves inside Veilus's profile pool instead of launching its own browser. Quoting the tool's own description:
+Every script `save_script` accepts follows the same rules, so it works inside Veilus's profiles instead of launching its own browser. From the tool's own description:
 
-> connect with `` chromium.connectOverCDP(`http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}`) ``; no `chromium.launch`/`launchPersistentContext`; use `browser.contexts()[0]`, not `newContext()`; no `setUserAgent`/`setViewportSize` — identity belongs to the profile; errors must exit non-zero: `main().catch((e) => { console.error(e); process.exit(1); })`; import only `playwright` and Node built-ins; end `main()` with `await browser.close()` — it only disconnects from the profile's browser and lets the script exit; without it the run hangs.
+1. Connect with `` chromium.connectOverCDP(`http://127.0.0.1:${process.env.VEILUS_DEBUG_PORT}`) ``.
+2. No `chromium.launch` / `launchPersistentContext`.
+3. Use `browser.contexts()[0]`, not `newContext()`.
+4. No `setUserAgent` / `setViewportSize`: identity belongs to the profile.
+5. Errors must exit non-zero: `main().catch((e) => { console.error(e); process.exit(1); })`.
+6. Import only `playwright` and Node built-ins.
+7. End `main()` with `await browser.close()`. It only disconnects from the profile's browser and lets the script exit; without it the run hangs.
 
-In short:
-
-- **Connect, don't launch** — `chromium.connectOverCDP` against `VEILUS_DEBUG_PORT`, never `chromium.launch()`.
-- **Use the existing context** — `browser.contexts()[0]`. The profile *is* the identity; don't create a new context or override the user agent or viewport.
-- **Read input from `process.env.VEILUS_VAR_<NAME>`**, UPPER_SNAKE_CASE.
-- **Write output with `console.log`** — that's what the LLM (and `get_run_result`) sees.
-- **Exit non-zero on error**, via the `main().catch(...)` pattern below.
-- **Always `await browser.close()`** at the end of `main()` — it disconnects, it doesn't close your profile's browser. Skip it and the run hangs until it times out.
-- **Only `playwright` and Node built-ins** — no other npm packages.
+Read input from `process.env.VEILUS_VAR_<NAME>` (UPPER_SNAKE_CASE), and print what you need to see with `console.log`. That output is what the agent reads through `get_run_result`.
 
 ## A minimal correct script
 
@@ -112,11 +132,11 @@ main().catch((e) => {
 
 ## What an agent can and can't do
 
-A few rules are built in so an agent working on your behalf stays inside safe limits:
+A few rules are built in so an agent working for you stays inside safe limits:
 
-- **Create and stop, never delete.** There's no tool for deleting profiles, proxy pools, scripts or schedules — deleting stays in the app, with you. An agent can turn a schedule off with `set_schedule_enabled`, which keeps the schedule and its history.
-- **Existing proxies aren't overwritten by accident.** `assign_proxy_pool` refuses the whole call if any of the profiles already has a proxy, unless the agent passes `force: true`. It also doesn't change the profiles' timezone, so a proxy in another country will stop the profile from launching — new profiles should get their proxies through `create_profiles` instead.
-- **Rate limit on expensive calls.** Each token can make at most **30 expensive calls per 60 seconds** — launching a profile, running a script, creating profiles, importing proxies, a batch run, or running a schedule now. Past that, calls are refused with a "retry after" time until the window frees up.
+- **Create and stop, never delete.** No tool deletes profiles, proxy pools, scripts or schedules. Deleting stays in the app, with you. An agent can turn a schedule off with `set_schedule_enabled`, which keeps the schedule and its history.
+- **Existing proxies aren't overwritten by accident.** `assign_proxy_pool` refuses the whole call if any of the profiles already has a proxy, unless the agent passes `force: true`. It also doesn't change the profiles' timezone, so a proxy in another country will stop the profile from launching. New profiles should get their proxies through `create_profiles` instead.
+- **Rate limit on expensive calls.** Each token can make at most **30 expensive calls per 60 seconds**: launching a profile, running a script, creating profiles, importing proxies, a batch run, or running a schedule now. Past that, calls are refused with a "retry after" time until the window frees up.
 - **`evaluate_js` is not a sandbox.** It runs JavaScript in the profile's page with the full rights of that logged-in page: it can read cookies and send requests as you. Only let an agent you trust use it on accounts that matter.
-- **Stored profile variables reach only approved scripts.** Values saved with `set_profile_variables` are delivered to batch runs, schedules, and `run_script` once you've approved the script. A test run of an unapproved script gets only the variables passed to that one call — so an unreviewed script never sees the secrets you stored.
-- **Scripts run with your permissions.** An agent-written script is a normal Node program — it can do anything a script you'd write yourself could do. Read what the agent saved before you approve it, the same way you'd review a pull request.
+- **Stored values reach only approved scripts.** Profile variables saved with `set_profile_variables` and dataset rows go to batch runs, schedules, and `run_script` once you've approved the script. A test run of an unapproved script gets only the variables passed to that one call, so an unreviewed script never sees the secrets you stored.
+- **Scripts run with your permissions.** An agent-written script is a normal Node program. It can do anything a script you wrote yourself could do. Read what the agent saved before you approve it, the same way you'd review a pull request.

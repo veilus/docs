@@ -104,6 +104,15 @@
       }
     },
     {
+      "name": "list_scripts",
+      "description": "List every script, newest first, without its source: `scriptId`, `name`, `description`, `version`, `mode` (`raw` or `dsl`), `origin` (`mcp` if an agent wrote it, `app` if the user did), `approved` and `updatedAt`. Check here before save_script so you update an existing script instead of saving a duplicate.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {},
+        "type": "object"
+      }
+    },
+    {
       "name": "get_script",
       "description": "Read the source and approval state of a Raw script, to fix it and save_script it again. Returns `scriptId`, `name`, `description`, `version`, `source`, `approved` and `origin`.",
       "inputSchema": {
@@ -1032,6 +1041,11 @@
         ],
         "type": "object"
       }
+    },
+    {
+      "method": "GET",
+      "path": "/v1/scripts",
+      "summary": "List every script without its source: id, name, version, mode (raw or dsl), origin and whether it is approved."
     },
     {
       "method": "GET",

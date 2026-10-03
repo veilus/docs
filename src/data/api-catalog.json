@@ -385,7 +385,7 @@
     },
     {
       "name": "create_schedule",
-      "description": "Create a schedule that runs an APPROVED script on the given profiles repeatedly. The script must already be approved by the user in Veilus → Flow: an unapproved script is refused now, not skipped later. schedule_type: interval (interval_minutes, with interval_unit minutes or seconds, at least 5 seconds), daily (daily_hour and daily_minute, the computer's local time), weekly (daily_hour, daily_minute and weekly_day, 0 = Sunday) or cron (cron_expr, 5 fields). concurrency (default 1, 1-16) and stagger_ms (default 0, 0-600000 i.e. 10 minutes) apply to every run. Returns the schedule, including nextRunAt.",
+      "description": "Create a schedule that runs an APPROVED script on the given profiles at set times. The script must already be approved by the user in Veilus → Flow: an unapproved script is refused now, not skipped later. schedule_type: interval (interval_minutes, with interval_unit minutes or seconds, at least 5 seconds), daily (daily_hour and daily_minute, the computer's local time), weekly (daily_hour, daily_minute and weekly_day, 0 = Sunday), cron (cron_expr, 5 fields) or once (run_at, a future RFC 3339 time with offset; the schedule runs once and then turns itself off). concurrency (default 1, 1-16) and stagger_ms (default 0, 0-600000 i.e. 10 minutes) apply to every run. Returns the schedule, including nextRunAt.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
@@ -430,12 +430,18 @@
             },
             "type": "array"
           },
+          "run_at": {
+            "description": "RFC 3339 with offset, e.g. 2026-10-04T09:00:00+07:00; required for once",
+            "format": "date-time",
+            "type": "string"
+          },
           "schedule_type": {
             "enum": [
               "interval",
               "daily",
               "weekly",
-              "cron"
+              "cron",
+              "once"
             ],
             "type": "string"
           },
@@ -1184,7 +1190,7 @@
     {
       "method": "POST",
       "path": "/v1/schedules",
-      "summary": "Create a schedule for an approved script on explicit profiles.",
+      "summary": "Create a schedule for an approved script on explicit profiles; a once schedule turns itself off after it runs.",
       "body": {
         "properties": {
           "concurrency": {
@@ -1234,12 +1240,18 @@
             },
             "type": "array"
           },
+          "run_at": {
+            "description": "RFC 3339 with offset, e.g. 2026-10-04T09:00:00+07:00; required for once",
+            "format": "date-time",
+            "type": "string"
+          },
           "schedule_type": {
             "enum": [
               "interval",
               "daily",
               "weekly",
-              "cron"
+              "cron",
+              "once"
             ],
             "type": "string"
           },

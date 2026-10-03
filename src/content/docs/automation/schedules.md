@@ -1,6 +1,6 @@
 ---
 title: Schedules
-description: Run a Veilus Flow script on a set of profiles automatically, at an interval, daily, weekly, or on a cron expression.
+description: Run a Veilus Flow script on a set of profiles automatically, once at a set time, at an interval, daily, weekly, or on a cron expression.
 sidebar:
   order: 4
 ---
@@ -19,7 +19,7 @@ Schedules are a Pro feature, also included in the trial.
 | **Schedule Name** | A name for the list, such as "Daily login check" |
 | **Script (optional)** | The script to run |
 | **Run on** | **Pick manually** to tick profiles, or **By saved filter** to run on whatever profiles a saved filter matches |
-| **Schedule Type** | **interval**, **daily**, **weekly** or **cron** (see below) |
+| **Schedule Type** | **interval**, **daily**, **weekly**, **cron** or **once** (see below) |
 | **Concurrency** | How many profiles run at the same time, from 1 up to the number of profiles picked |
 | **Stagger Delay (ms)** | The pause between two profile launches, in milliseconds |
 | **Enable schedule immediately** | Leave on to start the schedule now; turn off to create it paused |
@@ -34,6 +34,7 @@ Schedules are a Pro feature, also included in the trial.
 | **daily** | **Hour (0-23)**, **Minute (0-59)** | Every day at that time |
 | **weekly** | **Day**, **Hour (0-23)**, **Minute (0-59)** | Once a week, on that day at that time |
 | **cron** | **Cron Expression** (5 fields) | Whenever the expression matches |
+| **once** | **Run at** (date and time, this computer's local time) | One run at that time, then the schedule turns itself off. The time must be in the future, and a one-time schedule whose time has passed cannot be turned back on: create a new one. |
 
 Times are in your computer's local time zone.
 

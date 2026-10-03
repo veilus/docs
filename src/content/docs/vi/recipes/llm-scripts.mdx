@@ -61,7 +61,7 @@ Và sau khi bạn đã duyệt script:
 
 2. **Tạo profile khớp proxy.** `create_profiles` với pool đó cấp cho mỗi profile mới một slot proxy riêng, và sinh **múi giờ và ngôn ngữ của profile khớp với nơi proxy đi ra**. Profile nào có proxy chưa biết vị trí thì không được tạo, mà được liệt kê là lỗi.
 
-3. **Tìm hiểu trang web.** `launch_profile` mở một profile, rồi các tool điều khiển trang lái nó: `navigate` tới một URL, `snapshot` để liệt kê các phần tử trên trang, `click`, `type`, `press_key` và `scroll` để đi qua trang, `wait_for_element` để đợi trang kế tiếp. Nhờ vậy agent biết trang thật trông thế nào trước khi viết dòng code nào.
+3. **Tìm hiểu trang web.** `launch_profile` mở một profile, rồi các tool điều khiển trang lái nó: `navigate` tới một URL, `snapshot` để liệt kê các phần tử trên trang, `click`, `type`, `press_key` và `scroll` để đi qua trang, `wait_for_element` để đợi trang kế tiếp. Thao tác nào làm bật hộp thoại JS (alert, confirm, prompt) thì tool trả lời ngay (bấm Cancel, trừ khi agent yêu cầu OK bằng `dialog: "accept"`) và nói đó là hộp thoại nào. Nhờ vậy agent biết trang thật trông thế nào trước khi viết dòng code nào.
 
 4. **Viết script.** `save_script` lưu một script Playwright (TypeScript) vào Veilus Flow. Phần mô tả của tool đã mang sẵn [quy tắc của script](#quy-tắc-của-script), bạn không cần nhắc lại; script phạm quy tắc bị từ chối kèm số dòng.
 

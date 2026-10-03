@@ -585,16 +585,26 @@
     },
     {
       "name": "click",
-      "description": "Click an element of a running profile's page by node_id (a DOM click on the element). Fails if the page changed since the snapshot (take a new one) or if the node cannot be clicked, such as a text node.",
+      "description": "Click an element of a running profile's page by node_id (a DOM click on the element). Fails if the page changed since the snapshot (take a new one) or if the node cannot be clicked, such as a text node. A JavaScript alert/confirm/prompt that the action opens is answered at once: `dialog` \"dismiss\" (default, i.e. Cancel) or \"accept\" (OK), with `prompt_text` as the typed answer to a prompt; the result says which dialog opened and how it was answered.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "dialog": {
+            "enum": [
+              "dismiss",
+              "accept"
+            ],
+            "type": "string"
+          },
           "node_id": {
             "description": "node_id from snapshot ([id=N]) or wait_for_element",
             "type": "integer"
           },
           "profile_id": {
             "description": "UUID of a running profile (launch_profile first)",
+            "type": "string"
+          },
+          "prompt_text": {
             "type": "string"
           }
         },
@@ -633,10 +643,17 @@
     },
     {
       "name": "press_key",
-      "description": "Press one named key in a running profile's page: Enter, Tab, Escape, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Backspace, Delete or Space. If no input is focused, the LAST input on the page is focused first. For text use `type`.",
+      "description": "Press one named key in a running profile's page: Enter, Tab, Escape, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Backspace, Delete or Space. If no input is focused, the LAST input on the page is focused first. For text use `type`. A JavaScript alert/confirm/prompt that the action opens is answered at once: `dialog` \"dismiss\" (default, i.e. Cancel) or \"accept\" (OK), with `prompt_text` as the typed answer to a prompt; the result says which dialog opened and how it was answered.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "dialog": {
+            "enum": [
+              "dismiss",
+              "accept"
+            ],
+            "type": "string"
+          },
           "key": {
             "enum": [
               "Enter",
@@ -654,6 +671,9 @@
           },
           "profile_id": {
             "description": "UUID of a running profile (launch_profile first)",
+            "type": "string"
+          },
+          "prompt_text": {
             "type": "string"
           }
         },
@@ -699,15 +719,25 @@
     },
     {
       "name": "evaluate_js",
-      "description": "Run a JavaScript expression in a running profile's page and return its value as `text`, JSON-encoded (strings come back quoted); promises are awaited. `undefined` comes back as the text `(undefined)`, not JSON `null`. A thrown error comes back as text starting with [JS Error] — this is a normal call result, not a tool failure. Results over 64 KiB are cut and flagged truncated: true. A synchronous loop is stopped by the PAGE ITSELF after about 9 s; its result also comes back as ordinary [JS Error] text. A promise that never settles instead makes the call itself fail after 10 s with a timeout error. This is NOT a sandbox: it runs with the full rights of the logged-in page (reads cookies, sends requests as the user).",
+      "description": "Run a JavaScript expression in a running profile's page and return its value as `text`, JSON-encoded (strings come back quoted); promises are awaited. `undefined` comes back as the text `(undefined)`, not JSON `null`. A thrown error comes back as text starting with [JS Error] — this is a normal call result, not a tool failure. Results over 64 KiB are cut and flagged truncated: true. A synchronous loop is stopped by the PAGE ITSELF after about 9 s; its result also comes back as ordinary [JS Error] text. A promise that never settles instead makes the call itself fail after 10 s with a timeout error. This is NOT a sandbox: it runs with the full rights of the logged-in page (reads cookies, sends requests as the user). A JavaScript alert/confirm/prompt that the action opens is answered at once: `dialog` \"dismiss\" (default, i.e. Cancel) or \"accept\" (OK), with `prompt_text` as the typed answer to a prompt; the result says which dialog opened and how it was answered.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "dialog": {
+            "enum": [
+              "dismiss",
+              "accept"
+            ],
+            "type": "string"
+          },
           "expression": {
             "type": "string"
           },
           "profile_id": {
             "description": "UUID of a running profile (launch_profile first)",
+            "type": "string"
+          },
+          "prompt_text": {
             "type": "string"
           }
         },

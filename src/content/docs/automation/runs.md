@@ -21,6 +21,8 @@ The dialog shows a suggested maximum for **Concurrency** based on this computer'
 
 If a required variable gets no value from the profile, its datasets or the script's defaults, the run button stays disabled with **Fill all required variables first**. Fill the empty cells in the table, add the missing [profile variables](/automation/scripts/#what-a-script-receives), or assign a [dataset](/profiles/datasets/) that has that column.
 
+If a selected profile's content dataset has no unused rows left, the dialog names the profile and the dataset and keeps the run button disabled, because that profile would fail as soon as the run starts. Add rows, or use **Return used rows** on the dataset's page.
+
 Only approved scripts run. Running a script on several profiles at the same time is a Pro feature, also included in the trial. If your plan doesn't include it, set **Concurrency** to 1 and the profiles run one after another.
 
 ## What happens during a run

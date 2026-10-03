@@ -21,7 +21,7 @@ The slot follows from the kind of dataset, so a list of accounts is never "used 
 ## Create a dataset
 
 1. Open **Datasets** in the sidebar and click **New from file**.
-2. Choose a `.csv` file (the first line holds the column names; quoted values may contain commas and line breaks) or a `.txt` file (one value per line, in a column named `VALUE`).
+2. Choose a `.csv` or `.txt` file. Columns may be separated by `,`, `|` or `;`: the app detects the **Delimiter** from the first line (`|` first, then `;`, then `,`) and you can change it by hand. **First line is column names** is on by default; turn it off and the columns are named `COL_1`, `COL_2`… with the first line read as data. Quoted values may contain the delimiter and line breaks. A file with no delimiter is one value per line, in a column named `VALUE`.
 3. Check the preview of the first 20 rows. Lines that cannot be read are listed by line number.
 4. Enter a **Dataset name** (the file name is filled in).
 5. Under **Kind**, pick **Fixed** or **Consume**. For Consume, set **Rows per run** (1 to 50).

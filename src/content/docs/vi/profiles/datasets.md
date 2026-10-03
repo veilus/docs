@@ -21,7 +21,7 @@ Mỗi profile có hai ô dữ liệu:
 ## Tạo bộ dữ liệu
 
 1. Mở **Datasets** ở thanh bên, bấm **New from file**.
-2. Chọn file `.csv` (dòng đầu là tên cột; giá trị trong ngoặc kép được chứa dấu phẩy và xuống dòng) hoặc `.txt` (mỗi dòng một giá trị, trong cột tên `VALUE`).
+2. Chọn file `.csv` hoặc `.txt`. Các cột ngăn bằng `,`, `|` hoặc `;`: app tự nhận **Delimiter** từ dòng đầu (ưu tiên `|`, rồi `;`, rồi `,`) và bạn đổi tay được. Ô **First line is column names** bật sẵn; tắt đi thì cột tên `COL_1`, `COL_2`… và dòng đầu được đọc như dữ liệu. Giá trị trong ngoặc kép được chứa dấu ngăn cách và xuống dòng. File không có dấu ngăn cách nào là mỗi dòng một giá trị, trong cột tên `VALUE`.
 3. Xem bản xem trước 20 dòng đầu. Dòng không đọc được được liệt kê theo số dòng.
 4. Nhập **Dataset name** (tên file được điền sẵn).
 5. Ở **Kind**, chọn **Fixed** (Cố định) hoặc **Consume** (Rút dần). Với Consume, đặt **Rows per run** (1 đến 50).

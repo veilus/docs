@@ -776,6 +776,33 @@
       }
     },
     {
+      "name": "set_file",
+      "description": "Attach a file to a file input (<input type=file>, often shown as a \"Choose File\" button) of a running profile's page by node_id, instead of clicking it - a click opens the system file picker, which cannot be controlled. Only files inside the app's uploads folder (~/.veilus/data/uploads) are allowed: pass the file name, or an absolute path inside that folder; anything else is refused. Ask the user to copy the file there first.",
+      "inputSchema": {
+        "additionalProperties": false,
+        "properties": {
+          "node_id": {
+            "description": "node_id from snapshot ([id=N]) or wait_for_element",
+            "type": "integer"
+          },
+          "path": {
+            "description": "file name inside ~/.veilus/data/uploads",
+            "type": "string"
+          },
+          "profile_id": {
+            "description": "UUID of a running profile (launch_profile first)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "profile_id",
+          "node_id",
+          "path"
+        ],
+        "type": "object"
+      }
+    },
+    {
       "name": "create_dataset",
       "description": "Create a dataset: a table stored in Veilus that approved scripts read per profile. mode `fixed`: each profile gets ONE row for good (accounts); its columns arrive as process.env.VEILUS_VAR_<COLUMN>. mode `consume`: each run takes `rows_per_run` (1-50, default 1) unused rows; a failed run gives them back, a successful run marks them used; they arrive as VEILUS_VAR_ROWS (JSON array of {COLUMN: value}) and, when rows_per_run is 1, also one variable per column. VEILUS_VAR_ROW_INDEX is the row's number. Columns are UPPER_SNAKE_CASE; ROWS, ROW_INDEX, PROFILE_ID, RUN_ID and DEBUG_PORT are reserved. Mark a column `secret: true` for passwords: it is stored and given to approved scripts, but no tool ever returns it. Bad rows are reported in `rejected` by row number (from 1). Returns `datasetId`.",
       "inputSchema": {
@@ -1553,6 +1580,27 @@
         },
         "required": [
           "selector"
+        ],
+        "type": "object"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/v1/profiles/:id/set-file",
+      "summary": "Attach a file from the app's uploads folder to a file input by node id.",
+      "body": {
+        "properties": {
+          "node_id": {
+            "minimum": 1,
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "node_id",
+          "path"
         ],
         "type": "object"
       }

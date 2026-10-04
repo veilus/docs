@@ -568,7 +568,7 @@
     },
     {
       "name": "snapshot",
-      "description": "Accessibility snapshot of the current page of a running profile: one line per element with role, name and [id=N]; pass N as node_id to click or type. Ids change when the page changes - take a new snapshot after navigating or clicking. Lists at most 150 elements and 64 KiB; truncated: true means the page has more - use wait_for_element with a CSS selector to reach an element that is not listed.",
+      "description": "Accessibility snapshot of the current page of a running profile: one line per element with role, name and [id=N]; pass N as node_id to click or type. Ids change when the page changes - take a new snapshot after navigating or clicking. Lists at most 150 elements and 64 KiB; truncated: true means the page has more - use wait_for_element with a CSS selector to reach an element that is not listed. Elements inside same-origin iframes follow a `--- iframe URL ---` line and work with click and type like any other; a cross-origin iframe gets a `(cross-origin …)` line with its URL but its elements are not listed - navigate to that URL to work inside it.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {

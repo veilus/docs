@@ -547,7 +547,7 @@
     },
     {
       "name": "navigate",
-      "description": "Load a URL in the tab of a RUNNING profile and wait for its load event (up to 15 s); on timeout it PROCEEDS ANYWAY and still returns success, so the page may not be fully loaded yet. The profile must already be open - call launch_profile first; this never opens it. Call snapshot or wait_for_element afterwards to confirm the page actually loaded.",
+      "description": "Load a URL in the tab of a RUNNING profile and wait for its load event (up to 15 s); on timeout it PROCEEDS ANYWAY and the result says the page is still loading - then call wait_for_element for what you need before reading the page. The profile must already be open - call launch_profile first; this never opens it.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {

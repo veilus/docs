@@ -113,14 +113,38 @@ Profile variables and dataset rows only reach **approved** scripts. A trial run 
 
 ## The diagram editor
 
-**From Diagram** creates a script you build by dragging nodes from the **Node Palette** onto a canvas: Navigate, Click, Type Text, Wait, Extract, Extract List, Condition, Loop, and more. Changes on the canvas save automatically. Open the **Code** tab to see the Playwright code Veilus generates from the diagram.
+**From Diagram** creates a script you build by dragging nodes from the **Node Palette** onto a canvas. Changes on the canvas save automatically. Open the **Code** tab to see the Playwright code Veilus generates from the diagram. A diagram runs the same way as a Playwright script: it gets the same variables and dataset rows, its output shows in **Run History**, and a failed step fails the profile.
 
-:::caution
-The diagram editor only suits short, straight sequences of steps. In the generated code:
+### Nodes
 
-- **Condition** and **Loop** nodes compile to empty blocks. No steps run inside the branch or the loop.
-- **Extract** and **Extract List** store values but don't print them, so they don't show in the run's output.
-- An error in a step is printed, but the script still exits with code `0`, so the run reports the profile as done.
+| Group | Nodes |
+|---|---|
+| Page actions | Navigate, Click, Type Text, Press Key, Clear Text, Hover, Scroll, Select, Upload, Screenshot |
+| Waiting | Wait, Wait For Element, Wait & Click, Scroll Until Find |
+| Reading the page | Extract, Extract List, Get Text, Get URL, Get Attribute, Get Cookies |
+| Tabs and cookies | New Tab, Switch Tab, Close Tab, Switch Tab & Do, Set Cookies, Clear Cookies |
+| Data | Set Variable, HTTP Request, Output, Custom Script |
+| Flow control | Condition, Assert, Loop, For Each, Break, Try / Catch |
 
-For anything with branches, loops, output you need to read, or a reliable failure signal, use a Playwright script. An AI assistant can write one for you.
-:::
+Click a node to edit its settings in the side panel. To remove a node, hover over it and click the trash icon, or select it and press **Delete**. The Start node can't be removed.
+
+### Variables
+
+Write `{{NAME}}` in any text field of a node to use a variable. When the diagram saves, every name you use is added to the script's variables. Variable names that a node writes, such as the **Save as variable** of Extract, are not added. At run time each variable is read from `VEILUS_VAR_<NAME>`, which comes from profile variables, the dataset or the run, as described in [What a script receives](#what-a-script-receives). Open the script's **Variables** tab to set a default value or mark a variable as sensitive.
+
+Nodes that read the page, such as Get Text and HTTP Request, store their result in the variable you name, so later nodes can use it as `{{name}}`. HTTP Request stores `{ status, body }`, and `body` is parsed as JSON when possible.
+
+### Branches and loops
+
+- **Condition** runs the nodes on its **true** or **false** handle, depending on a JavaScript expression. The two branches meet again at the first node both reach.
+- **Assert** checks the page: an element exists, its text contains a value, or an expression is true. Wire its **true** and **false** handles to branch on the result. If nothing is wired to **false**, a failed check stops the run and fails the profile.
+- **Loop** repeats the nodes on its **body** handle, either a fixed number of times or while an expression is true. The **done** handle continues after the loop. To close the loop on the canvas, connect the last node of the body back to the Loop node.
+- **For Each** runs its **body** once per item. Leave **List / Array** empty to go through the profile's dataset rows, and read a column with `{{item.COLUMN}}`.
+- **Break** leaves the loop it is in. A Break outside a loop is an error.
+- **Try / Catch** runs the nodes on its **try** handle. If one of them fails, the run continues on the **catch** handle instead of failing the profile. The error is printed to the run's output.
+
+If the wiring can't be read as branches and loops, for example when a node inside one branch is also reached from outside it, the script stops at the start with a message that names the node and the edge.
+
+### Output
+
+The **Output** node prints a `RESULT {...}` line with the keys you list. This is the same line an AI-written script prints, so tools that read run results see the same thing for both. A value that is exactly one `{{name}}` keeps its type: a number stays a number, and a list stays a list. Any other value becomes text.

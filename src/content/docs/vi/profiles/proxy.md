@@ -55,7 +55,7 @@ Chọn **Assignment Mode**:
 
 Một URL cổng từ nhà cung cấp proxy của bạn, ví dụ `http://user:pass@gate.example.com:8000`. Dùng `socks5://` ở đầu cho cổng SOCKS5. URL cổng `https://` bị từ chối.
 
-Đặt **Session Type** theo cách cổng của nhà cung cấp hoạt động: **Sticky (same IP per session)** hoặc **Per Request (rotate each call)**. Nhà cung cấp làm việc xoay IP.
+Đặt **Session Type** theo cách cổng của nhà cung cấp hoạt động: **Sticky (same IP per session)** hoặc **Per Request (rotate each call)**. Việc xoay IP do nhà cung cấp làm.
 
 Loại của pool không đổi được sau khi tạo.
 
@@ -85,7 +85,7 @@ Bản xem trước đếm số proxy hợp lệ và liệt kê các dòng bị b
 Để xuất, dùng **Export all** ở trang Proxy pools, hoặc **Export** ở trang của một pool. Chọn **TXT** (mỗi dòng một proxy; pool xoay được ghi bằng URL cổng của nó) hoặc **CSV** (có cột vị trí; pool xoay bị bỏ ra). Proxy SOCKS5 giữ tiền tố `socks5://`, nên file nhập lại được đúng loại.
 
 :::caution
-File xuất chứa mật khẩu proxy ở dạng chữ thường. Username hay password có `:` `@` `,` `"` hoặc dấu xuống dòng sẽ không đọc lại đúng từ các file này; app cảnh báo khi gặp trường hợp đó.
+File xuất chứa mật khẩu proxy ở dạng văn bản thuần, không mã hoá. Username hay password có `:` `@` `,` `"` hoặc dấu xuống dòng sẽ không đọc lại đúng từ các file này; app cảnh báo khi gặp trường hợp đó.
 :::
 
 ## Kiểm tra proxy

@@ -1,6 +1,22 @@
 // @ts-check
+import { readdirSync } from 'node:fs';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
+
+// Trang /vi/ có file nguồn thật. Starlight dựng mọi trang tiếng Anh dưới /vi/ dù chưa dịch (Head.astro đã
+// noindex chúng, VEIL-1303); sitemap chỉ được kể trang dịch thật, nếu không Search Console báo "đã gửi nhưng
+// noindex" và trang tiếng Anh mang alternate vi trỏ vào bản dự phòng (VEIL-1312).
+const viPages = new Set(
+	readdirSync('src/content/docs/vi', { recursive: true })
+		.filter((f) => /\.mdx?$/.test(String(f)))
+		.map((f) => '/vi/' + String(f).replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '$1'))
+		.map((p) => (p.endsWith('/') ? p : `${p}/`)),
+);
+const isRealPage = (page) => {
+	const { pathname } = new URL(page);
+	return !pathname.startsWith('/vi/') || viPages.has(pathname);
+};
 
 export default defineConfig({
 	site: 'https://docs.veilus.io',
@@ -64,6 +80,11 @@ export default defineConfig({
 			head: [
 				{ tag: 'meta', attrs: { name: 'theme-color', content: '#F2EFE7' } },
 			],
+		}),
+		// Khai riêng thì Starlight không tự thêm sitemap của nó; i18n chép đúng cấu hình Starlight đang dùng.
+		sitemap({
+			filter: isRealPage,
+			i18n: { defaultLocale: 'root', locales: { root: 'en', vi: 'vi' } },
 		}),
 	],
 });

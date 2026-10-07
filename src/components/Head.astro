@@ -1,0 +1,35 @@
+---
+/**
+ * Head cho trang bản dịch dự phòng (fallback): Starlight dựng mọi trang tiếng Anh dưới /vi/ dù chưa dịch, gắn
+ * canonical tự trỏ và hreflang vi — Google thấy hai bản tiếng Anh trùng nhau, bản /vi/ lại khai là tiếng Việt.
+ * - Trang /vi/ chưa dịch: noindex, canonical về bản tiếng Anh, bỏ hreflang.
+ * - Trang tiếng Anh chưa có bản vi thật: bỏ hreflang vi (nó trỏ vào trang dự phòng ở trên).
+ * Dịch xong một trang (thêm file dưới src/content/docs/vi/) thì trang đó tự có lại canonical riêng và hreflang.
+ * KHÔNG xử lý sitemap: trang dự phòng vẫn trong sitemap-0.xml, Search Console sẽ báo "loại trừ do noindex".
+ */
+import { getCollection } from 'astro:content';
+import Default from '@astrojs/starlight/components/Head.astro';
+
+const route = Astro.locals.starlightRoute;
+const head = route.head;
+const isAlternate = (e: (typeof head)[number]) => e.tag === 'link' && e.attrs?.rel === 'alternate' && 'hreflang' in (e.attrs ?? {});
+
+if (route.isFallback) {
+  for (let i = head.length - 1; i >= 0; i--) if (isAlternate(head[i])) head.splice(i, 1);
+  for (const e of head) {
+    if (e.tag === 'link' && e.attrs?.rel === 'canonical' && typeof e.attrs.href === 'string') {
+      e.attrs.href = e.attrs.href.replace(/^(https?:\/\/[^/]+)\/vi(\/|$)/, '$1/');
+    }
+  }
+  head.push({ tag: 'meta', attrs: { name: 'robots', content: 'noindex, follow' }, content: '' });
+} else if (route.locale === undefined) {
+  const viIds = new Set(
+    (await getCollection('docs')).map((d) => d.id).filter((id) => id === 'vi' || id.startsWith('vi/')).map((id) => (id === 'vi' ? 'index' : id.slice(3))),
+  );
+  if (!viIds.has(route.id)) {
+    for (let i = head.length - 1; i >= 0; i--) if (isAlternate(head[i])) head.splice(i, 1);
+  }
+}
+---
+
+<Default />

@@ -12,7 +12,7 @@ export default defineConfig({
 				{ icon: 'x.com', label: 'X', href: 'https://x.com/veilusbrowser' },
 				{ icon: 'telegram', label: 'Telegram', href: 'https://t.me/veilusbrowser' },
 			],
-			components: { Banner: './src/components/VersionBanner.astro' },
+			components: { Banner: './src/components/VersionBanner.astro', Head: './src/components/Head.astro' },
 			customCss: ['./src/styles/fonts.css', './src/styles/custom.css'],
 			defaultLocale: 'root',
 			locales: {

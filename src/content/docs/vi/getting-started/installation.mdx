@@ -1,0 +1,116 @@
+---
+title: Cài đặt
+description: Cài Veilus trên Windows hoặc macOS và tải engine trình duyệt.
+sidebar:
+  order: 2
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+## Yêu cầu hệ thống
+
+| | Windows | macOS |
+|---|---------|-------|
+| **Hệ điều hành** | Windows 10 hoặc 11, 64-bit (x64) | macOS 13 trở lên |
+| **Bộ xử lý** | x64 | Apple Silicon (không hỗ trợ Mac Intel) |
+| **Mạng** | Cần để tải engine trình duyệt và kích hoạt license | Như Windows |
+
+Veilus chỉ có bản cho Windows và macOS.
+
+## Tải về
+
+Lấy bộ cài ở **[veilus.io/download](https://veilus.io/download/)**:
+
+- Windows: `Veilus_<version>_x64-setup.exe`
+- macOS: `Veilus_<version>_aarch64.dmg`
+
+Mọi bản phát hành cũng được liệt kê trên [GitHub](https://github.com/veilus/releases/releases).
+
+## Cài
+
+<Tabs>
+<TabItem label="Windows">
+
+<Steps>
+
+1. Chạy `Veilus_<version>_x64-setup.exe`.
+
+2. Nếu Windows SmartScreen hiện **Windows protected your PC**, bấm **More info** rồi **Run anyway**.
+
+3. Làm theo bộ cài, rồi mở Veilus từ menu Start.
+
+</Steps>
+
+</TabItem>
+<TabItem label="macOS">
+
+<Steps>
+
+1. Mở file `.dmg` và kéo **Veilus** vào **Applications**.
+
+2. Mở Veilus. App chưa được Apple notarize, nên macOS báo không xác minh được nhà phát triển. Bấm **Done**.
+
+3. Mở **System Settings → Privacy & Security**, cuộn xuống và bấm **Open Anyway**, rồi xác nhận **Open Anyway**.
+
+   Các lần mở sau diễn ra bình thường.
+
+</Steps>
+
+</TabItem>
+</Tabs>
+
+## Tải engine trình duyệt
+
+Bộ cài không kèm trình duyệt. Profile không mở được cho tới khi đã cài một engine.
+
+<Steps>
+
+1. Trong Veilus, mở **Settings → Engine & updates**.
+
+2. Ở **Chromium Version Manager**, danh sách phiên bản tự tải về. Nếu trống, bấm **Sync from Cloud**.
+
+3. Bấm **Download** cạnh phiên bản được đánh dấu **Latest**.
+
+   Engine đầu tiên bạn tải tự động thành engine đang dùng. **Engine in use** ở mục **Updates** cho biết profile sẽ chạy trên bản nào.
+
+</Steps>
+
+Để đổi phiên bản sau này, tải một phiên bản khác rồi bấm **Activate**. **Cleanup Old** xoá các phiên bản đã tải mà không đang dùng. Gói Free giữ một phiên bản engine tại một thời điểm; gói trả phí giữ được nhiều.
+
+## Cập nhật Veilus
+
+App không tự cập nhật. Để cập nhật, tải bộ cài mới nhất từ [veilus.io/download](https://veilus.io/download/) và cài đè lên bản hiện tại. Profile, script và cài đặt của bạn được giữ nguyên.
+
+Cập nhật engine là việc riêng: tải phiên bản mới hơn trong **Settings → Engine & updates**.
+
+## Veilus lưu dữ liệu ở đâu
+
+Profile, script, cài đặt và các engine đã tải nằm trong thư mục `.veilus` ở thư mục người dùng của bạn:
+
+- Windows: `%USERPROFILE%\.veilus`
+- macOS: `~/.veilus`
+
+## Gỡ cài đặt
+
+<Tabs>
+<TabItem label="Windows">
+
+1. Mở **Settings → Apps**, tìm **Veilus** và bấm **Uninstall**.
+2. Muốn xoá cả profile và engine thì xoá `%USERPROFILE%\.veilus`.
+
+</TabItem>
+<TabItem label="macOS">
+
+1. Thoát Veilus (**Quit Veilus** ở biểu tượng trên thanh menu, hoặc <kbd>Cmd</kbd>+<kbd>Q</kbd>), rồi kéo **Veilus** từ Applications vào Thùng rác.
+2. Muốn xoá cả profile và engine thì xoá `~/.veilus`.
+
+</TabItem>
+</Tabs>
+
+:::caution
+Xoá thư mục `.veilus` là mất mọi profile, kể cả cookie và phiên đăng nhập. Xuất những gì cần giữ trước.
+:::
+
+## Bước tiếp theo
+
+[Tạo profile đầu tiên →](/vi/getting-started/quickstart/)

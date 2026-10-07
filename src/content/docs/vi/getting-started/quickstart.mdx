@@ -1,0 +1,61 @@
+---
+title: Bắt đầu nhanh
+description: Tạo, mở và kiểm tra profile trình duyệt đầu tiên của bạn.
+sidebar:
+  order: 3
+---
+
+import { Steps, Aside } from '@astrojs/starlight/components';
+
+<Aside>
+Cài Veilus và tải engine trình duyệt trước. Xem [Cài đặt](/vi/getting-started/installation/).
+</Aside>
+
+## Tạo và mở một profile
+
+<Steps>
+
+1. **Tạo profile mới.** Bấm **New profile** ở đầu sidebar. Hộp thoại **Create Profile** mở ra.
+
+2. **Chọn hệ điều hành, ngôn ngữ và vùng.** Ở **Operating System**, chọn Windows hoặc macOS. Mặc định là hệ điều hành của máy bạn, và đó là lựa chọn an toàn hơn: profile cho hệ điều hành khác phải giả lập nhiều hơn, nên Veilus hiện cảnh báo khi bạn chọn. Ở **Language & Region**, chọn nhanh một thị trường hoặc tự đặt ngôn ngữ và **Timezone**. Bấm **Next**.
+
+3. **Sắp xếp.** Thêm tag nếu muốn để sau này tìm lại profile. Bấm **Create Profile**.
+
+   Veilus sinh một fingerprint khớp với hệ điều hành bạn chọn. Profile mới xuất hiện trong **All profiles**.
+
+4. **Mở nó.** Bấm nút mở trên dòng của profile (**Launch browser**). Trong hộp thoại, giữ **Browser Only** và bấm **Launch 1 Profile**.
+
+   Một cửa sổ trình duyệt mở ra với fingerprint, proxy, cookie và bộ nhớ của profile đó. Bấm lại cùng nút (**Stop browser**) để đóng.
+
+</Steps>
+
+Để thêm proxy, bấm vào dòng của profile để mở panel rồi sang tab **Network**: chọn một **Proxy Pool** hoặc điền **Manual Proxy**. **Match to proxy** đo xem proxy đi ra ở đâu rồi đặt múi giờ và ngôn ngữ của profile cho khớp; lưu lại để giữ thay đổi. Xem [Thiết lập proxy](/vi/profiles/proxy/).
+
+Nếu **Settings → Timezone check** đang ở **Block** (mặc định), profile có múi giờ không khớp với nơi proxy đi ra sẽ không mở được; Veilus hiện cả hai giá trị để bạn sửa một trong hai.
+
+## Kiểm tra profile
+
+Tích vào ô chọn của profile và bấm **Test** trên thanh chọn. Veilus mở profile trên một bộ trang kiểm tra fingerprint. Cột **Score** sau đó cho biết bao nhiêu trang đạt, ví dụ `5/6`. Bấm vào điểm để xem **Test report**, hoặc mở tab **Test** của profile.
+
+Nếu sau đó bạn đổi fingerprint hoặc proxy, điểm được đánh dấu là đã cũ: kiểm tra lại.
+
+## Danh sách profile
+
+**All profiles** hiện mỗi profile một dòng: **Status**, **Name**, **OS**, **Created**, **Last Used**, **Proxy** và **Score**.
+
+- **Tìm và lọc:** bấm <kbd>Ctrl</kbd>+<kbd>K</kbd> (<kbd>Cmd</kbd>+<kbd>K</kbd> trên macOS) để nhảy tới thanh lọc. Lưu bộ lọc hay dùng; nó xuất hiện ở **Saved filters** trong sidebar.
+- **Panel profile:** bấm vào một dòng để mở panel. Các tab: **Overview**, **Fingerprint**, **Network**, **Data** (cookie, ảnh chụp, bộ dữ liệu), **Automation**, **Extension** và **Test**. **Duplicate** nằm ở đầu panel; bản sao nhận fingerprint mới với cùng hệ điều hành, ngôn ngữ và múi giờ.
+- **Nhiều profile cùng lúc:** tích ô chọn của chúng rồi dùng thanh chọn để **Launch**, **Assign Pool**, **Assign dataset**, **Test** hoặc **Delete**. Profile đã xoá nằm trong **Trash**, nơi bạn khôi phục được.
+
+Tối đa 16 trình duyệt mở cùng lúc, dù bạn mở bằng tay, từ lịch hay qua API.
+
+## Giới hạn của gói Free
+
+Gói Free gồm 5 profile trên 1 máy. Tạo nhiều profile cùng lúc (**Batch create**), Veilus Flow, lịch chạy, Veilus Sync và API/MCP cục bộ cần gói trả phí hoặc bản dùng thử 7 ngày. Xem [Gói và license](/vi/reference/plans-and-license/).
+
+## Bước tiếp theo
+
+- [Tạo thêm profile](/vi/profiles/create/)
+- [Fingerprint](/vi/profiles/fingerprinting/)
+- [Thiết lập proxy](/vi/profiles/proxy/)
+- [Tự động hoá với Veilus Flow](/vi/automation/overview/)

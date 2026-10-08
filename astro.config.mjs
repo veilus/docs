@@ -1,5 +1,6 @@
 // @ts-check
 import { readdirSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 import sitemap from '@astrojs/sitemap';
@@ -18,6 +19,29 @@ const isRealPage = (page) => {
 	return !pathname.startsWith('/vi/') || viPages.has(pathname);
 };
 
+// lastmod của sitemap = ngày commit cuối của file nguồn (cùng nguồn với lastUpdated mà Starlight in dưới trang).
+// deploy.yml phải checkout với fetch-depth: 0, clone nông thì git log chỉ thấy commit mới nhất và mọi trang mang ngày deploy.
+// Trang không tìm được file nguồn (ví dụ trang 404) thì không có lastmod — thiếu còn hơn sai.
+const sourceByPath = new Map(
+	readdirSync('src/content/docs', { recursive: true })
+		.filter((f) => /\.mdx?$/.test(String(f)))
+		.map((f) => {
+			const p = '/' + String(f).replace(/\.mdx?$/, '').replace(/(^|\/)index$/, '$1');
+			return [p.endsWith('/') ? p : `${p}/`, `src/content/docs/${f}`];
+		}),
+);
+const lastCommitDate = (file) => {
+	try {
+		return execFileSync('git', ['log', '-1', '--format=%cI', '--', file], { encoding: 'utf8' }).trim() || undefined;
+	} catch {
+		return undefined;
+	}
+};
+const withLastmod = (item) => {
+	const lastmod = lastCommitDate(sourceByPath.get(new URL(item.url).pathname));
+	return lastmod ? { ...item, lastmod } : item;
+};
+
 export default defineConfig({
 	site: 'https://docs.veilus.io',
 	integrations: [
@@ -28,6 +52,7 @@ export default defineConfig({
 				{ icon: 'x.com', label: 'X', href: 'https://x.com/veilusbrowser' },
 				{ icon: 'telegram', label: 'Telegram', href: 'https://t.me/veilusbrowser' },
 			],
+			lastUpdated: true,
 			components: { Banner: './src/components/VersionBanner.astro', Head: './src/components/Head.astro' },
 			customCss: ['./src/styles/fonts.css', './src/styles/custom.css'],
 			defaultLocale: 'root',
@@ -84,6 +109,7 @@ export default defineConfig({
 		// Khai riêng thì Starlight không tự thêm sitemap của nó; i18n chép đúng cấu hình Starlight đang dùng.
 		sitemap({
 			filter: isRealPage,
+			serialize: withLastmod,
 			i18n: { defaultLocale: 'root', locales: { root: 'en', vi: 'vi' } },
 		}),
 	],

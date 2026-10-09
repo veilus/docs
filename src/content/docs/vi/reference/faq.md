@@ -15,7 +15,7 @@ Windows 10/11 (x64) và macOS 13 trở lên trên Apple Silicon. Không có bả
 Bộ cài chỉ chứa app. Engine trình duyệt là bản tải riêng để bạn chọn và đổi phiên bản engine trong **Settings → Engine & updates**. Xem [Cài đặt](/vi/getting-started/installation/#tải-engine-trình-duyệt).
 
 ### Veilus có tự cập nhật không?
-Không. Tải bộ cài mới nhất từ [veilus.io/download](https://veilus.io/vi/download/) và cài đè lên bản hiện tại. Phiên bản engine cập nhật riêng trong **Settings → Engine & updates**.
+Có, từ phiên bản 0.2.6. Mỗi lần mở, app kiểm bản mới và, nếu có, đưa nút **Update and restart**; không có gì được cài cho tới khi bạn bấm. Bạn cũng có thể bấm **Check for updates** trong **Settings → Engine & updates**. Với bản 0.2.5 trở về trước, cài bản mới nhất từ [veilus.io/download](https://veilus.io/vi/download/) đè lên một lần. Phiên bản engine cập nhật riêng, cũng ở trang cài đặt đó. Xem [Cập nhật Veilus](/vi/getting-started/installation/#cập-nhật-veilus).
 
 ## Profile và fingerprint
 

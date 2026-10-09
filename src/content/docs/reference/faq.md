@@ -15,7 +15,7 @@ Windows 10/11 (x64) and macOS 13 or later on Apple Silicon. There are no other b
 The installer contains only the app. The browser engine is a separate download so you can choose and switch engine versions in **Settings → Engine & updates**. See [Installation](/getting-started/installation/#download-the-browser-engine).
 
 ### Does Veilus update itself?
-No. Download the latest installer from [veilus.io/download](https://veilus.io/download/) and install it over the current version. Engine versions are updated separately in **Settings → Engine & updates**.
+Yes, from version 0.2.6. The app checks for a new version each time it starts and, when one exists, offers **Update and restart**; nothing installs until you click it. You can also click **Check for updates** in **Settings → Engine & updates**. On 0.2.5 or earlier, install the latest version from [veilus.io/download](https://veilus.io/download/) once over the current one. Engine versions are updated separately, on the same settings page. See [Updating Veilus](/getting-started/installation/#updating-veilus).
 
 ## Profiles and fingerprints
 

@@ -33,7 +33,7 @@ Every download is checked against Veilus's signed version index (SHA-256) before
 
 ## Updates
 
-The **Updates** section, below the Chromium Version Manager on the same page, only shows the engine build currently in use ("Engine in use: `<version>`"). It doesn't check for new versions or switch builds.
+The **Updates** section, below the Chromium Version Manager on the same page, shows the engine build currently in use ("Engine in use: `<version>`"). It doesn't check for new engine versions or switch builds. The **Check for updates** button in the same section is for the Veilus app itself, not the engine; see [Updating Veilus](/getting-started/installation/#updating-veilus).
 
 There is no scheduled or background check for new engine versions, and no setting to turn one on or off. Veilus syncs the version list once, silently, whenever you open **Settings → Engine & updates**; otherwise, syncing happens only when you click **Sync from Cloud** yourself.
 

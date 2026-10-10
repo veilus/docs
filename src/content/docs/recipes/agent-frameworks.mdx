@@ -1,0 +1,120 @@
+---
+title: Use a Profile from Other Tools
+description: Drive a running Veilus profile from Playwright, Puppeteer, playwright-mcp, agent-browser, browser-use or Crawl4AI over its local CDP address.
+sidebar:
+  order: 4
+---
+
+Most browser automation tools and AI browser agents can attach to a Chromium that is already running, over the Chrome DevTools Protocol (CDP). A running Veilus profile exposes that address, so you can keep the tool you already use and point it at a profile — with that profile's fingerprint, proxy and cookies.
+
+## Get the profile's CDP address
+
+You need the local API turned on — see [REST API](/reference/rest-api/) for the port and token.
+
+Launch the profile; the answer carries its `cdpUrl`:
+
+```bash
+curl -X POST \
+  -H "Authorization: Bearer $VEILUS_API_TOKEN" \
+  http://127.0.0.1:<port>/v1/profiles/<profile-id>/launch
+```
+
+```json
+{ "pid": 56891, "cdpUrl": "http://127.0.0.1:61761" }
+```
+
+A profile you opened from the app also has a `cdpUrl` while it runs: `GET /v1/profiles` lists it on each running profile. Over [MCP](/reference/mcp/), `launch_profile` and `list_profiles` return the same field.
+
+The address changes every time the profile starts. Read it again after each launch.
+
+## Before you connect
+
+- **The CDP address has no password.** Any program on your machine can use it while the profile runs. It only listens on `127.0.0.1`.
+- **Use the browser as it is.** Work in the profile's existing window and context. Don't create a new context with your own user agent, viewport or locale options — those override the profile's values for that context.
+- **Disconnect, don't close.** Ending your script should detach from the browser. The profile stays open until you stop it from the app or with `POST /v1/profiles/<profile-id>/stop`.
+- **A connected tool is still a connected tool.** Veilus keeps the profile's identity; it can't hide that an automation client is driving the page while one is attached.
+
+## Playwright
+
+```js
+import { chromium } from 'playwright';
+
+const browser = await chromium.connectOverCDP(cdpUrl);
+const context = browser.contexts()[0];
+const page = context.pages()[0] ?? (await context.newPage());
+await page.goto('https://example.com');
+console.log(await page.title());
+await browser.close(); // detaches; the profile keeps running
+```
+
+Use `browser.contexts()[0]`, not `browser.newContext()`.
+
+## Puppeteer
+
+```js
+import puppeteer from 'puppeteer';
+
+const browser = await puppeteer.connect({ browserURL: cdpUrl, defaultViewport: null });
+const [page] = await browser.pages();
+await page.goto('https://example.com');
+console.log(await page.title());
+await browser.disconnect();
+```
+
+Keep `defaultViewport: null`. Without it, Puppeteer resizes the page to 800×600, and that size stays on the tab after Puppeteer disconnects.
+
+## playwright-mcp
+
+Point the server at the profile instead of letting it start its own browser:
+
+```json
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp", "--cdp-endpoint", "http://127.0.0.1:61761"]
+    }
+  }
+}
+```
+
+Replace the address with the profile's current `cdpUrl`, and restart the MCP client after each profile launch.
+
+## agent-browser
+
+`agent-browser connect` takes the port part of `cdpUrl`:
+
+```bash
+agent-browser connect 61761
+agent-browser open https://example.com
+agent-browser get title
+```
+
+## browser-use
+
+```python
+from browser_use import Browser
+
+browser = Browser(cdp_url=cdp_url, keep_alive=True)
+```
+
+Pass it to your agent as `Agent(task=..., llm=..., browser=browser)`. `keep_alive=True` leaves the profile running when the agent finishes.
+
+## Crawl4AI
+
+```python
+import asyncio
+from crawl4ai import AsyncWebCrawler, BrowserConfig
+
+async def main():
+    config = BrowserConfig(browser_mode="cdp", cdp_url=cdp_url)
+    async with AsyncWebCrawler(config=config) as crawler:
+        result = await crawler.arun("https://example.com")
+        print(result.metadata.get("title"))
+
+asyncio.run(main())
+```
+
+## Tested versions
+
+Each example above was run against a Veilus profile on macOS on October 11, 2026, with: Playwright 1.64.0, Puppeteer 25.13.0, playwright-mcp 0.0.83, agent-browser 0.27.0, browser-use 0.13.11, Crawl4AI 0.9.4. In each, the page reported the profile's own user agent, screen size, time zone and language, and the page filled the browser window — no tool resized it, as long as Puppeteer was given `defaultViewport: null`. Newer releases of these tools may change their defaults — if a page suddenly reports a smaller size than its window, check the tool's viewport option first.

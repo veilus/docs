@@ -104,6 +104,8 @@ export default defineConfig({
 			],
 			head: [
 				{ tag: 'meta', attrs: { name: 'theme-color', content: '#F2EFE7' } },
+				// Xác minh Yandex Webmaster (VEIL-1345): docs.veilus.io là CNAME GitHub Pages, không đặt được TXT. Mã theo tài khoản Yandex.
+				{ tag: 'meta', attrs: { name: 'yandex-verification', content: '7901ddd8845b1fdd' } },
 			],
 		}),
 		// Khai riêng thì Starlight không tự thêm sitemap của nó; i18n chép đúng cấu hình Starlight đang dùng.

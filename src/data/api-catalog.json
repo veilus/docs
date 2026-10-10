@@ -585,7 +585,7 @@
     },
     {
       "name": "click",
-      "description": "Click an element of a running profile's page by node_id (a DOM click on the element). Fails if the page changed since the snapshot (take a new one) or if the node cannot be clicked, such as a text node. A JavaScript alert/confirm/prompt that the action opens is answered at once: `dialog` \"dismiss\" (default, i.e. Cancel) or \"accept\" (OK), with `prompt_text` as the typed answer to a prompt; the result says which dialog opened and how it was answered.",
+      "description": "Click an element of a running profile's page by node_id with a real mouse: the pointer moves to a point inside the element, then presses and releases. Fails if the page changed since the snapshot (take a new one), if the element has no visible box (hidden or zero-size — click its visible label or parent), or if another element covers it (the error names it — close or scroll past it first). A JavaScript alert/confirm/prompt that the action opens is answered at once: `dialog` \"dismiss\" (default, i.e. Cancel) or \"accept\" (OK), with `prompt_text` as the typed answer to a prompt; the result says which dialog opened and how it was answered.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
@@ -1456,7 +1456,7 @@
     {
       "method": "POST",
       "path": "/v1/profiles/:id/click",
-      "summary": "Click the element with a node id from snapshot or wait-for-element.",
+      "summary": "Click the element with a node id from snapshot or wait-for-element, with a real mouse; refuses hidden or covered elements.",
       "body": {
         "properties": {
           "node_id": {

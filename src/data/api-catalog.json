@@ -2,7 +2,7 @@
   "mcpTools": [
     {
       "name": "list_profiles",
-      "description": "List Veilus browser profiles, with their running state.",
+      "description": "List Veilus browser profiles, with their running state. A running profile also carries `cdpUrl` (see launch_profile).",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {},
@@ -11,7 +11,7 @@
     },
     {
       "name": "launch_profile",
-      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid}`. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing.",
+      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
@@ -1003,7 +1003,7 @@
     {
       "method": "GET",
       "path": "/v1/profiles",
-      "summary": "List Veilus browser profiles, with their running state."
+      "summary": "List Veilus browser profiles, with their running state; a running profile carries `cdpUrl`."
     },
     {
       "method": "GET",
@@ -1039,7 +1039,7 @@
     {
       "method": "POST",
       "path": "/v1/profiles/:id/launch",
-      "summary": "Launch a profile's browser and wait for it to start; a full pool fails with 409 rather than queuing."
+      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing."
     },
     {
       "method": "POST",

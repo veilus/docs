@@ -11,10 +11,14 @@
     },
     {
       "name": "launch_profile",
-      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing.",
+      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing. With `diagnostic: true` it opens the profile without its fingerprint, to tell whether a site blocks the fingerprint or the proxy.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "diagnostic": {
+            "description": "Diagnostic launch: the profile's proxy, but none of its fingerprint, in a fresh temporary browser directory deleted on stop — no cookies or logins, and nothing is written to the profile. The page sees THIS machine's real values (platform, CPU cores, GPU, screen, timezone, languages): use it to tell whether a site blocks the fingerprint or the IP/proxy, never on an account you care about. The engine's CDP hiding still applies; WebRTC is restricted to the proxy. Default false.",
+            "type": "boolean"
+          },
           "profile_id": {
             "description": "Profile UUID",
             "type": "string"
@@ -1039,7 +1043,17 @@
     {
       "method": "POST",
       "path": "/v1/profiles/:id/launch",
-      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing."
+      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing. Optional body `{diagnostic: true}`: the profile's proxy without its fingerprint, in a temporary directory.",
+      "body": {
+        "additionalProperties": false,
+        "properties": {
+          "diagnostic": {
+            "description": "Diagnostic launch: the profile's proxy, but none of its fingerprint, in a fresh temporary browser directory deleted on stop — no cookies or logins, and nothing is written to the profile. The page sees THIS machine's real values (platform, CPU cores, GPU, screen, timezone, languages): use it to tell whether a site blocks the fingerprint or the IP/proxy, never on an account you care about. The engine's CDP hiding still applies; WebRTC is restricted to the proxy. Default false.",
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      }
     },
     {
       "method": "POST",

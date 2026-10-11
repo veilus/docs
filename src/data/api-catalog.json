@@ -686,7 +686,7 @@
     },
     {
       "name": "scroll",
-      "description": "Scroll a running profile's page by `amount` pixels (1 to 20000) in direction up, down, left or right.",
+      "description": "Scroll a running profile's page by `amount` pixels (1 to 20000) in direction up, down, left or right, with mouse-wheel steps at the pointer's position. Like a real wheel, a scrollable area under the pointer scrolls instead of the page — after a click inside such an area, scroll there, or click outside it first.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
@@ -1522,7 +1522,7 @@
     {
       "method": "POST",
       "path": "/v1/profiles/:id/scroll",
-      "summary": "Scroll a running profile's page by a number of pixels in one direction.",
+      "summary": "Scroll a running profile's page by a number of pixels in one direction, with mouse-wheel steps at the pointer.",
       "body": {
         "properties": {
           "amount": {

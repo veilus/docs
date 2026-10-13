@@ -23,7 +23,7 @@ If a required variable gets no value from the profile, its datasets or the scrip
 
 If a selected profile's content dataset has no unused rows left, the dialog names the profile and the dataset and keeps the run button disabled, because that profile would fail as soon as the run starts. Add rows, or use **Return used rows** on the dataset's page.
 
-Only approved scripts run. Running a script on several profiles at the same time is a Pro feature, also included in the trial. If your plan doesn't include it, set **Concurrency** to 1 and the profiles run one after another.
+Only approved scripts run. Running scripts needs a paid plan or the 7-day Pro trial; the Free plan doesn't include Veilus Flow.
 
 ## What happens during a run
 

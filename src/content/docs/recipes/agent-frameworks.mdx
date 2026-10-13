@@ -7,6 +7,52 @@ sidebar:
 
 Most browser automation tools and AI browser agents can attach to a Chromium that is already running, over the Chrome DevTools Protocol (CDP). A running Veilus profile exposes that address, so you can keep the tool you already use and point it at a profile — with that profile's fingerprint, proxy and cookies.
 
+## SDK for Node and Python
+
+If you write your own Playwright script, the `veilus` package finds the local API, launches the profile and connects Playwright to it in one call. It needs Veilus 0.2.9 or newer with the local API turned on, and an API token in `VEILUS_API_TOKEN` — see [REST API](/reference/rest-api/).
+
+```bash
+npm install veilus playwright-core
+```
+
+```js
+import { Veilus } from 'veilus';
+
+const veilus = new Veilus();
+const [profile] = await veilus.listProfiles();
+
+const { page, close } = await veilus.connect(profile.id);
+await page.goto('https://example.com');
+console.log(await page.title());
+await close(); // detaches; the profile keeps running
+```
+
+```bash
+pip install "veilus[playwright]"
+```
+
+```python
+import asyncio
+from veilus import Veilus
+
+
+async def main():
+    veilus = Veilus()
+    profile = (await veilus.list_profiles())[0]
+
+    session = await veilus.connect(profile["id"])
+    await session.page.goto("https://example.com")
+    print(await session.page.title())
+    await session.close()  # detaches; the profile keeps running
+
+
+asyncio.run(main())
+```
+
+`connect()` reuses the profile if it is already running, otherwise launches it, and returns the profile's own context and page. The full API is in the package README on [npm](https://www.npmjs.com/package/veilus) and [PyPI](https://pypi.org/project/veilus/). For any other tool, read the profile's CDP address yourself, as below.
+
+Both examples were run on macOS on October 13, 2026, with `veilus` 0.1.0 from npm (Node 22, playwright-core 1.64.0) and from PyPI (Python 3.14, Playwright 1.63.0), against Veilus 0.2.10. After `close()`, the profile was still running.
+
 ## Get the profile's CDP address
 
 You need the local API turned on — see [REST API](/reference/rest-api/) for the port and token.

@@ -2,7 +2,7 @@
   "mcpTools": [
     {
       "name": "list_profiles",
-      "description": "List Veilus browser profiles, with their running state. A running profile also carries `cdpUrl` (see launch_profile).",
+      "description": "List Veilus browser profiles, with their running state. A running profile also carries `cdpUrl` (see launch_profile), and `headless: true` when it runs without a window.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {},
@@ -11,12 +11,16 @@
     },
     {
       "name": "launch_profile",
-      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing. With `diagnostic: true` it opens the profile without its fingerprint, to tell whether a site blocks the fingerprint or the proxy.",
+      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing. With `diagnostic: true` it opens the profile without its fingerprint, to tell whether a site blocks the fingerprint or the proxy. With `headless: true` it runs without a window.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
           "diagnostic": {
             "description": "Diagnostic launch: the profile's proxy, but none of its fingerprint, in a fresh temporary browser directory deleted on stop — no cookies or logins, and nothing is written to the profile. The page sees THIS machine's real values (platform, CPU cores, GPU, screen, timezone, languages): use it to tell whether a site blocks the fingerprint or the IP/proxy, never on an account you care about. The engine's CDP hiding still applies; WebRTC is restricted to the proxy. Default false.",
+            "type": "boolean"
+          },
+          "headless": {
+            "description": "Headless launch: the browser runs without a window (`--headless=new`). The profile's fingerprint is unchanged, including its screen size, and the engine's CDP hiding still applies. Measured on the macOS engine 154: detector sites score a headless launch like a windowed one — it is NOT a stealth feature and NOT more detectable. A profile that is already running is not relaunched (409): reuse it through the profile list, which reports its `cdpUrl` and whether it runs headless. Default false.",
             "type": "boolean"
           },
           "profile_id": {
@@ -36,6 +40,10 @@
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
+          "headless": {
+            "description": "Launch the run's profiles headless, without a window — the same launch as launch_profile's `headless` (see there): the profile's fingerprint is unchanged. Default false.",
+            "type": "boolean"
+          },
           "profile_ids": {
             "description": "UUIDs of the profiles to run on",
             "items": {
@@ -412,6 +420,10 @@
             "type": "integer"
           },
           "enabled": {
+            "type": "boolean"
+          },
+          "headless": {
+            "description": "Launch the run's profiles headless, without a window — the same launch as launch_profile's `headless` (see there): the profile's fingerprint is unchanged. Default false.",
             "type": "boolean"
           },
           "interval_minutes": {
@@ -1007,7 +1019,7 @@
     {
       "method": "GET",
       "path": "/v1/profiles",
-      "summary": "List Veilus browser profiles, with their running state; a running profile carries `cdpUrl`."
+      "summary": "List Veilus browser profiles, with their running state; a running profile carries `cdpUrl`, and `headless: true` when it runs without a window."
     },
     {
       "method": "GET",
@@ -1043,12 +1055,16 @@
     {
       "method": "POST",
       "path": "/v1/profiles/:id/launch",
-      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing. Optional body `{diagnostic: true}`: the profile's proxy without its fingerprint, in a temporary directory.",
+      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing. Optional body `{diagnostic?: bool, headless?: bool}`: `diagnostic` opens the profile's proxy without its fingerprint, in a temporary directory; `headless` runs it without a window. A profile that is already running is not relaunched (409).",
       "body": {
         "additionalProperties": false,
         "properties": {
           "diagnostic": {
             "description": "Diagnostic launch: the profile's proxy, but none of its fingerprint, in a fresh temporary browser directory deleted on stop — no cookies or logins, and nothing is written to the profile. The page sees THIS machine's real values (platform, CPU cores, GPU, screen, timezone, languages): use it to tell whether a site blocks the fingerprint or the IP/proxy, never on an account you care about. The engine's CDP hiding still applies; WebRTC is restricted to the proxy. Default false.",
+            "type": "boolean"
+          },
+          "headless": {
+            "description": "Headless launch: the browser runs without a window (`--headless=new`). The profile's fingerprint is unchanged, including its screen size, and the engine's CDP hiding still applies. Measured on the macOS engine 154: detector sites score a headless launch like a windowed one — it is NOT a stealth feature and NOT more detectable. A profile that is already running is not relaunched (409): reuse it through the profile list, which reports its `cdpUrl` and whether it runs headless. Default false.",
             "type": "boolean"
           }
         },
@@ -1066,6 +1082,10 @@
       "summary": "Start a script run on given profiles; returns the run immediately (its `id` is the run_id).",
       "body": {
         "properties": {
+          "headless": {
+            "description": "Launch the run's profiles headless, without a window — the same launch as launch_profile's `headless` (see there): the profile's fingerprint is unchanged. Default false.",
+            "type": "boolean"
+          },
           "profile_ids": {
             "items": {
               "format": "uuid",
@@ -1286,6 +1306,11 @@
           },
           "enabled": {
             "default": true,
+            "type": "boolean"
+          },
+          "headless": {
+            "default": false,
+            "description": "Launch the run's profiles headless, without a window — the same launch as launch_profile's `headless` (see there): the profile's fingerprint is unchanged. Default false.",
             "type": "boolean"
           },
           "interval_minutes": {

@@ -49,7 +49,7 @@ async def main():
 asyncio.run(main())
 ```
 
-`connect()` reuses the profile if it is already running, otherwise launches it, and returns the profile's own context and page. The full API is in the package README on [npm](https://www.npmjs.com/package/veilus) and [PyPI](https://pypi.org/project/veilus/). For any other tool, read the profile's CDP address yourself, as below.
+`connect()` reuses the profile if it is already running, otherwise launches it, and returns the profile's own context and page. Pass `headless: true` (Python: `headless=True`) to launch it without a browser window; a profile that is already running is reused as it is. The full API is in the package README on [npm](https://www.npmjs.com/package/veilus) and [PyPI](https://pypi.org/project/veilus/). For any other tool, read the profile's CDP address yourself, as below.
 
 Both examples were run on macOS on October 13, 2026, with `veilus` 0.1.0 from npm (Node 22, playwright-core 1.64.0) and from PyPI (Python 3.14, Playwright 1.63.0), against Veilus 0.2.10. After `close()`, the profile was still running.
 

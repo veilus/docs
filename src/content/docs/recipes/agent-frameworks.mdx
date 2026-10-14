@@ -141,10 +141,10 @@ agent-browser get title
 ```python
 from browser_use import Browser
 
-browser = Browser(cdp_url=cdp_url, keep_alive=True)
+browser = Browser(cdp_url=cdp_url, keep_alive=True, headless=False, no_viewport=True)
 ```
 
-Pass it to your agent as `Agent(task=..., llm=..., browser=browser)`. `keep_alive=True` leaves the profile running when the agent finishes. Full example: [browser_use_example.py](https://github.com/veilus/sdk/blob/main/examples/python/browser_use_example.py).
+Pass it to your agent as `Agent(task=..., llm=..., browser=browser)`. `keep_alive=True` leaves the profile running when the agent finishes. `headless=False` and `no_viewport=True` stop browser-use from resizing the profile's tabs when your script runs on a machine without a display. Full example: [browser_use_example.py](https://github.com/veilus/sdk/blob/main/examples/python/browser_use_example.py).
 
 The example uses `claude-haiku-5-5`. browser-use 0.13.11 asks the model for a forced tool choice, and `claude-sonnet-5-5` and `claude-opus-5-5` reject that request.
 
@@ -155,13 +155,18 @@ import asyncio
 from crawl4ai import AsyncWebCrawler, BrowserConfig
 
 async def main():
-    config = BrowserConfig(browser_mode="cdp", cdp_url=cdp_url)
+    config = BrowserConfig(
+        browser_mode="cdp", cdp_url=cdp_url, use_managed_browser=True, user_agent=""
+    )
+    config.headers.pop("sec-ch-ua", None)
     async with AsyncWebCrawler(config=config) as crawler:
         result = await crawler.arun("https://example.com")
         print(result.metadata.get("title"))
 
 asyncio.run(main())
 ```
+
+Keep all three settings. Without them, Crawl4AI 0.9.4 opens its own context and sends its own `User-Agent` and `sec-ch-ua` headers instead of the profile's. Full example: [crawl4ai_example.py](https://github.com/veilus/sdk/blob/main/examples/python/crawl4ai_example.py).
 
 ## Stagehand
 
@@ -235,4 +240,4 @@ The example subclasses Crawlee's `PlaywrightBrowserController`; check it again w
 
 On October 14, 2026, every example in [veilus/sdk/examples](https://github.com/veilus/sdk/blob/main/examples) ran against a Veilus profile on macOS: it opened a page, read its title and left the profile running. Versions: Playwright 1.64.0, Puppeteer 25.13.0, playwright-mcp 0.0.83, agent-browser 0.39.1, Crawl4AI 0.9.4, LangChain (langchain-community) 0.4.2, Scrapling 0.4.6, Crawlee 1.10.4, browser-use 0.13.11, Stagehand 3.7.3. The current table is [examples/TESTED.md](https://github.com/veilus/sdk/blob/main/examples/TESTED.md).
 
-On October 11, 2026, with Playwright, Puppeteer, playwright-mcp, agent-browser, browser-use and Crawl4AI, the page also reported the profile's own user agent, screen size, time zone and language, and filled the browser window — no tool resized it, as long as Puppeteer was given `defaultViewport: null`. Newer releases of these tools may change their defaults — if a page suddenly reports a smaller size than its window, check the tool's viewport option first.
+On October 11, 2026, with Playwright, Puppeteer, playwright-mcp, agent-browser and browser-use, the page also reported the profile's own user agent, screen size, time zone and language, and filled the browser window — no tool resized it, as long as Puppeteer was given `defaultViewport: null`. Newer releases of these tools may change their defaults — if a page suddenly reports a smaller size than its window, check the tool's viewport option first.

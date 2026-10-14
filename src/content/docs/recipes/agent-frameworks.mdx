@@ -1,6 +1,6 @@
 ---
 title: Use a Profile from Other Tools
-description: Drive a running Veilus profile from Playwright, Puppeteer, playwright-mcp, agent-browser, browser-use or Crawl4AI over its local CDP address.
+description: Drive a running Veilus profile from Playwright, Puppeteer, playwright-mcp, agent-browser, browser-use, Stagehand, Crawl4AI, LangChain, Scrapling or Crawlee over its local CDP address.
 sidebar:
   order: 4
 ---
@@ -144,7 +144,9 @@ from browser_use import Browser
 browser = Browser(cdp_url=cdp_url, keep_alive=True)
 ```
 
-Pass it to your agent as `Agent(task=..., llm=..., browser=browser)`. `keep_alive=True` leaves the profile running when the agent finishes.
+Pass it to your agent as `Agent(task=..., llm=..., browser=browser)`. `keep_alive=True` leaves the profile running when the agent finishes. Full example: [browser_use_example.py](https://github.com/veilus/sdk/blob/main/examples/python/browser_use_example.py).
+
+The example uses `claude-haiku-5-5`. browser-use 0.13.11 asks the model for a forced tool choice, and `claude-sonnet-5-5` and `claude-opus-5-5` reject that request.
 
 ## Crawl4AI
 
@@ -161,6 +163,76 @@ async def main():
 asyncio.run(main())
 ```
 
+## Stagehand
+
+```js
+import { Stagehand } from '@browserbasehq/stagehand';
+import { z } from 'zod';
+
+// Stagehand wants the browser's WebSocket endpoint, not the http:// address.
+const { webSocketDebuggerUrl } = await (await fetch(`${cdpUrl}/json/version`)).json();
+const stagehand = new Stagehand({
+  env: 'LOCAL',
+  localBrowserLaunchOptions: { cdpUrl: webSocketDebuggerUrl },
+  model: 'anthropic/claude-sonnet-5-5',
+});
+await stagehand.init();
+const page = stagehand.context.pages()[0];
+await page.goto('https://example.com');
+const { title } = await stagehand.extract('the page title', z.object({ title: z.string() }));
+console.log(title);
+await stagehand.close({ force: false }); // detaches; the profile keeps running
+```
+
+Use `stagehand.context.pages()[0]` — the profile's own tab. `extract` calls the model, so set `ANTHROPIC_API_KEY`. Full example: [stagehand.mjs](https://github.com/veilus/sdk/blob/main/examples/js/stagehand.mjs).
+
+## LangChain
+
+```python
+from langchain_community.agent_toolkits import PlayWrightBrowserToolkit
+from playwright.async_api import async_playwright
+
+async with async_playwright() as p:
+    browser = await p.chromium.connect_over_cdp(cdp_url)
+    toolkit = PlayWrightBrowserToolkit.from_browser(async_browser=browser)
+    tools = {t.name: t for t in toolkit.get_tools()}
+    await tools["navigate_browser"].arun({"url": "https://example.com"})
+    print(await browser.contexts[0].pages[-1].title())
+```
+
+Calling a tool directly needs no LLM; hand `toolkit.get_tools()` to your agent when you want one to choose. Leaving the `async with` block disconnects; the profile keeps running. Full example: [langchain_example.py](https://github.com/veilus/sdk/blob/main/examples/python/langchain_example.py).
+
+## Scrapling
+
+```python
+from playwright.async_api import async_playwright
+from scrapling.parser import Selector
+
+async with async_playwright() as pw:
+    browser = await pw.chromium.connect_over_cdp(cdp_url)
+    page = await browser.contexts[0].new_page()
+    await page.goto("https://example.com")
+    html = await page.content()
+    await page.close()
+print(Selector(html).css("title::text").get())
+```
+
+Playwright drives the profile's browser and Scrapling parses the page. Scrapling's own fetchers open a new browser context, which would not carry the profile's cookies. Full example: [scrapling_example.py](https://github.com/veilus/sdk/blob/main/examples/python/scrapling_example.py).
+
+## Crawlee
+
+Crawlee starts its own browser by default. Give it a browser plugin that connects to the profile instead, and a controller that opens pages in the profile's existing context and never closes it — the full plugin is about 30 lines: [crawlee_example.py](https://github.com/veilus/sdk/blob/main/examples/python/crawlee_example.py).
+
+```python
+crawler = PlaywrightCrawler(
+    browser_pool=BrowserPool(plugins=[VeilusPlugin(cdp_url)])
+)
+```
+
+The example subclasses Crawlee's `PlaywrightBrowserController`; check it again when you upgrade Crawlee.
+
 ## Tested versions
 
-Each example above was run against a Veilus profile on macOS on October 11, 2026, with: Playwright 1.64.0, Puppeteer 25.13.0, playwright-mcp 0.0.83, agent-browser 0.27.0, browser-use 0.13.11, Crawl4AI 0.9.4. In each, the page reported the profile's own user agent, screen size, time zone and language, and the page filled the browser window — no tool resized it, as long as Puppeteer was given `defaultViewport: null`. Newer releases of these tools may change their defaults — if a page suddenly reports a smaller size than its window, check the tool's viewport option first.
+On October 14, 2026, every example in [veilus/sdk/examples](https://github.com/veilus/sdk/blob/main/examples) ran against a Veilus profile on macOS: it opened a page, read its title and left the profile running. Versions: Playwright 1.64.0, Puppeteer 25.13.0, playwright-mcp 0.0.83, agent-browser 0.39.1, Crawl4AI 0.9.4, LangChain (langchain-community) 0.4.2, Scrapling 0.4.6, Crawlee 1.10.4, browser-use 0.13.11, Stagehand 3.7.3. The current table is [examples/TESTED.md](https://github.com/veilus/sdk/blob/main/examples/TESTED.md).
+
+On October 11, 2026, with Playwright, Puppeteer, playwright-mcp, agent-browser, browser-use and Crawl4AI, the page also reported the profile's own user agent, screen size, time zone and language, and filled the browser window — no tool resized it, as long as Puppeteer was given `defaultViewport: null`. Newer releases of these tools may change their defaults — if a page suddenly reports a smaller size than its window, check the tool's viewport option first.

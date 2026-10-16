@@ -209,7 +209,7 @@ export function codeSample(
         case "curl":
             return [
                 `curl --request ${e.method} '${url}'`,
-                `  --header 'Authorization: Bearer $${TOKEN_ENV}'`,
+                `  --header "Authorization: Bearer $${TOKEN_ENV}"`,
                 ...(hasBody
                     ? [
                           `  --header 'Content-Type: application/json'`,

@@ -6829,7 +6829,7 @@
         ]
       },
       "example": {
-        "error": "The local API needs the Pro plan."
+        "error": "API access requires a paid plan."
       }
     },
     {

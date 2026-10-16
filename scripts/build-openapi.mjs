@@ -37,7 +37,13 @@ for (const r of catalog.restRoutes) {
 const doc = {
 	openapi: '3.1.0',
 	info: { title: 'Veilus local API', version: '1.0.0' },
-	servers: [{ url: 'http://127.0.0.1:{port}' }],
+	// Same default as the app's OpenAPI (DEFAULT_REST_PORT in app src-tauri/src/state.rs).
+	servers: [
+		{
+			url: 'http://127.0.0.1:{port}',
+			variables: { port: { default: '10108', description: 'Shown on the API & MCP page' } },
+		},
+	],
 	components: { securitySchemes: { bearer: { type: 'http', scheme: 'bearer' } } },
 	security: [{ bearer: [] }],
 	paths,

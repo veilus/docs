@@ -11,7 +11,7 @@
     },
     {
       "name": "launch_profile",
-      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing. With `diagnostic: true` it opens the profile without its fingerprint, to tell whether a site blocks the fingerprint or the proxy. With `headless: true` it runs without a window.",
+      "description": "Launch a profile: waits for its browser to finish starting, then returns `{pid, cdpUrl}`. `cdpUrl` (http://127.0.0.1:<port>) is the profile's own Chromium DevTools endpoint: any CDP client — Playwright `connectOverCDP`, Puppeteer `connect`, browser-use, playwright-mcp — can drive the profile through it with its fingerprint and proxy. It has no authentication: any local process can use it while the profile runs. If the profile pool is already full this fails immediately with a 409 (`REST returned 409 ...`) rather than queuing. With `diagnostic: true` it opens the profile without its fingerprint, to tell whether a site blocks the fingerprint or the proxy. With `headless: true` it runs without a window. The browser stops by itself after 30 minutes with no call naming the profile; set `idle_timeout_secs` (0 = never) when driving it over `cdpUrl`.",
       "inputSchema": {
         "additionalProperties": false,
         "properties": {
@@ -22,6 +22,11 @@
           "headless": {
             "description": "Headless launch: the browser runs without a window (`--headless=new`). The profile's fingerprint is unchanged, including its screen size, and the engine's CDP hiding still applies. Measured on the macOS engine 154: detector sites score a headless launch like a windowed one — it is NOT a stealth feature and NOT more detectable. A profile that is already running is not relaunched (409): reuse it through the profile list, which reports its `cdpUrl` and whether it runs headless. Default false.",
             "type": "boolean"
+          },
+          "idle_timeout_secs": {
+            "description": "Stop this browser after this many seconds with no Veilus API/MCP call naming the profile (navigate, click, snapshot, ...). Traffic sent straight to `cdpUrl` by another client does NOT count: a framework driving the profile over CDP should pass 0, which never stops it. Default: the app setting, 30 minutes unless changed. Profiles opened from the Veilus window are never stopped this way.",
+            "minimum": 0,
+            "type": "integer"
           },
           "profile_id": {
             "description": "Profile UUID",
@@ -1055,7 +1060,7 @@
     {
       "method": "POST",
       "path": "/v1/profiles/:id/launch",
-      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing. Optional body `{diagnostic?: bool, headless?: bool}`: `diagnostic` opens the profile's proxy without its fingerprint, in a temporary directory; `headless` runs it without a window. A profile that is already running is not relaunched (409).",
+      "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing. Optional body `{diagnostic?: bool, headless?: bool, idle_timeout_secs?: integer}`: `diagnostic` opens the profile's proxy without its fingerprint, in a temporary directory; `headless` runs it without a window; `idle_timeout_secs` stops it after that long with no API call naming it (0 = never; default 30 min). A profile that is already running is not relaunched (409).",
       "body": {
         "additionalProperties": false,
         "properties": {
@@ -1066,6 +1071,11 @@
           "headless": {
             "description": "Headless launch: the browser runs without a window (`--headless=new`). The profile's fingerprint is unchanged, including its screen size, and the engine's CDP hiding still applies. Measured on the macOS engine 154: detector sites score a headless launch like a windowed one — it is NOT a stealth feature and NOT more detectable. A profile that is already running is not relaunched (409): reuse it through the profile list, which reports its `cdpUrl` and whether it runs headless. Default false.",
             "type": "boolean"
+          },
+          "idle_timeout_secs": {
+            "description": "Stop this browser after this many seconds with no Veilus API/MCP call naming the profile (navigate, click, snapshot, ...). Traffic sent straight to `cdpUrl` by another client does NOT count: a framework driving the profile over CDP should pass 0, which never stops it. Default: the app setting, 30 minutes unless changed. Profiles opened from the Veilus window are never stopped this way.",
+            "minimum": 0,
+            "type": "integer"
           }
         },
         "type": "object"

@@ -1,13 +1,10 @@
 // Writes public/openapi.json from src/data/api-catalog.json, built the same way
 // the app builds the document it serves at GET /v1/openapi.json. Differences:
-// none — `info.version` is the catalog's `appVersion`, as the app serves it.
+// none — except `info.version`: this document describes the `/v1` API, so it is a fixed "1.0.0";
+// the app's own /v1/openapi.json reports the app version instead.
 import { readFileSync, writeFileSync } from 'node:fs';
 
 const catalog = JSON.parse(readFileSync('src/data/api-catalog.json', 'utf8'));
-if (typeof catalog.appVersion !== 'string' || !catalog.appVersion) {
-	console.error('build-openapi: src/data/api-catalog.json has no appVersion — re-copy it from the app export.');
-	process.exit(1);
-}
 
 const paths = {};
 for (const r of catalog.restRoutes) {
@@ -39,7 +36,7 @@ for (const r of catalog.restRoutes) {
 
 const doc = {
 	openapi: '3.1.0',
-	info: { title: 'Veilus local API', version: catalog.appVersion },
+	info: { title: 'Veilus local API', version: '1.0.0' },
 	servers: [{ url: 'http://127.0.0.1:{port}' }],
 	components: { securitySchemes: { bearer: { type: 'http', scheme: 'bearer' } } },
 	security: [{ bearer: [] }],

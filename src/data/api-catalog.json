@@ -6852,6 +6852,5 @@
       }
     }
   ],
-  "tokenEnv": "VEILUS_API_TOKEN",
-  "appVersion": "0.2.13"
+  "tokenEnv": "VEILUS_API_TOKEN"
 }

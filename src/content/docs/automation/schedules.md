@@ -22,6 +22,7 @@ Schedules are a Pro feature, also included in the trial.
 | **Schedule Type** | **interval**, **daily**, **weekly**, **cron** or **once** (see below) |
 | **Concurrency** | How many profiles run at the same time, from 1 up to the number of profiles picked |
 | **Stagger Delay (ms)** | The pause between two profile launches, in milliseconds |
+| **Run headless** | Open each profile without a browser window. The profile's fingerprint, proxy and cookies are unchanged |
 | **Enable schedule immediately** | Leave on to start the schedule now; turn off to create it paused |
 
 3. Click **Create Schedule**.

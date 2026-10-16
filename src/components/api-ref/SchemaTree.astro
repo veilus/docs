@@ -1,0 +1,79 @@
+---
+import type { SchemaNode } from './apiReference';
+import SchemaTree from './SchemaTree.astro';
+
+interface Props {
+	nodes: SchemaNode[];
+	requiredLabel: string;
+}
+const { nodes, requiredLabel } = Astro.props;
+---
+
+<ul class="schema-tree not-content">
+	{
+		nodes.map((n) => (
+			<li>
+				<div class="field-head">
+					<code class="field-name">{n.name}</code>
+					<span class="field-type">{n.type}</span>
+					{n.required && <span class="field-required">{requiredLabel}</span>}
+				</div>
+				{n.description && <p class="field-desc">{n.description}</p>}
+				{n.children.length > 0 && (
+					<div class="field-children">
+						<SchemaTree nodes={n.children} requiredLabel={requiredLabel} />
+					</div>
+				)}
+			</li>
+		))
+	}
+</ul>
+
+<style>
+	.schema-tree {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 6px;
+		font-size: var(--sl-text-sm);
+	}
+	.schema-tree li {
+		margin: 0;
+		padding: 0.45rem 0.75rem;
+	}
+	.schema-tree li + li {
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+	.field-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0 0.5rem;
+	}
+	.field-name {
+		font-family: var(--sl-font-mono);
+		font-weight: 600;
+	}
+	.field-type {
+		color: var(--sl-color-gray-3);
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+		overflow-wrap: anywhere;
+	}
+	.field-required {
+		font-size: var(--sl-text-2xs);
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+	.field-desc {
+		margin: 0.2rem 0 0;
+		color: var(--sl-color-gray-2);
+		white-space: pre-line;
+	}
+	.field-children {
+		margin-top: 0.4rem;
+		padding-left: 0.75rem;
+	}
+</style>

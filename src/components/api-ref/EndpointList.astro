@@ -1,0 +1,46 @@
+---
+// All REST routes or MCP tools of the catalog, grouped like the app's reference.
+// src/data/api-catalog.json is a verbatim copy of the app's catalog — re-copy, never hand-edit.
+import catalog from '../../data/api-catalog.json';
+import { LABELS, type Lang } from '../catalog-labels';
+import { GROUPS, toEndpoints } from './apiReference';
+import type { ApiCatalog } from './catalogTypes';
+import Endpoint from './Endpoint.astro';
+
+interface Props {
+	section: 'rest' | 'mcp';
+	lang: Lang;
+}
+const { section, lang } = Astro.props;
+const endpoints = toEndpoints(catalog as ApiCatalog, section);
+const groups = GROUPS.map((g) => ({ name: g, items: endpoints.filter((e) => e.group === g) })).filter(
+	(g) => g.items.length > 0,
+);
+---
+
+<div class="api-ref">
+	{
+		groups.map((g) => (
+			<div class="api-group">
+				<p class="api-group-title">{LABELS[lang].groups[g.name] ?? g.name}</p>
+				{g.items.map((e) => (
+					<Endpoint endpoint={e} lang={lang} catalogKey={e.kind === 'mcp' ? e.title : `${e.method} ${e.path}`} />
+				))}
+			</div>
+		))
+	}
+</div>
+
+<style>
+	.api-ref {
+		min-width: 0;
+	}
+	.api-group-title {
+		margin-top: 2.5rem;
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--sl-color-gray-3);
+	}
+</style>

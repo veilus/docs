@@ -53,6 +53,7 @@ export default defineConfig({
 				{ icon: 'telegram', label: 'Telegram', href: 'https://t.me/veilusbrowser' },
 			],
 			lastUpdated: true,
+			routeMiddleware: './src/routeData.ts',
 			components: { Banner: './src/components/VersionBanner.astro', Head: './src/components/Head.astro' },
 			customCss: ['./src/styles/fonts.css', './src/styles/custom.css'],
 			defaultLocale: 'root',

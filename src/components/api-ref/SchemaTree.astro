@@ -1,5 +1,6 @@
 ---
 import type { SchemaNode } from './apiReference';
+import InlineCode from './InlineCode.astro';
 import SchemaTree from './SchemaTree.astro';
 
 interface Props {
@@ -18,7 +19,7 @@ const { nodes, requiredLabel } = Astro.props;
 					<span class="field-type">{n.type}</span>
 					{n.required && <span class="field-required">{requiredLabel}</span>}
 				</div>
-				{n.description && <p class="field-desc">{n.description}</p>}
+				{n.description && <p class="field-desc"><InlineCode text={n.description} /></p>}
 				{n.children.length > 0 && (
 					<div class="field-children">
 						<SchemaTree nodes={n.children} requiredLabel={requiredLabel} />

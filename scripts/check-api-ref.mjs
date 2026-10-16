@@ -13,6 +13,11 @@ const expected = {
 let failed = false;
 for (const lang of ['', 'vi/']) {
 	for (const [page, keys] of Object.entries(expected)) {
+		if (keys.length === 0) {
+			console.error(`check-api-ref: catalog list for ${page} is empty`);
+			failed = true;
+			continue;
+		}
 		const file = `dist/${lang}reference/${page}/index.html`;
 		let html;
 		try {

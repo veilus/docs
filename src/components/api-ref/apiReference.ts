@@ -244,6 +244,14 @@ export function codeSample(
     }
 }
 
+/** Catalog prose → text and `code` parts; an unmatched backtick stays literal. */
+export function inlineCode(text: string): Array<{ code: boolean; text: string }> {
+    return text
+        .split(/`([^`]+)`/)
+        .map((part, i) => ({ code: i % 2 === 1, text: part }))
+        .filter((p) => p.text !== "");
+}
+
 export interface SchemaNode {
     name: string;
     type: string;

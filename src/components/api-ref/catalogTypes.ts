@@ -58,4 +58,6 @@ export interface ApiCatalog {
     /** 401/403/500 — every route can answer them. */
     commonResponses: ResponseDoc[];
     tokenEnv: string;
+    /** The app version the catalog was exported from. */
+    appVersion: string;
 }

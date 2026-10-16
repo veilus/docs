@@ -5,6 +5,7 @@ import type { Lang } from '../catalog-labels';
 import { LABELS } from '../catalog-labels';
 import { schemaTree, typeLabel, type Endpoint } from './apiReference';
 import CodeSamples from './CodeSamples.astro';
+import InlineCode from './InlineCode.astro';
 import SchemaTree from './SchemaTree.astro';
 
 interface Props {
@@ -34,8 +35,8 @@ const paramNodes = e.params.map((p) => ({
 		<code class="path">{e.path}</code>
 		<span class="access">{e.access === 'write' ? t.write : t.read}</span>
 	</p>
-	{e.summary && <p class="prose-line">{e.summary}</p>}
-	<p class="prose-line muted">{e.description}</p>
+	{e.summary && <p class="prose-line"><InlineCode text={e.summary} /></p>}
+	<p class="prose-line muted"><InlineCode text={e.description} /></p>
 	{
 		e.kind === 'mcp' && (
 			<p class="muted small">
@@ -74,7 +75,7 @@ const paramNodes = e.params.map((p) => ({
 					<details>
 						<summary>
 							<code class="status">{r.status}</code>
-							<span class="muted">{r.description}</span>
+							<span class="muted"><InlineCode text={r.description} /></span>
 						</summary>
 						<div class="response-body">
 							<p class="schema-type">{typeLabel(r.schema)}</p>

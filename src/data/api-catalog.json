@@ -5837,7 +5837,7 @@
             "type": "object"
           },
           "example": {
-            "error": "invalid request: `path` must be a file inside the uploads folder /Users/me/.veilus/uploads; copy the file there first"
+            "error": "invalid request: `path` must be a file inside the uploads folder ~/.veilus/uploads; copy the file there first"
           }
         },
         {
@@ -6852,5 +6852,6 @@
       }
     }
   ],
-  "tokenEnv": "VEILUS_API_TOKEN"
+  "tokenEnv": "VEILUS_API_TOKEN",
+  "appVersion": "0.2.13"
 }

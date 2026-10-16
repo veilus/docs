@@ -1,0 +1,198 @@
+---
+// One endpoint of the API reference, laid out like the app's reference page:
+// heading with anchor, description, path params, body schema, responses, samples.
+import type { Lang } from '../catalog-labels';
+import { LABELS } from '../catalog-labels';
+import { schemaTree, typeLabel, type Endpoint } from './apiReference';
+import CodeSamples from './CodeSamples.astro';
+import InlineCode from './InlineCode.astro';
+import SchemaTree from './SchemaTree.astro';
+
+interface Props {
+	endpoint: Endpoint;
+	/** Catalog key the post-build check looks for: "GET /v1/x" or the tool name. */
+	catalogKey: string;
+	lang: Lang;
+}
+const { endpoint: e, catalogKey, lang } = Astro.props;
+const t = LABELS[lang];
+const bodyNodes = e.body ? schemaTree(e.body) : [];
+const paramNodes = e.params.map((p) => ({
+	name: p.name,
+	type: 'string',
+	required: true,
+	description: p.description,
+	children: [],
+}));
+---
+
+<section class="endpoint">
+	<h3 id={e.id} data-endpoint={catalogKey}>
+		<a href={`#${e.id}`}>{e.title}</a>
+	</h3>
+	<p class="endpoint-head">
+		<code class={`method method-${e.method.toLowerCase()}`}>{e.method}</code>
+		<code class="path">{e.path}</code>
+		<span class="access">{e.access === 'write' ? t.write : t.read}</span>
+	</p>
+	{e.summary && <p class="prose-line"><InlineCode text={e.summary} /></p>}
+	<p class="prose-line muted"><InlineCode text={e.description} /></p>
+	{
+		e.kind === 'mcp' && (
+			<p class="muted small">
+				{t.callsRoute} <code>{e.method} {e.path}</code>
+			</p>
+		)
+	}
+
+	{
+		paramNodes.length > 0 && (
+			<>
+				<p class="block-title">{t.pathParams}</p>
+				<SchemaTree nodes={paramNodes} requiredLabel={t.required} />
+			</>
+		)
+	}
+
+	{
+		bodyNodes.length > 0 && (
+			<>
+				<p class="block-title">
+					{e.kind === 'mcp' ? t.arguments : t.body}
+					{!e.bodyRequired && <span class="muted small"> · {t.optional}</span>}
+				</p>
+				<SchemaTree nodes={bodyNodes} requiredLabel={t.required} />
+			</>
+		)
+	}
+
+	<p class="block-title">{t.responses}</p>
+	<div class="responses not-content">
+		{
+			e.responses.map((r) => {
+				const nodes = schemaTree(r.schema);
+				return (
+					<details>
+						<summary>
+							<code class="status">{r.status}</code>
+							<span class="muted"><InlineCode text={r.description} /></span>
+						</summary>
+						<div class="response-body">
+							<p class="schema-type">{typeLabel(r.schema)}</p>
+							{nodes.length > 0 && <SchemaTree nodes={nodes} requiredLabel={t.required} />}
+							{r.example !== null && r.example !== undefined && (
+								<>
+									<p class="example-title">{t.example}</p>
+									<pre class="example">{JSON.stringify(r.example, null, 2)}</pre>
+								</>
+							)}
+						</div>
+					</details>
+				);
+			})
+		}
+	</div>
+
+	<p class="block-title">{t.samples}</p>
+	<CodeSamples endpoint={e} toolCallLabel={t.toolCall} />
+</section>
+
+<style>
+	.endpoint {
+		border-top: 1px solid var(--sl-color-hairline);
+		padding-top: 1.5rem;
+		min-width: 0;
+	}
+	.endpoint h3 a {
+		color: inherit;
+		text-decoration: none;
+	}
+	.endpoint h3 {
+		scroll-margin-top: calc(var(--sl-nav-height) + 1rem);
+	}
+	.endpoint-head {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+	}
+	.method {
+		font-weight: 700;
+		font-size: var(--sl-text-xs);
+	}
+	.method-get {
+		background: var(--sl-color-green-low);
+		color: var(--sl-color-green-high);
+	}
+	.method-post {
+		background: var(--sl-color-blue-low);
+		color: var(--sl-color-blue-high);
+	}
+	.path {
+		overflow-wrap: anywhere;
+	}
+	.access {
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 4px;
+		padding: 0 0.4rem;
+		font-size: var(--sl-text-xs);
+	}
+	.prose-line {
+		white-space: pre-line;
+	}
+	.muted {
+		color: var(--sl-color-gray-2);
+	}
+	.small {
+		font-size: var(--sl-text-xs);
+	}
+	.block-title {
+		font-weight: 600;
+		font-size: var(--sl-text-sm);
+	}
+	.responses {
+		border: 1px solid var(--sl-color-hairline);
+		border-radius: 6px;
+	}
+	.responses details {
+		margin: 0;
+		padding: 0.45rem 0.75rem;
+		font-size: var(--sl-text-sm);
+	}
+	.responses details + details {
+		border-top: 1px solid var(--sl-color-hairline);
+	}
+	.responses summary {
+		cursor: pointer;
+	}
+	.status {
+		font-family: var(--sl-font-mono);
+		font-weight: 600;
+		margin-right: 0.5rem;
+	}
+	.response-body > * {
+		margin-top: 0.5rem;
+	}
+	.schema-type {
+		color: var(--sl-color-gray-3);
+		font-family: var(--sl-font-mono);
+		font-size: var(--sl-text-xs);
+		overflow-wrap: anywhere;
+	}
+	.example-title {
+		font-size: var(--sl-text-2xs);
+		font-weight: 600;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--sl-color-gray-3);
+	}
+	.example {
+		font-family: var(--sl-font-mono);
+		max-height: 16rem;
+		overflow: auto;
+		padding: 0.5rem;
+		border-radius: 6px;
+		background: var(--sl-color-gray-6);
+		font-size: var(--sl-text-xs);
+	}
+</style>

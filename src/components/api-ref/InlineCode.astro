@@ -1,0 +1,22 @@
+---
+// Catalog prose with `backtick` spans as <code>; Astro escapes the text, no set:html.
+import { inlineCode } from './apiReference';
+
+interface Props {
+	text: string;
+}
+const { text } = Astro.props;
+---
+
+{inlineCode(text).map((p) => (p.code ? <code class="inline-code">{p.text}</code> : p.text))}
+
+<style>
+	.inline-code {
+		font-family: var(--sl-font-mono);
+		font-size: 0.9em;
+		background: var(--sl-color-gray-6);
+		border-radius: 4px;
+		padding: 0.05em 0.3em;
+		overflow-wrap: anywhere;
+	}
+</style>

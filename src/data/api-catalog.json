@@ -7,7 +7,10 @@
         "additionalProperties": false,
         "properties": {},
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/profiles"
     },
     {
       "name": "launch_profile",
@@ -37,7 +40,10 @@
           "profile_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/launch"
     },
     {
       "name": "run_script",
@@ -73,7 +79,10 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/scripts/run"
     },
     {
       "name": "get_run_result",
@@ -90,7 +99,10 @@
           "run_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/runs/:id"
     },
     {
       "name": "save_script",
@@ -118,7 +130,10 @@
           "source"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/scripts"
     },
     {
       "name": "list_scripts",
@@ -127,7 +142,10 @@
         "additionalProperties": false,
         "properties": {},
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/scripts"
     },
     {
       "name": "get_script",
@@ -143,7 +161,10 @@
           "script_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/scripts/:id"
     },
     {
       "name": "compile_script",
@@ -164,7 +185,10 @@
           "dsl"
         ],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "POST",
+      "path": "/v1/dsl/compile"
     },
     {
       "name": "create_profiles",
@@ -213,7 +237,10 @@
           "count"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles"
     },
     {
       "name": "import_proxies",
@@ -244,7 +271,10 @@
           "lines"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/proxy-pools"
     },
     {
       "name": "list_proxy_pools",
@@ -253,7 +283,10 @@
         "additionalProperties": false,
         "properties": {},
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/proxy-pools"
     },
     {
       "name": "get_profile_proxy",
@@ -270,7 +303,10 @@
           "profile_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/profiles/:id/proxy"
     },
     {
       "name": "assign_proxy_pool",
@@ -298,7 +334,10 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/proxy-pools/:id/assign"
     },
     {
       "name": "test_proxy",
@@ -315,7 +354,10 @@
           "pool_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/proxy-pools/:id/test"
     },
     {
       "name": "stop_profile",
@@ -332,7 +374,10 @@
           "profile_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/stop"
     },
     {
       "name": "set_profile_variables",
@@ -357,7 +402,10 @@
           "variables"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/variables"
     },
     {
       "name": "run_batch",
@@ -398,7 +446,10 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/scripts/batch"
     },
     {
       "name": "create_schedule",
@@ -488,7 +539,10 @@
           "schedule_type"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/schedules"
     },
     {
       "name": "list_schedules",
@@ -497,7 +551,10 @@
         "additionalProperties": false,
         "properties": {},
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/schedules"
     },
     {
       "name": "set_schedule_enabled",
@@ -518,7 +575,10 @@
           "enabled"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/schedules/:id/enabled"
     },
     {
       "name": "run_schedule_now",
@@ -535,7 +595,10 @@
           "schedule_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/schedules/:id/run"
     },
     {
       "name": "list_runs",
@@ -555,7 +618,10 @@
         },
         "required": [],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/runs"
     },
     {
       "name": "get_capacity",
@@ -564,7 +630,10 @@
         "additionalProperties": false,
         "properties": {},
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/capacity"
     },
     {
       "name": "navigate",
@@ -585,7 +654,10 @@
           "url"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/navigate"
     },
     {
       "name": "snapshot",
@@ -602,7 +674,10 @@
           "profile_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/profiles/:id/snapshot"
     },
     {
       "name": "click",
@@ -634,7 +709,10 @@
           "node_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/click"
     },
     {
       "name": "type",
@@ -660,7 +738,10 @@
           "text"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/type"
     },
     {
       "name": "press_key",
@@ -703,7 +784,10 @@
           "key"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/press-key"
     },
     {
       "name": "scroll",
@@ -736,7 +820,10 @@
           "amount"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/scroll"
     },
     {
       "name": "evaluate_js",
@@ -767,7 +854,10 @@
           "expression"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/evaluate"
     },
     {
       "name": "wait_for_element",
@@ -794,7 +884,10 @@
           "selector"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/wait-for-element"
     },
     {
       "name": "set_file",
@@ -821,7 +914,10 @@
           "path"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/profiles/:id/set-file"
     },
     {
       "name": "create_dataset",
@@ -884,7 +980,10 @@
           "columns"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/datasets"
     },
     {
       "name": "append_dataset_rows",
@@ -913,7 +1012,10 @@
           "rows"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/datasets/:id/rows"
     },
     {
       "name": "list_datasets",
@@ -922,7 +1024,10 @@
         "additionalProperties": false,
         "properties": {},
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/datasets"
     },
     {
       "name": "get_dataset_rows",
@@ -948,7 +1053,10 @@
           "dataset_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "read",
+      "method": "GET",
+      "path": "/v1/datasets/:id/rows"
     },
     {
       "name": "assign_dataset",
@@ -976,7 +1084,10 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/datasets/:id/assign"
     },
     {
       "name": "unassign_dataset",
@@ -1000,7 +1111,10 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/datasets/:id/unassign"
     },
     {
       "name": "reset_dataset_rows",
@@ -1017,29 +1131,276 @@
           "dataset_id"
         ],
         "type": "object"
-      }
+      },
+      "access": "write",
+      "method": "POST",
+      "path": "/v1/datasets/:id/reset"
     }
   ],
   "restRoutes": [
     {
       "method": "GET",
       "path": "/v1/profiles",
-      "summary": "List Veilus browser profiles, with their running state; a running profile carries `cdpUrl`, and `headless: true` when it runs without a window."
+      "summary": "List Veilus browser profiles, with their running state; a running profile carries `cdpUrl`, and `headless: true` when it runs without a window.",
+      "description": "Lists every browser profile on this machine with its live running state, proxy host and port, tags and variable names. Variable values and proxy passwords are never returned. A running profile also carries `cdpUrl`, the DevTools endpoint any CDP client can drive it through.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Every profile, with its live running state.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "cdpUrl": {
+                  "type": "string"
+                },
+                "contentDataset": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "folder": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "groups": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "headless": {
+                  "const": true
+                },
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "identityDataset": {
+                  "type": "string"
+                },
+                "lastUsed": {
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "name": {
+                  "type": "string"
+                },
+                "os": {
+                  "type": "string"
+                },
+                "proxy": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "host": {
+                      "type": "string"
+                    },
+                    "port": {
+                      "maximum": 65535,
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "proxyType": {
+                      "enum": [
+                        "http",
+                        "socks5",
+                        "residential"
+                      ],
+                      "type": "string"
+                    },
+                    "requiresAuth": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "enabled",
+                    "host",
+                    "port",
+                    "proxyType",
+                    "requiresAuth"
+                  ],
+                  "type": "object"
+                },
+                "proxyPoolId": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "slug": {
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "stopped",
+                    "starting",
+                    "running",
+                    "crashed"
+                  ],
+                  "type": "string"
+                },
+                "tags": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "variableNames": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "createdAt",
+                "folder",
+                "groups",
+                "id",
+                "lastUsed",
+                "name",
+                "os",
+                "proxy",
+                "slug",
+                "status",
+                "tags",
+                "variableNames"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "cdpUrl": "http://127.0.0.1:9333",
+              "createdAt": "2026-10-01T10:00:00Z",
+              "folder": null,
+              "groups": [],
+              "headless": true,
+              "id": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+              "lastUsed": "2026-10-16T08:59:00Z",
+              "name": "Shop 1",
+              "os": "windows",
+              "proxy": {
+                "enabled": true,
+                "host": "203.0.113.7",
+                "port": 8080,
+                "proxyType": "http",
+                "requiresAuth": true
+              },
+              "slug": "shop-1",
+              "status": "running",
+              "tags": [
+                "shop"
+              ],
+              "variableNames": [
+                "EMAIL",
+                "PASSWORD"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/capacity",
-      "summary": "Return the current browser pool capacity and usage."
+      "summary": "Return the current browser pool capacity and usage.",
+      "description": "How many browsers may run at once on this plan and machine, and how many run now. A launch beyond `max` fails with 409 instead of queuing.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Pool capacity and current usage.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "active": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "max": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "queued": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "active",
+              "max",
+              "queued"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "active": 1,
+            "max": 4,
+            "queued": 0
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/dsl/schema",
-      "summary": "Return the JSON schema for the drag-and-drop DSL."
+      "summary": "Return the JSON schema for the drag-and-drop DSL.",
+      "description": "Returns the JSON Schema of the Veilus Flow DSL and its version, generated from the app's own types. Read it before writing a DSL script so the script is valid the first time.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The DSL version and its JSON Schema.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "dslVersion": {
+                "type": "string"
+              },
+              "schema": {
+                "type": "object"
+              }
+            },
+            "required": [
+              "dslVersion",
+              "schema"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "dslVersion": "1",
+            "schema": {
+              "title": "VeilusFlowScript",
+              "type": "object"
+            }
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/dsl/compile",
       "summary": "Compile a drag-and-drop DSL script into runnable code.",
+      "description": "Compiles a DSL script into Playwright or Puppeteer TypeScript and returns the code with any warnings. Nothing is saved and no browser is opened: it only shows what the script would become.",
+      "access": "read",
+      "params": [],
       "body": {
         "properties": {
           "dsl": {
@@ -1055,12 +1416,80 @@
           "target"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The generated TypeScript, with compiler warnings.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "nodeCount": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "target": {
+                "type": "string"
+              },
+              "warnings": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "code",
+              "nodeCount",
+              "target",
+              "warnings"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "code": "import { chromium } from 'playwright';\n// ...",
+            "nodeCount": 3,
+            "target": "playwright",
+            "warnings": []
+          }
+        },
+        {
+          "status": 400,
+          "description": "`dsl` or `target` is missing, the DSL does not parse, or the target is not playwright or puppeteer.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: unknown target 'selenium', use 'playwright' or 'puppeteer'"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/launch",
       "summary": "Launch a profile's browser and wait for it to start; returns `{pid, cdpUrl}`, a full pool fails with 409 rather than queuing. Optional body `{diagnostic?: bool, headless?: bool, idle_timeout_secs?: integer}`: `diagnostic` opens the profile's proxy without its fingerprint, in a temporary directory; `headless` runs it without a window; `idle_timeout_secs` stops it after that long with no API call naming it (0 = never; default 30 min). A profile that is already running is not relaunched (409).",
+      "description": "Opens this profile's browser with its fingerprint, proxy, cookies and logins, and waits until it has started. It takes a slot of the browser pool until it is stopped, or until it sits idle past `idle_timeout_secs`. The returned `cdpUrl` lets any local process drive the browser while it runs.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "additionalProperties": false,
         "properties": {
@@ -1079,17 +1508,150 @@
           }
         },
         "type": "object"
-      }
+      },
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The browser started. `diagnostic` and `headless` appear only when true.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "cdpUrl": {
+                "type": "string"
+              },
+              "diagnostic": {
+                "const": true
+              },
+              "headless": {
+                "const": true
+              },
+              "pid": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "cdpUrl",
+              "pid"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "cdpUrl": "http://127.0.0.1:9333",
+            "pid": 48213
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body has an unknown key or a value of the wrong type.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: launch body {diagnostic?: bool, headless?: bool, idle_timeout_secs?: integer}: unknown field `headles`"
+          }
+        },
+        {
+          "status": 409,
+          "description": "Not launched: the pool is full, the profile is already running or does not exist, or the engine failed to start. Retrying the same call does not help until that changes.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: Too many browsers are already open (4 of 4). Close one and try again."
+          }
+        },
+        {
+          "status": 429,
+          "description": "Too many expensive calls from this token: launch, script run, batch, run schedule now, create profiles and import proxies count together, 30 per rolling 60 s. The Retry-After header gives the seconds to wait.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "rate limited: too many expensive calls in the last minute; retry after 42s"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/stop",
-      "summary": "Stop a running profile's browser."
+      "summary": "Stop a running profile's browser.",
+      "description": "Closes this profile's browser, its proxy bridge and its pool slot. Pages open in it are closed without asking; stopping a profile that is not running succeeds.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 204,
+          "description": "Stopped, or was not running. No body.",
+          "schema": {
+            "description": "No response body.",
+            "type": "null"
+          },
+          "example": null
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/scripts/run",
       "summary": "Start a script run on given profiles; returns the run immediately (its `id` is the run_id).",
+      "description": "Starts the script on the given profiles in the background: each profile's browser opens and the script drives it. An unapproved script runs on at most 3 profiles and without the profiles' stored variables. Returns the run at once; read its result with GET /v1/runs/:id.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "headless": {
@@ -1118,12 +1680,192 @@
           "script_id"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The run as recorded now, still `running`; poll GET /v1/runs/:id with its `id`.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "completedAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "error": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "profileIds": {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "profilesDone": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesFailed": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesTotal": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "scheduleId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scriptId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "enum": [
+                  "schedule",
+                  "app",
+                  "agent",
+                  null
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "startedAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "running",
+                  "completed",
+                  "partial",
+                  "failed",
+                  "skipped"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "completedAt",
+              "error",
+              "id",
+              "profileIds",
+              "profilesDone",
+              "profilesFailed",
+              "profilesTotal",
+              "scheduleId",
+              "scriptId",
+              "source",
+              "startedAt",
+              "status"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "completedAt": null,
+            "error": null,
+            "id": "6f1c2b9e-3d4a-4e8b-9f0a-1b2c3d4e5f60",
+            "profileIds": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+              "1c8f5b63-9d2e-4a4f-b7c0-3e6d9f2a5b81"
+            ],
+            "profilesDone": 0,
+            "profilesFailed": 0,
+            "profilesTotal": 2,
+            "scheduleId": null,
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "source": "agent",
+            "startedAt": "2026-10-16T09:00:00Z",
+            "status": "running"
+          }
+        },
+        {
+          "status": 400,
+          "description": "`script_id` or `profile_ids` is missing, a variable is invalid, the plan lacks Veilus Flow, or an unapproved script targets more than 3 profiles.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: need at least one `profile_id`"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No script with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: script 2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92"
+          }
+        },
+        {
+          "status": 429,
+          "description": "Too many expensive calls from this token: launch, script run, batch, run schedule now, create profiles and import proxies count together, 30 per rolling 60 s. The Retry-After header gives the seconds to wait.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "rate limited: too many expensive calls in the last minute; retry after 42s"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/scripts",
       "summary": "Save an agent-authored Raw script into Veilus Flow.",
+      "description": "Saves a Raw TypeScript script into Veilus Flow, or replaces one this API saved before. The source is checked against the Raw script contract first; a script stays unapproved until the user approves it in the app.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "description": {
@@ -1147,27 +1889,544 @@
           "source"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Saved. An agent-written script stays unapproved until the user approves it.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "approved": {
+                "type": "boolean"
+              },
+              "scriptId": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "approved",
+              "scriptId",
+              "version"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "approved": false,
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "version": "1.0.0"
+          }
+        },
+        {
+          "status": 400,
+          "description": "Empty name, the plan lacks Veilus Flow, or the source breaks the Raw script contract (one line per violation).",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: line 3 [no-launch] call connectOverCDP, never launch a browser"
+          }
+        },
+        {
+          "status": 404,
+          "description": "`script_id` names no script.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: script 2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92"
+          }
+        },
+        {
+          "status": 409,
+          "description": "`script_id` names a DSL script, or one the user wrote in the app; create a new script instead.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: script 2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92 was written in the app; create a new script instead"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/scripts",
-      "summary": "List every script without its source: id, name, version, mode (raw or dsl), origin and whether it is approved."
+      "summary": "List every script without its source: id, name, version, mode (raw or dsl), origin and whether it is approved.",
+      "description": "Lists every script in Veilus Flow, most recently changed first, without its source. Use it to find a script's id and whether it is approved before running it.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Every script, without its source.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "approved": {
+                  "type": "boolean"
+                },
+                "description": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "mode": {
+                  "enum": [
+                    "raw",
+                    "dsl"
+                  ],
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "origin": {
+                  "type": "string"
+                },
+                "scriptId": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "updatedAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "version": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "approved",
+                "description",
+                "mode",
+                "name",
+                "origin",
+                "scriptId",
+                "updatedAt",
+                "version"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "approved": false,
+              "description": null,
+              "mode": "raw",
+              "name": "Check inbox",
+              "origin": "mcp",
+              "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+              "updatedAt": "2026-10-16T08:30:00Z",
+              "version": "1.0.0"
+            }
+          ]
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/scripts/:id",
-      "summary": "Read a Raw script's source and approval state."
+      "summary": "Read a Raw script's source and approval state.",
+      "description": "Returns a Raw script's full source, version and approval state, to edit and save it again. DSL scripts are refused with 409.",
+      "access": "read",
+      "params": [
+        {
+          "name": "id",
+          "description": "Script id (uuid), as returned by POST /v1/scripts or listed by GET /v1/scripts."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The Raw script's source and approval state.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "approved": {
+                "type": "boolean"
+              },
+              "description": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "origin": {
+                "type": "string"
+              },
+              "scriptId": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "approved",
+              "description",
+              "name",
+              "origin",
+              "scriptId",
+              "source",
+              "version"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "approved": false,
+            "description": null,
+            "name": "Check inbox",
+            "origin": "mcp",
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "source": "import { chromium } from 'playwright';\n// ...",
+            "version": "1.0.0"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No script with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: script 2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The script is a DSL script; only Raw scripts can be read back.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: script 2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92 is a DSL script"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/runs/:id",
-      "summary": "Read a script run's result by run_id."
+      "summary": "Read a script run's result by run_id.",
+      "description": "Returns a run's state and, per profile, whether it finished, its exit code and the tail of the script's output. Poll it until `status` is no longer `running`.",
+      "access": "read",
+      "params": [
+        {
+          "name": "id",
+          "description": "Run id (uuid): the `id` returned when the run started, or one listed by GET /v1/runs."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The run and, once each profile finishes, its outcome with the tail of the script's output.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "completedAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "error": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "profileIds": {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "profiles": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "elapsedMs": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "error": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "exitCode": {
+                      "type": [
+                        "integer",
+                        "null"
+                      ]
+                    },
+                    "profileId": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "completed",
+                        "failed"
+                      ],
+                      "type": "string"
+                    },
+                    "stderrTail": {
+                      "type": "string"
+                    },
+                    "stdoutTail": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "elapsedMs",
+                    "error",
+                    "exitCode",
+                    "profileId",
+                    "status",
+                    "stderrTail",
+                    "stdoutTail"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "profilesDone": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesFailed": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesTotal": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "scheduleId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scriptId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "enum": [
+                  "schedule",
+                  "app",
+                  "agent",
+                  null
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "startedAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "running",
+                  "completed",
+                  "partial",
+                  "failed",
+                  "skipped"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "completedAt",
+              "error",
+              "id",
+              "profileIds",
+              "profiles",
+              "profilesDone",
+              "profilesFailed",
+              "profilesTotal",
+              "scheduleId",
+              "scriptId",
+              "source",
+              "startedAt",
+              "status"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "completedAt": "2026-10-16T09:01:10Z",
+            "error": null,
+            "id": "6f1c2b9e-3d4a-4e8b-9f0a-1b2c3d4e5f60",
+            "profileIds": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+              "1c8f5b63-9d2e-4a4f-b7c0-3e6d9f2a5b81"
+            ],
+            "profiles": [
+              {
+                "elapsedMs": 35120,
+                "error": null,
+                "exitCode": 0,
+                "profileId": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+                "status": "completed",
+                "stderrTail": "",
+                "stdoutTail": "done\n"
+              }
+            ],
+            "profilesDone": 2,
+            "profilesFailed": 0,
+            "profilesTotal": 2,
+            "scheduleId": null,
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "source": "agent",
+            "startedAt": "2026-10-16T09:00:00Z",
+            "status": "completed"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No run with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: run 6f1c2b9e-3d4a-4e8b-9f0a-1b2c3d4e5f60"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles",
       "summary": "Create 1-50 profiles; with a proxy pool, timezones follow each slot's geo.",
+      "description": "Creates 1 to 50 new profiles, each with a freshly generated fingerprint. With a proxy pool, each profile takes a slot and its timezone follows that proxy's measured exit, which sends traffic through the proxies. Datasets given here are assigned to the new profiles.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "content_dataset_id": {
@@ -1212,22 +2471,413 @@
           "count"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The profiles created and, by index, the ones that could not be.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "created": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "profile_id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "proxy_slot": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "timezone": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "profile_id",
+                    "timezone"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "failed": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "index": {
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "error",
+                    "index"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "location_warning": {
+                "type": "string"
+              },
+              "timezone_warning": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "created",
+              "failed"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "created": [
+              {
+                "name": "Shop 1",
+                "profile_id": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+                "proxy_slot": 0,
+                "timezone": "America/New_York"
+              }
+            ],
+            "failed": []
+          }
+        },
+        {
+          "status": 400,
+          "description": "The body is not valid: count outside 1-50, unknown os, empty tags, a dataset of the wrong mode or with too few rows, or a rotating pool.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: `count` must be between 1 and 50"
+          }
+        },
+        {
+          "status": 404,
+          "description": "The proxy pool or a dataset does not exist.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: proxy pool 7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40"
+          }
+        },
+        {
+          "status": 409,
+          "description": "No profile could be created, or a dataset cannot take these profiles.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: no profile was created: proxy 203.0.113.7:8080 did not answer"
+          }
+        },
+        {
+          "status": 429,
+          "description": "Too many expensive calls from this token: launch, script run, batch, run schedule now, create profiles and import proxies count together, 30 per rolling 60 s. The Retry-After header gives the seconds to wait.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "rate limited: too many expensive calls in the last minute; retry after 42s"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/profiles/:id/proxy",
-      "summary": "Show a profile's proxy: pool, slot, host:port and geo, never the password."
+      "summary": "Show a profile's proxy: pool, slot, host:port and geo, never the password.",
+      "description": "Shows where this profile's traffic goes: its pool and slot, or its own proxy, with the detected country and timezone. The proxy password is never returned, only whether one is set.",
+      "access": "read",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Where the profile's traffic goes: its pool and slot, or its own proxy; null fields when there is none.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "country": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "pool_id": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "profile_id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "proxy": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "enabled": {
+                        "type": "boolean"
+                      },
+                      "host": {
+                        "type": "string"
+                      },
+                      "port": {
+                        "maximum": 65535,
+                        "minimum": 0,
+                        "type": "integer"
+                      },
+                      "proxyType": {
+                        "enum": [
+                          "http",
+                          "socks5",
+                          "residential"
+                        ],
+                        "type": "string"
+                      },
+                      "requiresAuth": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "enabled",
+                      "host",
+                      "port",
+                      "proxyType",
+                      "requiresAuth"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "slot": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "timezone": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "country",
+              "pool_id",
+              "profile_id",
+              "proxy",
+              "slot",
+              "timezone"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "country": "US",
+            "pool_id": "7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40",
+            "profile_id": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+            "proxy": {
+              "enabled": true,
+              "host": "203.0.113.7",
+              "port": 8080,
+              "proxyType": "http",
+              "requiresAuth": true
+            },
+            "slot": 0,
+            "timezone": "America/New_York"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No profile with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: profile 0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/proxy-pools",
-      "summary": "List proxy pools with entry counts and detected countries."
+      "summary": "List proxy pools with entry counts and detected countries.",
+      "description": "Lists every proxy pool with its number of entries and the countries and timezones detected for its exits. A warning appears when a pool's exits span several UTC offsets or have moved.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Every pool with its entry count and the countries and timezones detected for its exits.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "countries": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "entry_count": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "kind": {
+                  "enum": [
+                    "static",
+                    "rotating"
+                  ],
+                  "type": "string"
+                },
+                "location_warning": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "pool_id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "timezone_warning": {
+                  "type": "string"
+                },
+                "timezones": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                }
+              },
+              "required": [
+                "countries",
+                "entry_count",
+                "kind",
+                "name",
+                "pool_id",
+                "timezones"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "countries": [
+                "US"
+              ],
+              "entry_count": 10,
+              "kind": "static",
+              "name": "US residential",
+              "pool_id": "7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40",
+              "timezones": [
+                "America/New_York"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/proxy-pools",
       "summary": "Create a static proxy pool from proxy lines; bad lines are reported by number.",
+      "description": "Creates a new static proxy pool from up to 1000 proxy lines, credentials included. Lines that do not parse are skipped and reported by number, never by content.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "lines": {
@@ -1252,12 +2902,114 @@
           "lines"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The new pool, how many lines were imported, and the numbers of the lines refused.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "imported": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "pool_id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "rejected": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "line": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "reason": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "line",
+                    "reason"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "imported",
+              "pool_id",
+              "rejected"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "imported": 9,
+            "pool_id": "7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40",
+            "rejected": [
+              {
+                "line": 4,
+                "reason": "expected host:port, host:port:user:pass or user:pass@host:port, optionally prefixed by http:// or socks5://"
+              }
+            ]
+          }
+        },
+        {
+          "status": 400,
+          "description": "Empty name, a type other than static, more than 1000 lines, or no valid line at all.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: `name` must not be empty"
+          }
+        },
+        {
+          "status": 429,
+          "description": "Too many expensive calls from this token: launch, script run, batch, run schedule now, create profiles and import proxies count together, 30 per rolling 60 s. The Retry-After header gives the seconds to wait.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "rate limited: too many expensive calls in the last minute; retry after 42s"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/proxy-pools/:id/assign",
       "summary": "Assign a proxy pool to profiles; refuses profiles that already have a proxy unless force.",
+      "description": "Points these profiles at the pool, one slot each, replacing how they reach the network from their next launch. Profiles that already have a proxy are refused unless `force` is true; their timezone is not regenerated.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Proxy pool id (uuid), as listed by GET /v1/proxy-pools."
+        }
+      ],
       "body": {
         "properties": {
           "force": {
@@ -1276,22 +3028,484 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Every profile was assigned; each one's slot in the pool.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "assigned": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "profile_id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "slot": {
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "profile_id",
+                    "slot"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "pool_id": {
+                "format": "uuid",
+                "type": "string"
+              }
+            },
+            "required": [
+              "assigned",
+              "pool_id"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "assigned": [
+              {
+                "profile_id": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+                "slot": 0
+              }
+            ],
+            "pool_id": "7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or `profile_ids` is empty or has duplicates.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: `profile_ids` has duplicates"
+          }
+        },
+        {
+          "status": 404,
+          "description": "The pool or one of the profiles does not exist.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: proxy pool 7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40"
+          }
+        },
+        {
+          "status": 409,
+          "description": "Some profiles already have a proxy and `force` is false; nothing was assigned.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profiles already have a proxy: 0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70. Nothing was assigned; pass `force: true` to replace their proxy (their timezone is not regenerated)"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/proxy-pools/:id/test",
-      "summary": "Test every proxy in a pool now: alive, latency, exit IP and geo."
+      "summary": "Test every proxy in a pool now: alive, latency, exit IP and geo.",
+      "description": "Connects through every proxy in the pool now, measuring whether it answers, its latency, exit IP and geo. This sends real traffic through each proxy and refreshes the pool's stored geo.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Proxy pool id (uuid), as listed by GET /v1/proxy-pools."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "One row per proxy: alive, latency, exit IP and geo. Errors never carry the password.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "alive": {
+                  "type": "boolean"
+                },
+                "country": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "error": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "external_ip": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "latency_ms": {
+                  "minimum": 0,
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "location_unstable": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "proxy": {
+                  "type": "string"
+                },
+                "timezone": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "alive",
+                "country",
+                "error",
+                "external_ip",
+                "latency_ms",
+                "proxy",
+                "timezone"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "alive": true,
+              "country": "US",
+              "error": null,
+              "external_ip": "198.51.100.23",
+              "latency_ms": 212,
+              "proxy": "203.0.113.7:8080",
+              "timezone": "America/New_York"
+            }
+          ]
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No pool with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: proxy pool 7a1d9e42-0c3b-4d5e-8f6a-9b0c1d2e3f40"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/schedules",
-      "summary": "List schedules with their script, target profiles, timing and next run."
+      "summary": "List schedules with their script, target profiles, timing and next run.",
+      "description": "Lists every schedule, newest first, with its script, target profiles, timing, whether it is on, and its next run. Nothing is changed and no browser is opened. Use it to find a schedule's id before turning it on or off, or running it now.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Every schedule, newest first.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "concurrency": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "createdAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "cronExpr": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "dailyHour": {
+                  "minimum": 0,
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "dailyMinute": {
+                  "minimum": 0,
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "enabled": {
+                  "type": "boolean"
+                },
+                "headless": {
+                  "type": "boolean"
+                },
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "intervalMinutes": {
+                  "minimum": 0,
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "intervalUnit": {
+                  "enum": [
+                    "seconds",
+                    "minutes"
+                  ],
+                  "type": "string"
+                },
+                "lastRunAt": {
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "name": {
+                  "type": "string"
+                },
+                "nextRunAt": {
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "profileIds": {
+                  "items": {
+                    "type": "string"
+                  },
+                  "type": "array"
+                },
+                "runAt": {
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "scheduleType": {
+                  "enum": [
+                    "interval",
+                    "daily",
+                    "weekly",
+                    "cron",
+                    "once"
+                  ],
+                  "type": "string"
+                },
+                "scriptId": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "staggerMs": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "target": {
+                  "oneOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "explicit"
+                        },
+                        "value": {
+                          "items": {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "kind": {
+                          "const": "filter"
+                        },
+                        "value": {
+                          "format": "uuid",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "kind",
+                        "value"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "updatedAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "weeklyDay": {
+                  "minimum": 0,
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "concurrency",
+                "createdAt",
+                "cronExpr",
+                "dailyHour",
+                "dailyMinute",
+                "enabled",
+                "headless",
+                "id",
+                "intervalMinutes",
+                "intervalUnit",
+                "lastRunAt",
+                "name",
+                "nextRunAt",
+                "profileIds",
+                "runAt",
+                "scheduleType",
+                "scriptId",
+                "staggerMs",
+                "target",
+                "updatedAt",
+                "weeklyDay"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "concurrency": 1,
+              "createdAt": "2026-10-16T08:00:00Z",
+              "cronExpr": null,
+              "dailyHour": 9,
+              "dailyMinute": 0,
+              "enabled": true,
+              "headless": false,
+              "id": "3e0b7d85-bf40-4c61-99e2-5a8fbb4c7da3",
+              "intervalMinutes": null,
+              "intervalUnit": "minutes",
+              "lastRunAt": null,
+              "name": "Morning check",
+              "nextRunAt": "2026-10-17T02:00:00Z",
+              "profileIds": [
+                "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+              ],
+              "runAt": null,
+              "scheduleType": "daily",
+              "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+              "staggerMs": 0,
+              "target": {
+                "kind": "explicit",
+                "value": [
+                  "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+                ]
+              },
+              "updatedAt": "2026-10-16T08:00:00Z",
+              "weeklyDay": null
+            }
+          ]
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/schedules",
       "summary": "Create a schedule for an approved script on explicit profiles; a once schedule turns itself off after it runs.",
+      "description": "Creates a schedule that runs an approved script on these profiles at the given times, unattended. Every profile and the script must exist; timing that would never fire is refused.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "concurrency": {
@@ -1386,12 +3600,297 @@
           "schedule_type"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The schedule as stored, with its next run.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "concurrency": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "createdAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "cronExpr": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "dailyHour": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "dailyMinute": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "headless": {
+                "type": "boolean"
+              },
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "intervalMinutes": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "intervalUnit": {
+                "enum": [
+                  "seconds",
+                  "minutes"
+                ],
+                "type": "string"
+              },
+              "lastRunAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "nextRunAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "profileIds": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "runAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scheduleType": {
+                "enum": [
+                  "interval",
+                  "daily",
+                  "weekly",
+                  "cron",
+                  "once"
+                ],
+                "type": "string"
+              },
+              "scriptId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "staggerMs": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "target": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "explicit"
+                      },
+                      "value": {
+                        "items": {
+                          "format": "uuid",
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "filter"
+                      },
+                      "value": {
+                        "format": "uuid",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "updatedAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "weeklyDay": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "concurrency",
+              "createdAt",
+              "cronExpr",
+              "dailyHour",
+              "dailyMinute",
+              "enabled",
+              "headless",
+              "id",
+              "intervalMinutes",
+              "intervalUnit",
+              "lastRunAt",
+              "name",
+              "nextRunAt",
+              "profileIds",
+              "runAt",
+              "scheduleType",
+              "scriptId",
+              "staggerMs",
+              "target",
+              "updatedAt",
+              "weeklyDay"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "concurrency": 1,
+            "createdAt": "2026-10-16T08:00:00Z",
+            "cronExpr": null,
+            "dailyHour": 9,
+            "dailyMinute": 0,
+            "enabled": true,
+            "headless": false,
+            "id": "3e0b7d85-bf40-4c61-99e2-5a8fbb4c7da3",
+            "intervalMinutes": null,
+            "intervalUnit": "minutes",
+            "lastRunAt": null,
+            "name": "Morning check",
+            "nextRunAt": "2026-10-17T02:00:00Z",
+            "profileIds": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+            ],
+            "runAt": null,
+            "scheduleType": "daily",
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "staggerMs": 0,
+            "target": {
+              "kind": "explicit",
+              "value": [
+                "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+              ]
+            },
+            "updatedAt": "2026-10-16T08:00:00Z",
+            "weeklyDay": null
+          }
+        },
+        {
+          "status": 400,
+          "description": "Empty name or profile list, `concurrency` or `stagger_ms` out of range, or timing fields that would never fire.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: this schedule would never run: interval needs interval_minutes; ..."
+          }
+        },
+        {
+          "status": 404,
+          "description": "A profile or the script does not exist.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: profiles 0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70 do not exist; call list_profiles for valid ids"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The script is not approved; the user approves it in Veilus Flow.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: script `Check inbox` is not approved — ask the user to approve it in Veilus → Flow, then call this again"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/schedules/:id/enabled",
       "summary": "Turn a schedule on or off; turning it on recomputes its next run.",
+      "description": "Turns the schedule on or off. Turning it on recomputes its next run from now and requires its script to still be approved.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Schedule id (uuid), as listed by GET /v1/schedules."
+        }
+      ],
       "body": {
         "properties": {
           "enabled": {
@@ -1402,17 +3901,501 @@
           "enabled"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The schedule after the change; turning it on recomputes `nextRunAt` from now.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "concurrency": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "createdAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "cronExpr": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "dailyHour": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "dailyMinute": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "headless": {
+                "type": "boolean"
+              },
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "intervalMinutes": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              },
+              "intervalUnit": {
+                "enum": [
+                  "seconds",
+                  "minutes"
+                ],
+                "type": "string"
+              },
+              "lastRunAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "name": {
+                "type": "string"
+              },
+              "nextRunAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "profileIds": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "runAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scheduleType": {
+                "enum": [
+                  "interval",
+                  "daily",
+                  "weekly",
+                  "cron",
+                  "once"
+                ],
+                "type": "string"
+              },
+              "scriptId": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "staggerMs": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "target": {
+                "oneOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "explicit"
+                      },
+                      "value": {
+                        "items": {
+                          "format": "uuid",
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "kind": {
+                        "const": "filter"
+                      },
+                      "value": {
+                        "format": "uuid",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "value"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              },
+              "updatedAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "weeklyDay": {
+                "minimum": 0,
+                "type": [
+                  "integer",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "concurrency",
+              "createdAt",
+              "cronExpr",
+              "dailyHour",
+              "dailyMinute",
+              "enabled",
+              "headless",
+              "id",
+              "intervalMinutes",
+              "intervalUnit",
+              "lastRunAt",
+              "name",
+              "nextRunAt",
+              "profileIds",
+              "runAt",
+              "scheduleType",
+              "scriptId",
+              "staggerMs",
+              "target",
+              "updatedAt",
+              "weeklyDay"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "concurrency": 1,
+            "createdAt": "2026-10-16T08:00:00Z",
+            "cronExpr": null,
+            "dailyHour": 9,
+            "dailyMinute": 0,
+            "enabled": true,
+            "headless": false,
+            "id": "3e0b7d85-bf40-4c61-99e2-5a8fbb4c7da3",
+            "intervalMinutes": null,
+            "intervalUnit": "minutes",
+            "lastRunAt": null,
+            "name": "Morning check",
+            "nextRunAt": "2026-10-17T02:00:00Z",
+            "profileIds": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+            ],
+            "runAt": null,
+            "scheduleType": "daily",
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "staggerMs": 0,
+            "target": {
+              "kind": "explicit",
+              "value": [
+                "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+              ]
+            },
+            "updatedAt": "2026-10-16T08:00:00Z",
+            "weeklyDay": null
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, the body is not `{enabled: boolean}`, or a one-time schedule's run_at has passed.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {enabled: boolean}"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No schedule with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: schedule 3e0b7d85-bf40-4c61-99e2-5a8fbb4c7da3; call list_schedules for valid ids"
+          }
+        },
+        {
+          "status": 409,
+          "description": "Turning on a schedule whose script is no longer approved.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: script `Check inbox` is not approved — ask the user to approve it in Veilus → Flow, then call this again"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/schedules/:id/run",
-      "summary": "Run a schedule once now; returns the run immediately."
+      "summary": "Run a schedule once now; returns the run immediately.",
+      "description": "Runs the schedule once now, outside its timing: its profiles open and its script drives them. Refused while the schedule already has a run in progress. Returns the run at once; read its result with GET /v1/runs/:id.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Schedule id (uuid), as listed by GET /v1/schedules."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The run as recorded now, still `running`; poll GET /v1/runs/:id with its `id`.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "completedAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "error": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "profileIds": {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "profilesDone": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesFailed": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesTotal": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "scheduleId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scriptId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "enum": [
+                  "schedule",
+                  "app",
+                  "agent",
+                  null
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "startedAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "running",
+                  "completed",
+                  "partial",
+                  "failed",
+                  "skipped"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "completedAt",
+              "error",
+              "id",
+              "profileIds",
+              "profilesDone",
+              "profilesFailed",
+              "profilesTotal",
+              "scheduleId",
+              "scriptId",
+              "source",
+              "startedAt",
+              "status"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "completedAt": null,
+            "error": null,
+            "id": "6f1c2b9e-3d4a-4e8b-9f0a-1b2c3d4e5f60",
+            "profileIds": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+              "1c8f5b63-9d2e-4a4f-b7c0-3e6d9f2a5b81"
+            ],
+            "profilesDone": 0,
+            "profilesFailed": 0,
+            "profilesTotal": 2,
+            "scheduleId": null,
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "source": "agent",
+            "startedAt": "2026-10-16T09:00:00Z",
+            "status": "running"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No schedule with this id, or its script is gone.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: schedule 3e0b7d85-bf40-4c61-99e2-5a8fbb4c7da3; call list_schedules for valid ids"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The schedule already has a run in progress, its script is not approved, or no target profile is left.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: schedule already has a run in progress — wait for it to finish (list_runs or get_run_result), then try again"
+          }
+        },
+        {
+          "status": 429,
+          "description": "Too many expensive calls from this token: launch, script run, batch, run schedule now, create profiles and import proxies count together, 30 per rolling 60 s. The Retry-After header gives the seconds to wait.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "rate limited: too many expensive calls in the last minute; retry after 42s"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/scripts/batch",
       "summary": "Run an approved script on many profiles; returns the run immediately.",
+      "description": "Runs an approved script on many profiles in the background, `concurrency` at a time, with the profiles' stored variables. Returns the run at once; read its result with GET /v1/runs/:id.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "concurrency": {
@@ -1450,12 +4433,216 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The run as recorded now, still `running`; poll GET /v1/runs/:id with its `id`.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "completedAt": {
+                "format": "date-time",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "error": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "profileIds": {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "profilesDone": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesFailed": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "profilesTotal": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "scheduleId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "scriptId": {
+                "format": "uuid",
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "source": {
+                "enum": [
+                  "schedule",
+                  "app",
+                  "agent",
+                  null
+                ],
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "startedAt": {
+                "format": "date-time",
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "running",
+                  "completed",
+                  "partial",
+                  "failed",
+                  "skipped"
+                ],
+                "type": "string"
+              }
+            },
+            "required": [
+              "completedAt",
+              "error",
+              "id",
+              "profileIds",
+              "profilesDone",
+              "profilesFailed",
+              "profilesTotal",
+              "scheduleId",
+              "scriptId",
+              "source",
+              "startedAt",
+              "status"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "completedAt": null,
+            "error": null,
+            "id": "6f1c2b9e-3d4a-4e8b-9f0a-1b2c3d4e5f60",
+            "profileIds": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+              "1c8f5b63-9d2e-4a4f-b7c0-3e6d9f2a5b81"
+            ],
+            "profilesDone": 0,
+            "profilesFailed": 0,
+            "profilesTotal": 2,
+            "scheduleId": null,
+            "scriptId": "2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92",
+            "source": "agent",
+            "startedAt": "2026-10-16T09:00:00Z",
+            "status": "running"
+          }
+        },
+        {
+          "status": 400,
+          "description": "No profile ids, `concurrency` or `stagger_ms` out of range, or an invalid variable.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: `concurrency` must be between 1 and 4"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No script with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: script not found: 2d9a6c74-ae3f-4b50-88d1-4f7eaa3b6c92; save_script returns valid ids"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The script is not approved; the user approves it in Veilus Flow.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: script `Check inbox` is not approved — ask the user to approve it in Veilus → Flow, then call this again"
+          }
+        },
+        {
+          "status": 429,
+          "description": "Too many expensive calls from this token: launch, script run, batch, run schedule now, create profiles and import proxies count together, 30 per rolling 60 s. The Retry-After header gives the seconds to wait.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "rate limited: too many expensive calls in the last minute; retry after 42s"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/variables",
       "summary": "Replace all stored variables of a profile; returns the variable names only.",
+      "description": "Replaces every stored variable of this profile with the ones given; variables not in the body are deleted. Values may be secrets: they are never returned, only the names.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
           "variables": {
@@ -1469,22 +4656,301 @@
           "variables"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The variable names now stored, sorted. Values are never returned.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "profile_id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "variable_names": {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "profile_id",
+              "variable_names"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "profile_id": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+            "variable_names": [
+              "EMAIL",
+              "PASSWORD"
+            ]
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or a name is not UPPER_SNAKE_CASE, a value is over 32 KiB, or there are more than 64.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: variable name `email` must be UPPER_SNAKE_CASE, matching [A-Z_][A-Z0-9_]* and at most 64 chars"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No profile with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: profile 0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70; call list_profiles for valid ids"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/runs",
-      "summary": "List recent runs, newest first; query schedule_id and limit (default 20, max 100)."
+      "summary": "List recent runs, newest first; query schedule_id and limit (default 20, max 100).",
+      "description": "Lists recent runs from every source, newest first, without their profile ids. Query `schedule_id` keeps one schedule's runs; `limit` defaults to 20, at most 100.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Recent runs, newest first, without their profile ids.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "completedAt": {
+                  "format": "date-time",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "error": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "profilesDone": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "profilesFailed": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "profilesTotal": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "scheduleId": {
+                  "format": "uuid",
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "startedAt": {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                "status": {
+                  "enum": [
+                    "running",
+                    "completed",
+                    "partial",
+                    "failed",
+                    "skipped"
+                  ],
+                  "type": "string"
+                }
+              },
+              "required": [
+                "completedAt",
+                "error",
+                "id",
+                "profilesDone",
+                "profilesFailed",
+                "profilesTotal",
+                "scheduleId",
+                "startedAt",
+                "status"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "completedAt": null,
+              "error": null,
+              "id": "6f1c2b9e-3d4a-4e8b-9f0a-1b2c3d4e5f60",
+              "profilesDone": 0,
+              "profilesFailed": 0,
+              "profilesTotal": 2,
+              "scheduleId": null,
+              "startedAt": "2026-10-16T09:00:00Z",
+              "status": "running"
+            }
+          ]
+        },
+        {
+          "status": 400,
+          "description": "Unknown query parameter, `schedule_id` not a uuid, or `limit` not a positive integer.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: unknown query parameter `page=2`; use schedule_id and limit"
+          }
+        },
+        {
+          "status": 404,
+          "description": "`schedule_id` names no schedule.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: schedule 3e0b7d85-bf40-4c61-99e2-5a8fbb4c7da3; call list_schedules for valid ids"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/openapi.json",
-      "summary": "Return the OpenAPI 3.1 document describing this REST API."
+      "summary": "Return the OpenAPI 3.1 document describing this REST API.",
+      "description": "Returns the OpenAPI 3.1 document of this API, built from the same catalog as this list. It describes every route's parameters, request body and each status it answers, with a real example. Nothing on this machine is read or changed.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The OpenAPI 3.1 document of this API.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "components": {
+                "type": "object"
+              },
+              "info": {
+                "type": "object"
+              },
+              "openapi": {
+                "const": "3.1.0"
+              },
+              "paths": {
+                "type": "object"
+              },
+              "security": {
+                "type": "array"
+              },
+              "servers": {
+                "type": "array"
+              }
+            },
+            "required": [
+              "components",
+              "info",
+              "openapi",
+              "paths",
+              "security",
+              "servers"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "components": {
+              "securitySchemes": {
+                "bearer": {
+                  "scheme": "bearer",
+                  "type": "http"
+                }
+              }
+            },
+            "info": {
+              "title": "Veilus local API",
+              "version": "0.2.9"
+            },
+            "openapi": "3.1.0",
+            "paths": {},
+            "security": [
+              {
+                "bearer": []
+              }
+            ],
+            "servers": [
+              {
+                "url": "http://127.0.0.1:{port}"
+              }
+            ]
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/navigate",
       "summary": "Load a URL in a running profile's tab and wait for the load event.",
+      "description": "Loads the URL in the running profile's tab, as the profile, with its cookies and logins, and waits up to 15 s for the page to load. The page the tab showed before is left.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
           "url": {
@@ -1495,34 +4961,301 @@
           "url"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Navigated. The sentence says when the page was still loading after 15 s.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "result"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "result": "navigated to https://example.com"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/profiles/:id/snapshot",
-      "summary": "Accessibility snapshot of a running profile's page, with [id=N] per element."
+      "summary": "Accessibility snapshot of a running profile's page, with [id=N] per element.",
+      "description": "Reads the running profile's page as an accessibility tree, one element per line with an [id=N] that click, type and set-file take. Nothing on the page changes. Stops at 150 elements or 64 KiB.",
+      "access": "read",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The accessibility tree as text, one element per line with [id=N]; `truncated` past 150 elements or 64 KiB.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "dialogs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "accepted": {
+                      "type": "boolean"
+                    },
+                    "kind": {
+                      "enum": [
+                        "alert",
+                        "confirm",
+                        "prompt",
+                        "beforeunload"
+                      ],
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accepted",
+                    "kind",
+                    "message"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              },
+              "truncated": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "text",
+              "truncated"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "text": "- heading \"Example Domain\" [id=12]\n- link \"More information...\" [id=15]",
+            "truncated": false
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/click",
       "summary": "Click the element with a node id from snapshot or wait-for-element, with a real mouse; refuses hidden or covered elements.",
+      "description": "Moves the mouse to the element and clicks it on the real page, which may submit a form, follow a link or buy something. A JS dialog the click opens is answered (dismissed by default). Hidden or covered elements are refused.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
+          "dialog": {
+            "enum": [
+              "dismiss",
+              "accept"
+            ],
+            "type": "string"
+          },
           "node_id": {
             "minimum": 1,
             "type": "integer"
+          },
+          "prompt_text": {
+            "type": "string"
           }
         },
         "required": [
           "node_id"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Clicked. Any JS dialog the click opened is named in the sentence.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "result"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "result": "Clicked element [id=15]"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 404,
+          "description": "The node id is stale: the page changed since the snapshot. Call snapshot again.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: element [id=42] — the page changed since the snapshot; call snapshot for fresh ids, then retry"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/type",
       "summary": "Focus an element by node id and type text into it.",
+      "description": "Focuses the element, clears it, and types the text key by key on the real page. At most 5000 characters per call.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
           "node_id": {
@@ -1538,14 +5271,108 @@
           "text"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Typed. The sentence notes a field that could not be cleared or did not change.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "result"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "result": "Typed 11 chars into element [id=21]"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 404,
+          "description": "The node id is stale: the page changed since the snapshot. Call snapshot again.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: element [id=42] — the page changed since the snapshot; call snapshot for fresh ids, then retry"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/press-key",
       "summary": "Press one named key (Enter, Tab, Escape, arrows, Backspace, Delete, Space).",
+      "description": "Presses one named key on the real page, where focus is now; Enter may submit a form. A JS dialog the key opens is answered (dismissed by default).",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
+          "dialog": {
+            "enum": [
+              "dismiss",
+              "accept"
+            ],
+            "type": "string"
+          },
           "key": {
             "enum": [
               "Enter",
@@ -1560,18 +5387,89 @@
               "Space"
             ],
             "type": "string"
+          },
+          "prompt_text": {
+            "type": "string"
           }
         },
         "required": [
           "key"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Pressed. Any JS dialog the key opened is named in the sentence.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "result"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "result": "Pressed key: Enter"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/scroll",
       "summary": "Scroll a running profile's page by about a number of pixels in one direction, with mouse-wheel steps at the pointer; reports the pixels scrolled.",
+      "description": "Scrolls the real page with mouse-wheel steps at the pointer, styled after the profile's OS. Pages that load more content on scroll will load it.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
           "amount": {
@@ -1594,15 +5492,93 @@
           "amount"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Scrolled; the sentence gives the direction and pixels.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "result"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "result": "Scrolled down by 600px"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/evaluate",
       "summary": "Run JavaScript in a running profile's page; 64 KiB result cap, 10 s timeout.",
+      "description": "Runs the JavaScript expression inside the running profile's page, with the page's own access to its cookies, storage and logged-in session. It can change or submit anything the page can. The result is cut at 64 KiB; the call gives up after 10 s.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
+          "dialog": {
+            "enum": [
+              "dismiss",
+              "accept"
+            ],
+            "type": "string"
+          },
           "expression": {
+            "type": "string"
+          },
+          "prompt_text": {
             "type": "string"
           }
         },
@@ -1610,12 +5586,114 @@
           "expression"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The expression's value as text, cut at 64 KiB, with any JS dialog it opened.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "dialogs": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "accepted": {
+                      "type": "boolean"
+                    },
+                    "kind": {
+                      "enum": [
+                        "alert",
+                        "confirm",
+                        "prompt",
+                        "beforeunload"
+                      ],
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "accepted",
+                    "kind",
+                    "message"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "text": {
+                "type": "string"
+              },
+              "truncated": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "text",
+              "truncated"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "text": "\"Example Domain\"",
+            "truncated": false
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/wait-for-element",
       "summary": "Wait until a CSS selector matches and return the element's node id.",
+      "description": "Waits until the CSS selector matches an element on the running profile's page, up to `timeout_ms` (default 5 s, at most 30 s), and returns its node id for click, type or set-file to act on. Nothing on the page is changed; if the selector never matches, the call fails with 409 after the timeout.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
           "selector": {
@@ -1631,12 +5709,81 @@
           "selector"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The node id of the first element the selector matched.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "node_id": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "node_id"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "node_id": 21
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the body is missing a field or has a value out of range.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: body must be JSON {node_id: integer}"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/profiles/:id/set-file",
       "summary": "Attach a file from the app's uploads folder to a file input by node id.",
+      "description": "Attaches a file to a file input on the real page; the page can then upload it. Only files inside the app's uploads folder are accepted.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Profile id (uuid), as listed by GET /v1/profiles."
+        }
+      ],
       "body": {
         "properties": {
           "node_id": {
@@ -1652,17 +5799,240 @@
           "path"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The file is attached to the input.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "result": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "result"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "result": "file set on node 30"
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or `path` is not a file inside the uploads folder.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: `path` must be a file inside the uploads folder ~/.veilus/uploads; copy the file there first"
+          }
+        },
+        {
+          "status": 404,
+          "description": "The node id is stale: the page changed since the snapshot. Call snapshot again.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: element [id=42] — the page changed since the snapshot; call snapshot for fresh ids, then retry"
+          }
+        },
+        {
+          "status": 409,
+          "description": "The profile is not running, its tab is gone, or the page did not answer in time.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profile is not running; call launch_profile first"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/datasets",
-      "summary": "List datasets with their columns and row counts by state; never row values."
+      "summary": "List datasets with their columns and row counts by state; never row values.",
+      "description": "Lists every dataset with its mode, columns, row counts by state and how many profiles use it. No row values are returned.",
+      "access": "read",
+      "params": [],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "Every dataset with its columns and row counts by state; no row values.",
+          "schema": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "columns": {
+                  "items": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "secret": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "secret"
+                    ],
+                    "type": "object"
+                  },
+                  "type": "array"
+                },
+                "counts": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "assigned": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "available": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "reserved": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "total": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "used": {
+                      "minimum": 0,
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "assigned",
+                    "available",
+                    "reserved",
+                    "total",
+                    "used"
+                  ],
+                  "type": "object"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "mode": {
+                  "enum": [
+                    "fixed",
+                    "consume"
+                  ],
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "profileCount": {
+                  "minimum": 0,
+                  "type": "integer"
+                },
+                "rowsPerRun": {
+                  "minimum": 0,
+                  "type": [
+                    "integer",
+                    "null"
+                  ]
+                },
+                "updatedAt": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "columns",
+                "counts",
+                "createdAt",
+                "id",
+                "mode",
+                "name",
+                "profileCount",
+                "rowsPerRun",
+                "updatedAt"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "example": [
+            {
+              "columns": [
+                {
+                  "name": "EMAIL",
+                  "secret": false
+                },
+                {
+                  "name": "PASSWORD",
+                  "secret": true
+                }
+              ],
+              "counts": {
+                "assigned": 3,
+                "available": 0,
+                "reserved": 0,
+                "total": 10,
+                "used": 0
+              },
+              "createdAt": "2026-10-16 08:00:00",
+              "id": "5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81",
+              "mode": "fixed",
+              "name": "Accounts",
+              "profileCount": 3,
+              "rowsPerRun": null,
+              "updatedAt": "2026-10-16 08:00:00"
+            }
+          ]
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/datasets",
       "summary": "Create a fixed or consume dataset from columns and rows; bad rows are reported by number.",
+      "description": "Creates a new dataset with these columns and up to 5000 rows. A fixed dataset gives each profile its own row; a consume dataset hands out rows to runs until they are used. Rows that do not fit the columns are skipped and reported by number.",
+      "access": "write",
+      "params": [],
       "body": {
         "properties": {
           "columns": {
@@ -1720,17 +6090,284 @@
           "columns"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The new dataset, how many rows were imported, and the numbers of the rows refused.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "datasetId": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "imported": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "rejected": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "lineNo": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "reason": {
+                      "enum": [
+                        "fieldCount",
+                        "unclosedQuote",
+                        "unknownColumn",
+                        "emptyRow"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "lineNo",
+                    "reason"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "datasetId",
+              "imported",
+              "rejected"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "datasetId": "5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81",
+            "imported": 9,
+            "rejected": [
+              {
+                "lineNo": 4,
+                "reason": "unknownColumn"
+              }
+            ]
+          }
+        },
+        {
+          "status": 400,
+          "description": "Bad column names, a reserved column, rows_per_run on a fixed dataset, or more than 5000 rows.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: invalid dataset: column `email` must match ^[A-Z_][A-Z0-9_]*$"
+          }
+        },
+        {
+          "status": 409,
+          "description": "A dataset with this name already exists.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: a dataset named \"Accounts\" already exists"
+          }
+        }
+      ]
     },
     {
       "method": "GET",
       "path": "/v1/datasets/:id/rows",
-      "summary": "Read a dataset's rows by page (query offset, limit); secret columns are never returned."
+      "summary": "Read a dataset's rows by page (query offset, limit); secret columns are never returned.",
+      "description": "Returns one page of the dataset's rows with their state and owning profile; query `offset` and `limit` (default 100). Secret columns are left out of every row.",
+      "access": "read",
+      "params": [
+        {
+          "name": "id",
+          "description": "Dataset id (uuid), as listed by GET /v1/datasets."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "One page of rows. Secret columns are absent from `values`, not empty.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "datasetId": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "offset": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "rows": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "id": {
+                      "format": "uuid",
+                      "type": "string"
+                    },
+                    "index": {
+                      "minimum": 1,
+                      "type": "integer"
+                    },
+                    "profileId": {
+                      "format": "uuid",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "runId": {
+                      "format": "uuid",
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "state": {
+                      "enum": [
+                        "available",
+                        "reserved",
+                        "used",
+                        null
+                      ],
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "usedAt": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "values": {
+                      "additionalProperties": {
+                        "type": "string"
+                      },
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "index",
+                    "profileId",
+                    "runId",
+                    "state",
+                    "usedAt",
+                    "values"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "total": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "datasetId",
+              "offset",
+              "rows",
+              "total"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "datasetId": "5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81",
+            "offset": 0,
+            "rows": [
+              {
+                "id": "8e4a1c39-6b2d-4f7e-a0c5-9d3b5e7f1a24",
+                "index": 1,
+                "profileId": "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70",
+                "runId": null,
+                "state": null,
+                "usedAt": null,
+                "values": {
+                  "EMAIL": "a@example.com"
+                }
+              }
+            ],
+            "total": 10
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or a query parameter is unknown or not a non-negative integer.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: unknown query parameter `page`; use offset and limit"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No dataset with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: dataset 5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/datasets/:id/rows",
       "summary": "Append rows to a dataset; bad rows are reported by number.",
+      "description": "Appends up to 5000 rows to the dataset; existing rows are kept. Rows that do not fit the columns are skipped and reported by number.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Dataset id (uuid), as listed by GET /v1/datasets."
+        }
+      ],
       "body": {
         "properties": {
           "rows": {
@@ -1749,12 +6386,109 @@
           "rows"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "How many rows were appended, and the numbers of the rows refused.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "imported": {
+                "minimum": 0,
+                "type": "integer"
+              },
+              "rejected": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "lineNo": {
+                      "minimum": 0,
+                      "type": "integer"
+                    },
+                    "reason": {
+                      "enum": [
+                        "fieldCount",
+                        "unclosedQuote",
+                        "unknownColumn",
+                        "emptyRow"
+                      ],
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "lineNo",
+                    "reason"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "imported",
+              "rejected"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "imported": 5,
+            "rejected": []
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, the body is not `{rows: object[]}`, or more than 5000 rows.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: at most 5000 rows per call"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No dataset with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: dataset 5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/datasets/:id/assign",
       "summary": "Assign a dataset to profiles, into the slot its mode implies; a taken slot is refused unless force.",
+      "description": "Puts the dataset into these profiles' identity slot (fixed) or content slot (consume); a fixed dataset also gives each profile a free row. A slot already holding another dataset is refused unless `force` is true.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Dataset id (uuid), as listed by GET /v1/datasets."
+        }
+      ],
       "body": {
         "properties": {
           "force": {
@@ -1773,12 +6507,142 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "The profiles that took the dataset into its slot, and by name those a fixed dataset had no row left for.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "assigned": {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              "datasetId": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "slot": {
+                "enum": [
+                  "identity",
+                  "content"
+                ],
+                "type": "string"
+              },
+              "withoutRow": {
+                "items": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "profileId": {
+                      "format": "uuid",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "profileId"
+                  ],
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "required": [
+              "assigned",
+              "datasetId",
+              "slot",
+              "withoutRow"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "assigned": [
+              "0b7e4a52-8c1d-4f3e-a6b9-2d5c8e1f4a70"
+            ],
+            "datasetId": "5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81",
+            "slot": "identity",
+            "withoutRow": []
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or `profile_ids` is empty or has duplicates.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: need at least one `profile_id`"
+          }
+        },
+        {
+          "status": 404,
+          "description": "The dataset or one of the profiles does not exist.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: dataset 5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81"
+          }
+        },
+        {
+          "status": 409,
+          "description": "A profile already has another dataset in that slot and `force` is false, or the columns clash with the other slot's dataset.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "conflict: profiles already have a different identity dataset: Shop 1. Nothing was assigned; pass `force: true` to replace it"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/datasets/:id/unassign",
       "summary": "Remove a dataset from profiles; their fixed rows become unassigned again.",
+      "description": "Removes the dataset from these profiles' slot; their fixed rows become free for other profiles. Profiles that were deleted are accepted, to free their rows.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Dataset id (uuid), as listed by GET /v1/datasets."
+        }
+      ],
       "body": {
         "properties": {
           "profile_ids": {
@@ -1793,12 +6657,199 @@
           "profile_ids"
         ],
         "type": "object"
-      }
+      },
+      "bodyRequired": true,
+      "responses": [
+        {
+          "status": 200,
+          "description": "How many profiles lost the dataset.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "changed": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "changed"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "changed": 1
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or `profile_ids` is empty or has duplicates.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: `profile_ids` has duplicates"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No dataset with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: dataset 5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81"
+          }
+        }
+      ]
     },
     {
       "method": "POST",
       "path": "/v1/datasets/:id/reset",
-      "summary": "Return every used row of a consume dataset to available."
+      "summary": "Return every used row of a consume dataset to available.",
+      "description": "Marks every used row of this consume dataset available again, so runs hand them out a second time. Only a consume dataset can be reset; a fixed one is refused, and rows still available are left as they are. The call answers how many rows changed.",
+      "access": "write",
+      "params": [
+        {
+          "name": "id",
+          "description": "Dataset id (uuid), as listed by GET /v1/datasets."
+        }
+      ],
+      "bodyRequired": false,
+      "responses": [
+        {
+          "status": 200,
+          "description": "How many used rows became available again.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "changed": {
+                "minimum": 0,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "changed"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "changed": 12
+          }
+        },
+        {
+          "status": 400,
+          "description": "The id is not a uuid, or the dataset is not a consume dataset.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "invalid request: not a uuid: 1234"
+          }
+        },
+        {
+          "status": 404,
+          "description": "No dataset with this id.",
+          "schema": {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          "example": {
+            "error": "not found: dataset 5c2e8f17-4a6b-4d9c-b1e3-7f0a2b4c6d81"
+          }
+        }
+      ]
+    }
+  ],
+  "commonResponses": [
+    {
+      "status": 401,
+      "description": "No bearer token, or not a token this app issued. The body is empty: it never says which.",
+      "schema": {
+        "description": "No response body.",
+        "type": "null"
+      },
+      "example": null
+    },
+    {
+      "status": 403,
+      "description": "Refused by the plan: it no longer includes the local API (checked on every request), or it does not allow this action (profile or schedule limit, parallel runs). A request whose Host header is not loopback is also 403, with an empty body.",
+      "schema": {
+        "anyOf": [
+          {
+            "additionalProperties": false,
+            "properties": {
+              "error": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "error"
+            ],
+            "type": "object"
+          },
+          {
+            "description": "No response body.",
+            "type": "null"
+          }
+        ]
+      },
+      "example": {
+        "error": "API access requires a paid plan."
+      }
+    },
+    {
+      "status": 500,
+      "description": "Veilus failed: storage could not be read or written, or a task panicked. The message says what failed; retrying rarely helps.",
+      "schema": {
+        "additionalProperties": false,
+        "properties": {
+          "error": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "error"
+        ],
+        "type": "object"
+      },
+      "example": {
+        "error": "internal error: list profiles: database is locked"
+      }
     }
   ],
   "tokenEnv": "VEILUS_API_TOKEN"

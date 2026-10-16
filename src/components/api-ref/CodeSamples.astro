@@ -1,0 +1,35 @@
+---
+// Copyable request samples for one endpoint, from the shared `codeSample`.
+// REST: cURL / JavaScript / Python tabs (synced across the page); MCP: the tool call.
+import { Code, TabItem, Tabs } from '@astrojs/starlight/components';
+import { codeSample, exampleBody, type Endpoint, type SampleLang } from './apiReference';
+
+interface Props {
+	endpoint: Endpoint;
+	toolCallLabel: string;
+}
+const { endpoint: e, toolCallLabel } = Astro.props;
+
+const hasBody =
+	e.kind === 'mcp' ? Object.keys(e.body?.properties ?? {}).length > 0 : e.method === 'POST' && !!e.body;
+const body = hasBody ? exampleBody(e.body) : undefined;
+const LANGS: { value: SampleLang; label: string; code: string }[] = [
+	{ value: 'curl', label: 'cURL', code: 'sh' },
+	{ value: 'fetch', label: 'JavaScript', code: 'js' },
+	{ value: 'python', label: 'Python', code: 'py' },
+];
+---
+
+{
+	e.kind === 'mcp' ? (
+		<Code code={codeSample(e, 'mcp', null, body)} lang="json" title={toolCallLabel} />
+	) : (
+		<Tabs syncKey="api-sample-lang">
+			{LANGS.map((l) => (
+				<TabItem label={l.label}>
+					<Code code={codeSample(e, l.value, null, body)} lang={l.code} />
+				</TabItem>
+			))}
+		</Tabs>
+	)
+}

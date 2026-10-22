@@ -9,7 +9,7 @@ description: Frequently asked questions about Veilus.
 The Free plan gives you 5 profiles on 1 device, with no time limit and no card. Veilus Flow, schedules, batch runs, Veilus Sync, import/export, script templates and the local API/MCP need a paid plan. You can try all of them with a 7-day Pro trial. See [Plans & license](/reference/plans-and-license/).
 
 ### Which operating systems does it run on?
-Windows 10/11 (x64) and macOS 13 or later on Apple Silicon. There are no other builds.
+Windows 10/11 (x64) and macOS 13.5 or later on Apple Silicon. There are no other builds.
 
 ### Why do I have to download the engine separately?
 The installer contains only the app. The browser engine is a separate download so you can choose and switch engine versions in **Settings → Engine & updates**. See [Installation](/getting-started/installation/#download-the-browser-engine).

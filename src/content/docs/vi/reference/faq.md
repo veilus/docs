@@ -9,7 +9,7 @@ description: Những câu hỏi thường gặp về Veilus.
 Gói Free cho bạn 5 profile trên 1 máy, không giới hạn thời gian, không cần thẻ. Veilus Flow, lịch chạy, chạy hàng loạt, Veilus Sync, nhập/xuất, mẫu script và API/MCP cục bộ cần gói trả phí. Bạn dùng thử được tất cả với bản Pro 7 ngày. Xem [Gói và license](/vi/reference/plans-and-license/).
 
 ### Chạy trên hệ điều hành nào?
-Windows 10/11 (x64) và macOS 13 trở lên trên Apple Silicon. Không có bản nào khác.
+Windows 10/11 (x64) và macOS 13.5 trở lên trên Apple Silicon. Không có bản nào khác.
 
 ### Vì sao phải tải engine riêng?
 Bộ cài chỉ chứa app. Engine trình duyệt là bản tải riêng để bạn chọn và đổi phiên bản engine trong **Settings → Engine & updates**. Xem [Cài đặt](/vi/getting-started/installation/#tải-engine-trình-duyệt).

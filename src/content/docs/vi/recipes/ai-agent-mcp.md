@@ -20,12 +20,12 @@ Recipe này để Claude điều khiển một profile Veilus: xem một trang, 
 RESULT {"submitted":2,"orders":[{"name":"Alex Doe","size":"medium","accepted":true}, …]}
 ```
 
-Script báo lỗi nếu site không nhận một đơn, nên submit thất bại hiện ra là lượt chạy thất bại.
+Script báo lỗi nếu site không nhận một đơn, nên lần gửi thất bại sẽ hiện là một lượt chạy lỗi.
 
 ## Đổi cho form của bạn
 
-- Biến profile `FORM_URL`: form của bạn. Sau đó đổi các selector của `page.fill` và phần kiểm tra sau khi submit. Ví dụ đọc bản JSON mà httpbin trả lại, còn site thật hiện trang xác nhận. Hoặc nhờ Claude làm lại bước 4 của prompt trên trang của bạn.
-- `dataset.csv`: mỗi lần gửi một dòng, các cột `NAME`, `PHONE`, `EMAIL`, `SIZE`, `COMMENTS`.
+- Biến profile `FORM_URL`: form của bạn. Sau đó đổi các selector của `page.fill` và phần kiểm tra sau khi submit. Ví dụ đọc bản JSON mà httpbin trả lại, còn site thật hiện trang xác nhận. Hoặc nhờ Claude làm lại bước 4 của prompt, áp dụng cho trang của bạn.
+- `dataset.csv`: mỗi lần gửi tương ứng một dòng, các cột `NAME`, `PHONE`, `EMAIL`, `SIZE`, `COMMENTS`.
 
 Prompt không được kiểm thử tự động: mỗi lần LLM viết ra code khác nhau, nên hãy đọc script trước khi duyệt.
 

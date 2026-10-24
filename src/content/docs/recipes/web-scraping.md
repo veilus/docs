@@ -59,6 +59,8 @@ Replace `.product`, `.title` and `.price` with the selectors of the site you scr
 
 Veilus keeps only the last 4096 characters of each profile's output. If you collect more than that, write it to a file with Node's `fs` module and print a short summary.
 
+A complete, tested version that also compares prices between runs: [Price Monitor](/recipes/price-monitor/).
+
 ## Scrape a list of URLs
 
 To work through many pages across several profiles, put the URLs in a **consume** dataset with a column named `URL`, set how many rows each run takes, and assign the dataset to the profiles. Each run takes new rows, and two profiles never get the same row. See [Datasets](/profiles/datasets/).

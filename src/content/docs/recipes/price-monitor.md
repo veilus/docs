@@ -26,7 +26,8 @@ The first run records prices only, so `changed` is empty. Later runs list the pa
 ## Change it for your sites
 
 - `URL` column: your product pages. `SELECTOR` column: the CSS selector of the price (empty means `.price`).
-- Profile variable `WEBHOOK_URL`: a Slack or Discord webhook to get a message on each change.
+- Profile variable `WEBHOOK_URL`: a webhook URL that accepts JSON, to get a message on each change. The body carries `text` (read by Slack) and `content` (read by Discord).
+- A page whose price can't be read does not stop the run: it is listed under `failed` in the `RESULT` line, the other pages are still checked, and the run is marked failed so you notice.
 - Profile variable `OUT_DIR`: where the last prices are kept (default `~/veilus-solutions`).
 
 ## Legal considerations

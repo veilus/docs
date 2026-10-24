@@ -11,13 +11,13 @@ Recipe này để Claude điều khiển một profile Veilus: xem một trang, 
 
 ## Hai cách dùng
 
-- **Có Claude:** cần Claude Code có plugin Veilus và app Veilus đang chạy với API cục bộ bật. Dán prompt trong `prompt.md`. Claude làm việc trong profile qua [MCP server của Veilus](/vi/reference/mcp/) và lưu một script. Không gì chạy không giám sát cho đến khi bạn duyệt trong **Veilus Flow → Scripts**. Xem thêm [Để LLM làm tự động hoá giúp bạn](/vi/recipes/llm-scripts/).
+- **Có Claude:** cần Claude Code có plugin Veilus (`/plugin marketplace add veilus/claude-plugin`, rồi `/plugin install veilus@veilus`) và app Veilus đang chạy với API cục bộ bật. Dán prompt trong `prompt.md`. Claude làm việc trong profile qua [MCP server của Veilus](/vi/reference/mcp/) và lưu một script. Không gì chạy không giám sát cho đến khi bạn duyệt trong **Veilus Flow → Scripts**. Xem thêm [Để LLM làm tự động hoá giúp bạn](/vi/recipes/llm-scripts/).
 - **Không có Claude:** dán `script.ts` vào **Veilus Flow → Scripts** rồi duyệt nó (dataset chỉ đến được script đã duyệt), nhập `dataset.csv` và gán cho một profile. Xem [Scripts](/vi/automation/scripts/) và [Datasets](/vi/profiles/datasets/).
 
 ## Một lượt chạy in ra gì
 
 ```text
-RESULT {"submitted":2,"orders":[{"name":"Alex Doe","size":"medium","accepted":true}, …]}
+RESULT {"submitted":2,"orders":[{"name":"Alex Doe","size":"medium"}, …]}
 ```
 
 Script báo lỗi nếu site không nhận một đơn, nên lần gửi thất bại sẽ hiện là một lượt chạy lỗi.

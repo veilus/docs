@@ -26,7 +26,8 @@ Lượt đầu chỉ ghi lại giá nên `changed` rỗng. Các lượt sau li�
 ## Đổi cho trang của bạn
 
 - Cột `URL`: các trang sản phẩm của bạn. Cột `SELECTOR`: CSS selector của giá (để trống thì dùng `.price`).
-- Biến profile `WEBHOOK_URL`: webhook Slack hoặc Discord để nhận tin nhắn mỗi khi giá đổi.
+- Biến profile `WEBHOOK_URL`: một webhook nhận JSON, để nhận tin nhắn mỗi khi giá đổi. Nội dung gửi đi có trường `text` (Slack đọc) và `content` (Discord đọc).
+- Trang nào không đọc được giá thì không làm dừng cả lượt: trang đó nằm trong `failed` của dòng `RESULT`, các trang khác vẫn được kiểm, và lượt chạy được đánh dấu lỗi để bạn để ý.
 - Biến profile `OUT_DIR`: nơi lưu giá của lượt trước (mặc định `~/veilus-solutions`).
 
 ## Lưu ý pháp lý

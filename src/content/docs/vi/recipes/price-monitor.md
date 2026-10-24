@@ -11,7 +11,7 @@ Recipe này theo dõi giá trên một danh sách trang sản phẩm. Mỗi lư�
 
 ## Thiết lập
 
-1. Tạo script trong **Veilus Flow → Scripts** rồi dán `script.ts`. Xem [Scripts](/vi/automation/scripts/).
+1. Tạo script trong **Veilus Flow → Scripts** rồi dán `script.ts`, sau đó duyệt nó: dataset chỉ đến được script đã duyệt. Xem [Scripts](/vi/automation/scripts/).
 2. Nhập `dataset.csv` làm dataset và gán cho profile. Xem [Datasets](/vi/profiles/datasets/).
 3. Chạy thử một lần, rồi thêm [lịch chạy](/vi/automation/schedules/), ví dụ mỗi 6 giờ.
 

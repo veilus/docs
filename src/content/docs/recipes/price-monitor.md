@@ -11,7 +11,7 @@ This recipe tracks prices on a list of product pages. Each run opens every page 
 
 ## Set it up
 
-1. Create a script in **Veilus Flow → Scripts** and paste `script.ts`. See [Scripts](/automation/scripts/).
+1. Create a script in **Veilus Flow → Scripts** and paste `script.ts`, then approve it: dataset rows reach approved scripts only. See [Scripts](/automation/scripts/).
 2. Import `dataset.csv` as a dataset and assign it to the profile. See [Datasets](/profiles/datasets/).
 3. Run it once, then add a [schedule](/automation/schedules/), for example every 6 hours.
 

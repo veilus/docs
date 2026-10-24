@@ -12,7 +12,7 @@ Recipe này mở các trang đích của bạn như khách ở từng quốc gia
 ## Thiết lập
 
 1. Tạo một profile cho mỗi quốc gia, mỗi profile có proxy ở nước đó. Xem [Thiết lập proxy](/vi/profiles/proxy/). Trên mỗi profile, thêm biến profile `COUNTRY` với mã hai chữ cái (`DE`, `JP`, …).
-2. Dán `script.ts` vào **Veilus Flow → Scripts**, nhập `dataset.csv` chứa các trang đích của bạn và gán cho tất cả profile. Xem [Scripts](/vi/automation/scripts/) và [Datasets](/vi/profiles/datasets/).
+2. Dán `script.ts` vào **Veilus Flow → Scripts** rồi duyệt nó (dataset chỉ đến được script đã duyệt), nhập `dataset.csv` chứa các trang đích của bạn và gán cho tất cả profile. Xem [Scripts](/vi/automation/scripts/) và [Datasets](/vi/profiles/datasets/).
 3. Chạy script trên tất cả profile cùng lúc rồi đọc dòng `RESULT` của từng profile trong **Run History**. Xem [Runs](/vi/automation/runs/).
 
 Nếu proxy của một profile thoát ra từ sai quốc gia, profile đó báo lỗi `this profile exits from US, not DE: check its proxy`, nên bạn sẽ không phải so sánh các trang được tải từ sai quốc gia.

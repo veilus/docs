@@ -12,7 +12,7 @@ This recipe lets Claude drive a Veilus profile: look at a page, fill a form, che
 ## Two ways to use it
 
 - **With Claude:** needs Claude Code with the Veilus plugin and the Veilus app running with the local API on. Paste the prompt from `prompt.md`. Claude works in the profile through the [Veilus MCP server](/reference/mcp/) and saves a script. Nothing runs unattended until you approve it in **Veilus Flow → Scripts**. See also [Let an LLM do the automation for you](/recipes/llm-scripts/).
-- **Without Claude:** paste `script.ts` into **Veilus Flow → Scripts**, import `dataset.csv` and assign it to a profile. See [Scripts](/automation/scripts/) and [Datasets](/profiles/datasets/).
+- **Without Claude:** paste `script.ts` into **Veilus Flow → Scripts** and approve it (dataset rows reach approved scripts only), import `dataset.csv` and assign it to a profile. See [Scripts](/automation/scripts/) and [Datasets](/profiles/datasets/).
 
 ## What a run prints
 

@@ -12,7 +12,7 @@ This recipe opens your landing pages the way visitors in each country see them: 
 ## Set it up
 
 1. Create one profile per country, each with a proxy in that country. See [Proxy setup](/profiles/proxy/). On each profile, add a profile variable `COUNTRY` with the two-letter code (`DE`, `JP`, …).
-2. Paste `script.ts` into **Veilus Flow → Scripts**, import `dataset.csv` with your landing pages and assign it to all the profiles. See [Scripts](/automation/scripts/) and [Datasets](/profiles/datasets/).
+2. Paste `script.ts` into **Veilus Flow → Scripts** and approve it (dataset rows reach approved scripts only), import `dataset.csv` with your landing pages and assign it to all the profiles. See [Scripts](/automation/scripts/) and [Datasets](/profiles/datasets/).
 3. Run the script on all the profiles at once and read each profile's `RESULT` line in **Run History**. See [Runs](/automation/runs/).
 
 If a profile's proxy exits from the wrong country, that profile fails with `this profile exits from US, not DE: check its proxy`, so you never compare pages from the wrong place.

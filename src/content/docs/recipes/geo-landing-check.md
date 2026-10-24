@@ -20,10 +20,10 @@ If a profile's proxy exits from the wrong country, that profile fails with `this
 ## What a run prints
 
 ```text
-RESULT {"country":"DE","timezone":"Europe/Berlin","outDir":"…","pages":[{"url":"…","finalUrl":"…","status":200,"lang":"de","title":"…","screenshot":"DE-<run>-1.png"}]}
+RESULT {"country":"DE","timezone":"Europe/Berlin","outDir":"…/geo-landing-check/<run>","pages":[{"url":"…","finalUrl":"…","status":200,"lang":"de","title":"…","screenshot":"DE-1.png"}]}
 ```
 
-Screenshots are saved in `OUT_DIR/geo-landing-check/`. The `RESULT` line gives that folder once as `outDir` and each page's file name. Veilus keeps the last 4096 characters of a run's output, so keep each profile's list to about 20 pages.
+Each run saves its screenshots in its own folder, `OUT_DIR/geo-landing-check/<run>/`. The `RESULT` line gives that folder once as `outDir` and each page's file name. `finalUrl` appears only when the page ended somewhere else. Veilus keeps the last 4096 characters of a run's output: measured, 16 pages fit in one `RESULT` line (11 if every page redirects), so keep each profile's list to 15 pages or fewer.
 
 ## Change it for your sites
 

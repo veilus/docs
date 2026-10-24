@@ -11,13 +11,13 @@ This recipe lets Claude drive a Veilus profile: look at a page, fill a form, che
 
 ## Two ways to use it
 
-- **With Claude:** needs Claude Code with the Veilus plugin and the Veilus app running with the local API on. Paste the prompt from `prompt.md`. Claude works in the profile through the [Veilus MCP server](/reference/mcp/) and saves a script. Nothing runs unattended until you approve it in **Veilus Flow → Scripts**. See also [Let an LLM do the automation for you](/recipes/llm-scripts/).
+- **With Claude:** needs Claude Code with the Veilus plugin (`/plugin marketplace add veilus/claude-plugin`, then `/plugin install veilus@veilus`) and the Veilus app running with the local API on. Paste the prompt from `prompt.md`. Claude works in the profile through the [Veilus MCP server](/reference/mcp/) and saves a script. Nothing runs unattended until you approve it in **Veilus Flow → Scripts**. See also [Let an LLM do the automation for you](/recipes/llm-scripts/).
 - **Without Claude:** paste `script.ts` into **Veilus Flow → Scripts** and approve it (dataset rows reach approved scripts only), import `dataset.csv` and assign it to a profile. See [Scripts](/automation/scripts/) and [Datasets](/profiles/datasets/).
 
 ## What a run prints
 
 ```text
-RESULT {"submitted":2,"orders":[{"name":"Alex Doe","size":"medium","accepted":true}, …]}
+RESULT {"submitted":2,"orders":[{"name":"Alex Doe","size":"medium"}, …]}
 ```
 
 The script throws if the site did not take an order, so a failed submit shows as a failed run.

@@ -20,10 +20,10 @@ Nếu proxy của một profile thoát ra từ sai quốc gia, profile đó báo
 ## Một lượt chạy in ra gì
 
 ```text
-RESULT {"country":"DE","timezone":"Europe/Berlin","outDir":"…","pages":[{"url":"…","finalUrl":"…","status":200,"lang":"de","title":"…","screenshot":"DE-<run>-1.png"}]}
+RESULT {"country":"DE","timezone":"Europe/Berlin","outDir":"…/geo-landing-check/<run>","pages":[{"url":"…","finalUrl":"…","status":200,"lang":"de","title":"…","screenshot":"DE-1.png"}]}
 ```
 
-Ảnh chụp được lưu trong `OUT_DIR/geo-landing-check/`. Dòng `RESULT` cho biết thư mục đó một lần ở `outDir` và tên file của từng trang. Veilus chỉ giữ 4096 ký tự cuối của output mỗi lượt chạy, do đó mỗi profile chỉ nên giữ danh sách khoảng 20 trang.
+Mỗi lượt chạy lưu ảnh vào một thư mục riêng, `OUT_DIR/geo-landing-check/<run>/`. Dòng `RESULT` cho biết thư mục đó một lần ở `outDir` và tên file của từng trang. `finalUrl` chỉ xuất hiện khi trang kết thúc ở địa chỉ khác. Veilus chỉ giữ 4096 ký tự cuối của output mỗi lượt chạy: theo số đo, 16 trang vừa một dòng `RESULT` (11 trang nếu trang nào cũng chuyển hướng), nên mỗi profile chỉ nên giữ 15 trang trở xuống.
 
 ## Đổi cho trang của bạn
 

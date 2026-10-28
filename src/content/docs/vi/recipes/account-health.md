@@ -13,7 +13,7 @@ Script chỉ đọc tài khoản của chính bạn: nó không bao giờ đăng
 
 ## Thiết lập
 
-Thử trước khi chưa cần tài khoản (mục `demo` có sẵn):
+Thử trước, chưa cần tài khoản (mục `demo` có sẵn):
 
 1. Dán `script.ts` vào **Veilus Flow → Scripts** rồi duyệt nó. Xem [Scripts](/vi/automation/scripts/).
 2. Trên một profile, thêm biến profile `PLATFORM` = `demo`.
@@ -36,7 +36,7 @@ Với tài khoản của bạn:
 2. Đặt biến profile `PLATFORM` thành một khóa của `PLATFORMS` trong `script.ts`. Đặt `URL` nếu trang khác mặc định (trang quản trị cửa hàng, trang cá nhân của bạn).
 3. Duyệt script và đưa nó vào [lịch chạy](/vi/automation/schedules/) trên tất cả profile.
 
-Hiện chỉ có mục `demo`. Bạn thêm nền tảng khác bằng cách tự đo selector (README trong repo hướng dẫn), hoặc nhờ Claude làm với `prompt.md`.
+Hiện chỉ có mục `demo`. Bạn thêm nền tảng khác bằng cách tự đo selector rồi thêm một mục vào `PLATFORMS` (xem README trong repo), hoặc nhờ Claude làm với `prompt.md`.
 
 ## Một lượt chạy in ra gì
 
@@ -62,7 +62,7 @@ Lượt chạy thoát mã 1 kèm `metric … not found` nghĩa là website đã 
 - Biến profile `PLATFORM` (bắt buộc): kiểm mục nào của `PLATFORMS`.
 - Biến profile `URL` (tùy chọn): trang cần đọc, khi khác trang mặc định của mục.
 - Biến profile `WEBHOOK_URL` (tùy chọn): một webhook nhận JSON. Nó nhận tin nhắn khi trạng thái là `logged_out`. Nội dung gửi đi có trường `text` (Slack đọc) và `content` (Discord đọc).
-- Trang khác: thêm một mục vào `PLATFORMS` gồm trang, một selector chỉ có khi đã đăng nhập, và một selector cho mỗi con số.
+- Website khác: thêm một mục vào `PLATFORMS` gồm trang, một selector chỉ có khi đã đăng nhập, và một selector cho mỗi con số.
 - Số khác: thêm một khóa vào `metrics` của nền tảng đó.
 
 ## Lưu ý pháp lý

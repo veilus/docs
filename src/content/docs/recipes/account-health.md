@@ -36,7 +36,7 @@ For your own accounts:
 2. Set the profile variable `PLATFORM` to a key of `PLATFORMS` in `script.ts`. Set `URL` if the page differs (your store's admin, your own profile page).
 3. Approve the script and put it on a [schedule](/automation/schedules/) across all your profiles.
 
-Only the `demo` entry ships today. You add another platform by measuring its selectors by hand (the README in the repo explains how), or by letting Claude do it with `prompt.md`.
+Only the `demo` entry ships today. You add another platform by measuring its selectors by hand and adding an entry to `PLATFORMS` (see the README in the repo), or by letting Claude do it with `prompt.md`.
 
 ## What a run prints
 
